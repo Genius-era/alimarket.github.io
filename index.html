@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Alimarket</title>
+<title>ConsignPro</title>
 <style>
   :root {
     --bg: #F3F4F6; --card: #FFFFFF; --primary: #4F46E5; --primary-light: #EEF2FF;
@@ -122,7 +122,7 @@
   <div class="login-card">
     <div style="text-align:center; margin-bottom:32px;">
       <div style="font-size:48px; margin-bottom:12px;">📦</div>
-      <h1>AliMarket</h1>
+      <h1>ConsignPro</h1>
       <p style="color:var(--muted);">Smart Consignment Tracking</p>
     </div>
     <div class="card">
@@ -260,7 +260,6 @@
 
 <script>
   // --- CONFIG ---
-  // YOUR EXACT URL IS ALREADY PLACED HERE
   const API_URL = 'https://script.google.com/macros/s/AKfycbzQf0h5t57xYqdnoi8XA_uURzls9_xDogB86EHLot_rRYtGQ4YPVQ2bH66lswjoXa_jTA/exec';
   let currentUser = null;
   let db = {};
@@ -300,10 +299,10 @@
         img.onload = () => {
           const canvas = document.createElement('canvas');
           let w = img.width, h = img.height;
-          if (w > 800) { h *= 800 / w; w = 800; } // Max 800px width to save space
+          if (w > 800) { h *= 800 / w; w = 800; }
           canvas.width = w; canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL('image/jpeg', 0.7)); // 70% quality for fast upload
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
         };
         img.src = e.target.result;
       };
@@ -363,29 +362,31 @@
     let html = '';
 
     assignments.forEach(a => {
-      const p = products.find(x => x.product_id === a.product_id);
+      const pId = a.product_id || a.productId || a.Product_ID;
+      const p = products.find(x => (x.product_id || x.productId || x.Product_ID) === pId);
       if (!p) return;
-      const sold = sales.filter(s => s.product_id === a.product_id).reduce((sum, s) => sum + Number(s.qty_sold), 0);
+      
+      const sold = sales.filter(s => (s.product_id || s.productId || s.Product_ID) === pId).reduce((sum, s) => sum + Number(s.qty_sold || 0), 0);
       const remaining = Math.max(0, a.qty_assigned - sold);
-      totalOwed += sold * Number(p.owner_price);
+      totalOwed += sold * Number(p.owner_price || p.Owner_Price || 0);
 
       html += `
         <div class="prod-card">
-          <div class="prod-img-wrap"><img src="${p.image_url}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
+          <div class="prod-img-wrap"><img src="${p.image_url || p.Image_URL}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
           <div class="prod-details">
-            <h4>${p.name}</h4>
-            <div class="price">GH₵ ${p.owner_price}</div>
+            <h4>${p.name || p.Name}</h4>
+            <div class="price">GH₵ ${p.owner_price || p.Owner_Price}</div>
             <div class="stock">${remaining} left in stock</div>
             <div class="stepper">
-              <button onclick="step('${p.product_id}', -1)">-</button>
-              <input type="number" id="qty-${p.product_id}" value="0" min="0" max="${remaining}" readonly>
-              <button onclick="step('${p.product_id}', 1)">+</button>
+              <button onclick="step('${pId}', -1)">-</button>
+              <input type="number" id="qty-${pId}" value="0" min="0" max="${remaining}" readonly>
+              <button onclick="step('${pId}', 1)">+</button>
             </div>
           </div>
         </div>`;
     });
 
-    payments.forEach(p => totalPaid += Number(p.amount));
+    payments.forEach(p => totalPaid += Number(p.amount || p.Amount || 0));
     const bal = totalOwed - totalPaid;
     document.getElementById('seller-balance').innerText = `GH₵ ${bal.toFixed(2)}`;
     document.getElementById('seller-products').innerHTML = html || '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">No stock assigned yet.</p>';
@@ -449,28 +450,34 @@
     let totalDebt = 0;
     document.getElementById('stat-products').innerText = products.length;
     document.getElementById('stat-sellers').innerText = sellers.length;
-    document.getElementById('stat-sales').innerText = sales.reduce((s, x) => s + Number(x.qty_sold), 0);
+    document.getElementById('stat-sales').innerText = sales.reduce((s, x) => s + Number(x.qty_sold || 0), 0);
     
     let sHtml = '';
     sellers.forEach(s => {
       let owed = 0, paid = 0;
-      sales.filter(x => x.seller_id === s.seller_id).forEach(sl => {
-        const p = products.find(pr => pr.product_id === sl.product_id);
-        if(p) owed += sl.qty_sold * Number(p.owner_price);
+      // BULLETPROOF ID MATCHING
+      const sId = s.seller_id || s.sellerId || s['Seller ID'] || s.id || Object.values(s)[0]; 
+      
+      sales.filter(x => (x.seller_id || x.sellerId || x['Seller ID']) === sId).forEach(sl => {
+        const pId = sl.product_id || sl.productId || sl['Product ID'];
+        const p = products.find(pr => (pr.product_id || pr.productId || pr['Product ID']) === pId);
+        if(p) owed += sl.qty_sold * Number(p.owner_price || p['Owner Price'] || 0);
       });
-      payments.filter(x => x.seller_id === s.seller_id).forEach(p => paid += Number(p.amount));
+      
+      payments.filter(x => (x.seller_id || x.sellerId || x['Seller ID']) === sId).forEach(p => paid += Number(p.amount || p.Amount || 0));
+      
       const bal = owed - paid;
       if(bal > 0) totalDebt += bal;
 
       sHtml += `
         <div class="list-item">
-          <div class="avatar">${s.name.charAt(0)}</div>
+          <div class="avatar">${(s.name || s.Name || 'U').charAt(0)}</div>
           <div class="info">
-            <h4>${s.name}</h4>
+            <h4>${s.name || s.Name || 'Unknown'}</h4>
             <p>Owed: GH₵${owed.toFixed(0)} | Paid: GH₵${paid.toFixed(0)}</p>
           </div>
           <span class="badge ${bal > 0 ? 'badge-danger' : 'badge-success'}">GH₵${bal.toFixed(0)}</span>
-          ${bal > 0 ? `<button class="btn btn-success btn-sm" onclick="confirmPay('${s.seller_id}', ${bal})" style="margin-left:8px;">Collect</button>` : ''}
+          ${bal > 0 ? `<button class="btn btn-success btn-sm" onclick="confirmPay('${sId}', ${bal})" style="margin-left:8px;">Collect</button>` : ''}
         </div>`;
     });
     document.getElementById('stat-debt').innerText = `GH₵${totalDebt.toFixed(0)}`;
@@ -479,24 +486,34 @@
 
     let pHtml = '';
     products.forEach(p => {
+      const pId = p.product_id || p.productId || p['Product ID'] || p.id || Object.values(p)[0];
       pHtml += `
         <div class="prod-card">
-          <div class="prod-img-wrap"><img src="${p.image_url}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
+          <div class="prod-img-wrap"><img src="${p.image_url || p['Image URL']}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
           <div class="prod-details">
-            <h4>${p.name}</h4>
-            <div class="price">GH₵ ${p.owner_price}</div>
-            <div class="stock">Total: ${p.total_qty}</div>
+            <h4>${p.name || p.Name}</h4>
+            <div class="price">GH₵ ${p.owner_price || p['Owner Price']}</div>
+            <div class="stock">Total: ${p.total_qty || p['Total Qty']}</div>
           </div>
         </div>`;
     });
     document.getElementById('owner-prod-grid').innerHTML = pHtml || '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">No products yet.</p>';
 
+    // BULLETPROOF DROPDOWNS
     let selOpts = '<option value="">Select Seller</option>';
-    sellers.forEach(s => selOpts += `<option value="${s.seller_id}">${s.name}</option>`);
+    sellers.forEach(s => {
+      const sId = s.seller_id || s.sellerId || s['Seller ID'] || s.id || Object.values(s)[0];
+      const sName = s.name || s.Name || 'Unknown';
+      selOpts += `<option value="${sId}">${sName}</option>`;
+    });
     document.getElementById('assign-seller').innerHTML = selOpts;
 
     let prodOpts = '<option value="">Select Product</option>';
-    products.forEach(p => prodOpts += `<option value="${p.product_id}">${p.name}</option>`);
+    products.forEach(p => {
+      const pId = p.product_id || p.productId || p['Product ID'] || p.id || Object.values(p)[0];
+      const pName = p.name || p.Name || 'Unknown';
+      prodOpts += `<option value="${pId}">${pName}</option>`;
+    });
     document.getElementById('assign-product').innerHTML = prodOpts;
   }
 
@@ -554,7 +571,11 @@
     const s = document.getElementById('assign-seller').value;
     const p = document.getElementById('assign-product').value;
     const q = document.getElementById('assign-qty').value;
-    if (!s || !p || !q) return toast('Fill all fields', 'error');
+    
+    // PREVENT "undefined" FROM BEING SAVED
+    if (!s || s === "undefined" || !p || p === "undefined" || !q) {
+      return toast('Please select a valid Seller and Product', 'error');
+    }
     
     const res = await apiCall('assign_product', { sellerId: s, productId: p, qty: q });
     if (res.success) {
