@@ -3,594 +3,1522 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ConsignPro</title>
+<title>BLACKMARKET</title>
+<link rel="manifest" href="manifest.json">
 <style>
-  :root {
-    --bg: #F3F4F6; --card: #FFFFFF; --primary: #4F46E5; --primary-light: #EEF2FF;
-    --success: #10B981; --success-light: #D1FAE5; --danger: #EF4444; --danger-light: #FEE2E2;
-    --text: #111827; --muted: #6B7280; --border: #E5E7EB;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; overflow-x: hidden; }
-  
-  /* --- UTILITIES --- */
-  .hidden { display: none !important; }
-  .container { max-width: 600px; margin: 0 auto; padding: 16px; padding-bottom: 100px; min-height: 100dvh; }
-  .card { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
-  
-  /* --- TYPOGRAPHY & INPUTS --- */
-  h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
-  h2 { font-size: 22px; font-weight: 700; margin-bottom: 16px; }
-  h3 { font-size: 16px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-  .input, select { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 16px; background: #F9FAFB; transition: all 0.2s; margin-bottom: 12px; }
-  .input:focus, select:focus { outline: none; border-color: var(--primary); background: white; box-shadow: 0 0 0 3px var(--primary-light); }
-  
-  /* --- BUTTONS --- */
-  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.1s, opacity 0.2s; }
-  .btn:active { transform: scale(0.98); opacity: 0.9; }
-  .btn-primary { background: var(--primary); color: white; }
-  .btn-success { background: var(--success); color: white; }
-  .btn-danger { background: var(--danger); color: white; }
-  .btn-outline { background: white; color: var(--primary); border: 1.5px solid var(--primary); }
-  .btn-sm { padding: 10px 16px; font-size: 14px; width: auto; border-radius: 8px; }
-  
-  /* --- BOTTOM NAV --- */
-  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border); display: flex; padding-bottom: var(--safe-bottom); z-index: 100; }
-  .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 12px 0; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; transition: color 0.2s; }
-  .nav-item.active { color: var(--primary); }
-  .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; }
+:root {
+  --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a; --bg4: #222222;
+  --card: #141414; --card2: #1c1c1c;
+  --primary: #f5c518; --primary-dim: rgba(245,197,24,0.12); --primary-border: rgba(245,197,24,0.3);
+  --success: #22c55e; --success-dim: rgba(34,197,94,0.12);
+  --danger: #ef4444; --danger-dim: rgba(239,68,68,0.12);
+  --warning: #f59e0b; --warning-dim: rgba(245,158,11,0.12);
+  --info: #3b82f6; --info-dim: rgba(59,130,246,0.12);
+  --text: #f0f0f0; --text2: #a0a0a0; --text3: #606060;
+  --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.1);
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --radius: 14px; --radius-sm: 8px; --radius-xs: 5px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
-  /* --- LOGIN --- */
-  #screen-login { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100dvh; padding: 24px; background: linear-gradient(135deg, #EEF2FF 0%, #F3F4F6 100%); }
-  .login-card { width: 100%; max-width: 400px; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden;min-height:100dvh}
+.hidden{display:none!important}
 
-  /* --- SELLER UI --- */
-  .balance-card { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white; border-radius: 20px; padding: 24px; margin-bottom: 24px; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3); }
-  .balance-card h3 { color: rgba(255,255,255,0.8); margin-bottom: 4px; }
-  .balance-card h1 { font-size: 36px; margin-bottom: 16px; }
-  .balance-card .btn { background: rgba(255,255,255,0.2); color: white; backdrop-filter: blur(4px); }
-  
-  .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .prod-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
-  .prod-img-wrap { width: 100%; aspect-ratio: 1/1; background: #F3F4F6; overflow: hidden; }
-  .prod-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-  .prod-details { padding: 12px; flex: 1; display: flex; flex-direction: column; }
-  .prod-details h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .prod-details .price { font-size: 13px; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
-  .prod-details .stock { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
-  .stepper { display: flex; align-items: center; justify-content: space-between; background: #F9FAFB; border-radius: 8px; padding: 4px; margin-top: auto; }
-  .stepper button { width: 32px; height: 32px; border-radius: 8px; border: none; background: white; font-size: 18px; font-weight: bold; color: var(--primary); box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer; }
-  .stepper input { width: 40px; text-align: center; border: none; background: transparent; font-size: 16px; font-weight: 700; color: var(--text); }
+/* ---- LAYOUT ---- */
+.screen{min-height:100dvh;display:flex;flex-direction:column}
+.container{max-width:640px;margin:0 auto;padding:16px;padding-bottom:calc(100px + var(--safe-b));width:100%}
+.page-header{display:flex;align-items:center;justify-content:space-between;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));max-width:640px;margin:0 auto;width:100%}
 
-  /* --- OWNER UI --- */
-  .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
-  .stat-card { background: white; padding: 16px; border-radius: 12px; box-shadow: var(--shadow); }
-  .stat-card p { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
-  .stat-card h2 { font-size: 20px; margin: 0; }
-  
-  .list-item { display: flex; align-items: center; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--border); }
-  .list-item:last-child { border-bottom: none; }
-  .list-item .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; }
-  .list-item .info { flex: 1; }
-  .list-item .info h4 { font-size: 15px; font-weight: 600; }
-  .list-item .info p { font-size: 13px; color: var(--muted); }
-  .badge { padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; }
-  .badge-danger { background: var(--danger-light); color: var(--danger); }
-  .badge-success { background: var(--success-light); color: var(--success); }
+/* ---- CARDS ---- */
+.card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:14px;border:1px solid var(--border)}
+.card-sm{background:var(--card2);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border)}
 
-  /* --- MODALS & TOASTS --- */
-  .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--text); color: white; padding: 12px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; z-index: 1000; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.success { background: var(--success); }
-  .toast.error { background: var(--danger); }
+/* ---- INPUTS ---- */
+.input,select{width:100%;padding:14px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:15px;color:var(--text);font-family:var(--font);margin-bottom:12px;transition:border-color .2s,box-shadow .2s}
+.input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-dim)}
+.input::placeholder{color:var(--text3)}
+select option{background:var(--bg3);color:var(--text)}
+textarea.input{resize:vertical;min-height:80px}
 
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 999; display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-  .modal-overlay.active { opacity: 1; pointer-events: auto; }
-  .modal-content { background: white; width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 24px; padding-bottom: calc(24px + var(--safe-bottom)); transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-  .modal-overlay.active .modal-content { transform: translateY(0); }
-  .modal-handle { width: 40px; height: 4px; background: #D1D5DB; border-radius: 99px; margin: 0 auto 20px; }
-  
-  .fab { position: fixed; bottom: calc(90px + var(--safe-bottom)); right: 20px; width: 56px; height: 56px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 28px; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4); cursor: pointer; z-index: 50; display: flex; align-items: center; justify-content: center; }
-  .fab:active { transform: scale(0.95); }
-  
-  .loader { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* ---- BUTTONS ---- */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:transform .12s,opacity .2s,background .2s;font-family:var(--font);width:100%}
+.btn:active{transform:scale(0.97);opacity:.9}
+.btn-primary{background:var(--primary);color:#0a0a0a}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-ghost{background:transparent;color:var(--primary);border:1px solid var(--primary-border)}
+.btn-muted{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
+.btn-sm{padding:8px 14px;font-size:13px;width:auto;border-radius:var(--radius-xs)}
+.btn-info{background:var(--info-dim);color:var(--info);border:1px solid rgba(59,130,246,.3)}
+.btn-wa{background:#25D366;color:#fff}
+
+/* ---- BOTTOM NAV ---- */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border2);display:flex;padding-bottom:var(--safe-b);z-index:100;max-width:100%}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px;color:var(--text3);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:color .15s}
+.nav-item.active{color:var(--primary)}
+.nav-item svg{width:22px;height:22px;margin-bottom:3px;stroke:currentColor}
+.nav-badge{background:var(--danger);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:6px;right:50%;transform:translateX(8px)}
+
+/* ---- LOGIN SCREEN ---- */
+#screen-login{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-height:100dvh}
+.login-logo{text-align:center;margin-bottom:36px}
+.login-logo h1{font-size:36px;font-weight:700;letter-spacing:-.5px;color:var(--primary)}
+.login-logo p{color:var(--text2);font-size:14px;margin-top:6px;letter-spacing:.08em;text-transform:uppercase}
+.login-card{width:100%;max-width:420px}
+.role-tabs{display:flex;gap:8px;margin-bottom:20px;background:var(--bg3);border-radius:var(--radius-sm);padding:4px}
+.role-tab{flex:1;padding:10px;text-align:center;border-radius:var(--radius-xs);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s}
+.role-tab.active{background:var(--primary);color:#0a0a0a}
+
+/* ---- BALANCE CARD ---- */
+.balance-card{background:var(--bg3);border:1px solid var(--primary-border);border-radius:var(--radius);padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
+.balance-card::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:var(--primary-dim);border-radius:50%}
+.balance-amount{font-size:32px;font-weight:700;color:var(--primary);letter-spacing:-1px}
+.balance-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+
+/* ---- PRODUCT GRID ---- */
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:480px){.product-grid{grid-template-columns:repeat(3,1fr)}}
+.prod-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column}
+.prod-img{width:100%;aspect-ratio:1;background:var(--bg3);overflow:hidden}
+.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.prod-card:hover .prod-img img{transform:scale(1.04)}
+.prod-info{padding:10px 12px;flex:1;display:flex;flex-direction:column}
+.prod-name{font-size:13px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prod-price{font-size:12px;color:var(--primary);font-weight:700;margin-bottom:6px}
+.prod-stock{font-size:11px;color:var(--text3);margin-bottom:8px}
+
+/* ---- STEPPER ---- */
+.stepper{display:flex;align-items:center;gap:4px;background:var(--bg3);border-radius:var(--radius-xs);padding:4px;margin-top:auto}
+.stepper-btn{width:30px;height:30px;border-radius:var(--radius-xs);border:none;background:var(--bg4);color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stepper input{flex:1;text-align:center;background:transparent;border:none;color:var(--text);font-size:15px;font-weight:700;font-family:var(--font)}
+
+/* ---- STAT GRID ---- */
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px}
+.stat-card{background:var(--card2);padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.stat-label{font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.stat-val{font-size:22px;font-weight:700}
+
+/* ---- LIST ITEMS ---- */
+.list-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.list-item:last-child{border-bottom:none}
+.list-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary-dim);border:1px solid var(--primary-border);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex-shrink:0}
+.list-info{flex:1;min-width:0}
+.list-info h4{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list-info p{font-size:12px;color:var(--text2)}
+
+/* ---- BADGES ---- */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700}
+.badge-success{background:var(--success-dim);color:var(--success)}
+.badge-danger{background:var(--danger-dim);color:var(--danger)}
+.badge-warning{background:var(--warning-dim);color:var(--warning)}
+.badge-info{background:var(--info-dim);color:var(--info)}
+.badge-muted{background:var(--bg3);color:var(--text2)}
+.badge-gold{background:var(--primary-dim);color:var(--primary)}
+
+/* ---- PROGRESS / MILESTONE ---- */
+.milestone-bar{margin:12px 0}
+.milestone-track{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.milestone-fill{height:100%;background:var(--primary);border-radius:99px;transition:width .6s ease}
+.milestone-text{font-size:12px;color:var(--text2)}
+.milestone-text span{color:var(--primary);font-weight:600}
+
+/* ---- PREORDER CARD ---- */
+.preorder-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:12px}
+.preorder-img{width:100%;height:180px;object-fit:cover;background:var(--bg3)}
+.preorder-body{padding:14px}
+.preorder-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.preorder-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5}
+.preorder-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.preorder-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.preorder-price{font-size:22px;font-weight:700;color:var(--primary)}
+.preorder-eta{font-size:12px;color:var(--text2);background:var(--bg3);padding:4px 10px;border-radius:99px}
+
+/* ---- ORDER STATUS ---- */
+.order-card{background:var(--card2);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px}
+.order-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.order-id{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
+.order-product{font-size:14px;font-weight:600;margin-bottom:4px}
+.order-meta{font-size:12px;color:var(--text2)}
+
+/* ---- SELLER MARKETPLACE CARD ---- */
+.market-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:12px}
+.market-card-body{padding:14px}
+.market-name{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:2px}
+.market-town{font-size:12px;color:var(--text2);margin-bottom:8px}
+.market-delivery{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:99px;margin-bottom:10px}
+.market-product{font-size:14px;font-weight:500;margin-bottom:4px}
+.market-price{font-size:18px;font-weight:700;color:var(--primary)}
+
+/* ---- SEARCH BAR ---- */
+.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--text3)}
+.search-input{width:100%;padding:12px 14px 12px 40px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:var(--font)}
+.search-input:focus{outline:none;border-color:var(--primary)}
+
+/* ---- TOAST ---- */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--bg3);color:var(--text);padding:12px 24px;border-radius:99px;font-size:14px;font-weight:600;z-index:10000;transition:transform .3s;box-shadow:var(--shadow);text-align:center;width:90%;max-width:400px;border:1px solid var(--border2)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--success);border-color:var(--success);color:#fff}
+.toast.error{background:var(--danger);border-color:var(--danger);color:#fff}
+
+/* ---- MODAL ---- */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.active{opacity:1;pointer-events:auto}
+.modal-box{background:var(--bg2);width:100%;max-width:640px;border-radius:var(--radius) var(--radius) 0 0;padding:24px;padding-bottom:calc(24px + var(--safe-b));transform:translateY(100%);transition:transform .3s;max-height:90dvh;overflow-y:auto;border-top:1px solid var(--border2)}
+.modal-overlay.active .modal-box{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:99px;margin:0 auto 20px}
+
+/* ---- FAB ---- */
+.fab{position:fixed;bottom:calc(80px + var(--safe-b));right:20px;width:52px;height:52px;border-radius:50%;background:var(--primary);color:#0a0a0a;border:none;font-size:26px;box-shadow:0 8px 24px rgba(245,197,24,.35);cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;font-weight:700}
+.fab:active{transform:scale(.95)}
+
+/* ---- SUBMIT BAR ---- */
+.submit-bar{position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + var(--safe-b));background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border2);z-index:50}
+.submit-bar .btn{max-width:640px;margin:0 auto;display:flex}
+
+/* ---- INVENTORY ---- */
+.inv-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.inv-row:last-child{border-bottom:none}
+.inv-label{color:var(--text2)}
+.inv-val{font-weight:600}
+
+/* ---- SECTION HEADER ---- */
+.sec-header{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px}
+
+/* ---- TABS ---- */
+.tab-bar{display:flex;gap:0;background:var(--bg3);border-radius:var(--radius-sm);padding:3px;margin-bottom:16px}
+.tab-btn{flex:1;padding:9px;text-align:center;border-radius:var(--radius-xs);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:var(--font)}
+.tab-btn.active{background:var(--primary);color:#0a0a0a}
+
+/* ---- LOADER ---- */
+.loader{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.2);border-radius:50%;border-top-color:#fff;animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-dark{border:2.5px solid rgba(0,0,0,.15);border-top-color:#0a0a0a}
+
+/* ---- PAYMENT TYPE LABEL ---- */
+.pay-type{font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
+.pay-full{background:var(--danger-dim);color:var(--danger)}
+.pay-partial{background:var(--warning-dim);color:var(--warning)}
+
+/* ---- WISHLIST BTN ---- */
+.wish-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--text3);font-size:20px;line-height:1;transition:color .2s}
+.wish-btn.active{color:var(--primary)}
+
+/* ---- PROFILE CARD ---- */
+.profile-field{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
+.profile-field:last-child{border-bottom:none}
+.profile-field span:first-child{color:var(--text2);font-size:13px}
+.profile-field span:last-child{font-weight:500}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:380px){
+  .product-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .balance-amount{font-size:26px}
+}
+@media(min-width:640px){
+  .bottom-nav,.submit-bar{left:50%;transform:translateX(-50%);width:640px;border-radius:var(--radius) var(--radius) 0 0}
+  .modal-box{border-radius:var(--radius)}
+  .fab{right:calc(50% - 300px)}
+}
+
+.divider{height:1px;background:var(--border);margin:16px 0}
+.row{display:flex;gap:10px;align-items:center}
+.row-between{display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body>
 
-<!-- TOAST NOTIFICATION -->
 <div id="toast" class="toast"></div>
 
-<!-- CONFIRMATION MODAL -->
-<div id="modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal-content">
+<!-- ===== CONFIRM MODAL ===== -->
+<div id="modal-confirm" class="modal-overlay" onclick="if(event.target===this)closeModal('confirm')">
+  <div class="modal-box">
     <div class="modal-handle"></div>
-    <h2 id="modal-title">Are you sure?</h2>
-    <p id="modal-msg" style="color:var(--muted); margin-bottom:24px;"></p>
-    <div style="display:flex; gap:12px;">
-      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" id="modal-confirm-btn">Confirm</button>
+    <h2 id="mc-title" style="font-size:18px;font-weight:700;margin-bottom:8px"></h2>
+    <p id="mc-msg" style="color:var(--text2);margin-bottom:20px;font-size:14px"></p>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-muted" onclick="closeModal('confirm')">Cancel</button>
+      <button class="btn btn-primary" id="mc-btn">Confirm</button>
     </div>
   </div>
 </div>
 
-<!-- LOGIN SCREEN -->
+<!-- ===== LOGIN SCREEN ===== -->
 <div id="screen-login">
+  <div class="login-logo">
+    <div style="font-size:52px;margin-bottom:8px">🖤</div>
+    <h1>BLACKMARKET</h1>
+    <p>your source, your hustle</p>
+  </div>
   <div class="login-card">
-    <div style="text-align:center; margin-bottom:32px;">
-      <div style="font-size:48px; margin-bottom:12px;">📦</div>
-      <h1>ConsignPro</h1>
-      <p style="color:var(--muted);">Smart Consignment Tracking</p>
+    <div class="role-tabs">
+      <div class="role-tab active" onclick="switchLoginTab('login')">Sign In</div>
+      <div class="role-tab" onclick="switchLoginTab('signup')">Join as Buyer</div>
     </div>
-    <div class="card">
-      <input type="text" id="login-user" class="input" placeholder="Username">
-      <input type="password" id="login-pass" class="input" placeholder="Password">
+
+    <div id="login-form" class="card">
+      <input type="text" id="l-user" class="input" placeholder="Username" autocomplete="username">
+      <input type="password" id="l-pass" class="input" placeholder="Password" autocomplete="current-password">
       <button class="btn btn-primary" id="login-btn" onclick="login()">Sign In</button>
+      <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:12px">Sellers: contact owner for your account</p>
+    </div>
+
+    <div id="signup-form" class="card hidden">
+      <input type="text" id="s-name" class="input" placeholder="Full Name">
+      <input type="text" id="s-phone" class="input" placeholder="Phone Number">
+      <input type="text" id="s-user" class="input" placeholder="Choose Username">
+      <input type="password" id="s-pass" class="input" placeholder="Choose Password">
+      <button class="btn btn-primary" id="signup-btn" onclick="signup()">Create Account</button>
     </div>
   </div>
 </div>
 
-<!-- APP CONTAINER (Shown after login) -->
+<!-- ===== APP SHELL ===== -->
 <div id="app" class="hidden">
-  
-  <!-- SELLER VIEWS -->
-  <div id="view-seller" class="hidden">
-    <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div>
-          <p style="color:var(--muted); font-size:14px;">Welcome back,</p>
-          <h2 id="seller-name-display" style="margin:0;"></h2>
-        </div>
-        <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
-      </div>
 
-      <div class="balance-card">
-        <h3>Total Owed to Owner</h3>
-        <h1 id="seller-balance">GH₵ 0.00</h1>
-        <button class="btn" onclick="openWhatsApp()">💬 Notify Owner via WhatsApp</button>
+  <!-- ===== SELLER VIEW ===== -->
+  <div id="view-seller" class="hidden screen">
+    <div class="page-header">
+      <div>
+        <div style="font-size:12px;color:var(--text2)">Welcome back,</div>
+        <div style="font-size:18px;font-weight:700" id="sv-name"></div>
       </div>
-
-      <h3>My Stock</h3>
-      <div id="seller-products" class="product-grid"></div>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
     </div>
-    
-    <button class="btn btn-success" id="seller-submit-btn" style="position:fixed; bottom:calc(16px + var(--safe-bottom)); left:16px; right:16px; max-width:568px; margin:0 auto; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4); z-index:50;" onclick="submitSales()">
-      Submit Sales (0 items)
-    </button>
+    <div class="container">
+      <div class="balance-card">
+        <div class="balance-label">Total owed to owner</div>
+        <div class="balance-amount" id="sv-balance">GH₵ 0.00</div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-wa btn-sm" onclick="waOwner()">💬 WhatsApp Owner</button>
+          <button class="btn btn-muted btn-sm" onclick="openModal('seller-profile')">Edit Profile</button>
+        </div>
+      </div>
+
+      <div class="sec-header">My Assigned Stock</div>
+      <div id="sv-products" class="product-grid"></div>
+
+      <div class="sec-header">Payment Statement</div>
+      <div id="sv-statement" class="card"></div>
+
+      <div class="sec-header">Request More Stock</div>
+      <div class="card">
+        <select id="sv-req-prod" class="input"><option value="">Select product</option></select>
+        <input type="number" id="sv-req-qty" class="input" placeholder="Quantity needed">
+        <button class="btn btn-ghost" onclick="requestStock()">Request Stock from Owner</button>
+      </div>
+
+      <div class="sec-header">List a Product in Marketplace</div>
+      <div class="card">
+        <select id="sv-list-prod" class="input"><option value="">Select product to list</option></select>
+        <input type="number" id="sv-list-price" class="input" placeholder="Your selling price (GH₵)">
+        <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Owner will approve before it goes live</p>
+        <button class="btn btn-ghost" onclick="submitListing()">Submit for Approval</button>
+      </div>
+
+      <div class="sec-header">My Marketplace Listings</div>
+      <div id="sv-listings"></div>
+    </div>
+    <div class="submit-bar">
+      <button class="btn btn-success" id="sv-submit-btn" onclick="submitSales()">Submit Sales (0 items)</button>
+    </div>
   </div>
 
-  <!-- OWNER VIEWS -->
-  <div id="view-owner" class="hidden">
+  <!-- ===== OWNER VIEW ===== -->
+  <div id="view-owner" class="hidden screen">
+    <div class="page-header">
+      <h1 style="font-size:20px;font-weight:700;color:var(--primary)">BLACKMARKET</h1>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-ghost btn-sm" onclick="loadDashboard()" title="Refresh data" style="padding:8px 10px">↻</button>
+        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
     <div class="container">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h1 style="font-size:24px;">Dashboard</h1>
-        <button class="btn btn-outline btn-sm" onclick="logout()">Logout</button>
-      </div>
 
-      <!-- Owner Home Tab -->
-      <div id="owner-home">
+      <!-- Home -->
+      <div id="ow-home">
         <div class="stat-grid">
-          <div class="stat-card"><p>Total Products</p><h2 id="stat-products">0</h2></div>
-          <div class="stat-card"><p>Active Sellers</p><h2 id="stat-sellers">0</h2></div>
-          <div class="stat-card"><p>Total Sales</p><h2 id="stat-sales">0</h2></div>
-          <div class="stat-card"><p>Outstanding</p><h2 id="stat-debt" style="color:var(--danger)">GH₵0</h2></div>
+          <div class="stat-card"><div class="stat-label">Products</div><div class="stat-val" id="ow-stat-p">0</div></div>
+          <div class="stat-card"><div class="stat-label">Sellers</div><div class="stat-val" id="ow-stat-s">0</div></div>
+          <div class="stat-card"><div class="stat-label">Buyers</div><div class="stat-val" id="ow-stat-b">0</div></div>
+          <div class="stat-card"><div class="stat-label">Outstanding</div><div class="stat-val" id="ow-stat-d" style="color:var(--danger)">GH₵0</div></div>
         </div>
-        <h3>Seller Balances</h3>
-        <div class="card" id="owner-sellers-list"></div>
+        <div class="sec-header">Pending Actions</div>
+        <div id="ow-pending"></div>
+        <div class="sec-header">Seller Balances</div>
+        <div class="card" id="ow-seller-list"></div>
       </div>
 
-      <!-- Owner Products Tab -->
-      <div id="owner-products" class="hidden">
-        <h3>Product Catalog</h3>
-        <div id="owner-prod-grid" class="product-grid"></div>
+      <!-- Inventory -->
+      <div id="ow-inventory" class="hidden">
+        <div class="sec-header">Live Inventory</div>
+        <div id="ow-inv-list"></div>
       </div>
 
-      <!-- Owner Assign Tab -->
-      <div id="owner-assign" class="hidden">
-        <h3>Assign Stock</h3>
+      <!-- Preorders -->
+      <div id="ow-preorders" class="hidden">
+        <div class="sec-header">Preorder Items</div>
+        <div id="ow-preorder-list"></div>
+      </div>
+
+      <!-- Assign -->
+      <div id="ow-assign" class="hidden">
+        <div class="sec-header">Assign Stock</div>
         <div class="card">
-          <select id="assign-seller" class="input"></select>
-          <select id="assign-product" class="input"></select>
-          <input type="number" id="assign-qty" class="input" placeholder="Quantity">
+          <select id="ow-as-seller" class="input"></select>
+          <select id="ow-as-prod" class="input"></select>
+          <input type="number" id="ow-as-qty" class="input" placeholder="Quantity">
           <button class="btn btn-primary" onclick="assignProduct()">Assign Stock</button>
         </div>
+        <div class="sec-header">Stock Requests from Sellers</div>
+        <div id="ow-req-list"></div>
       </div>
 
-      <!-- Owner Sellers Tab -->
-      <div id="owner-sellers" class="hidden">
-        <h3>Manage Sellers</h3>
-        <div class="card" id="owner-sellers-manage-list"></div>
+      <!-- Sellers + Buyers -->
+      <div id="ow-sellers" class="hidden">
+        <div class="sec-header">Your Sellers</div>
+        <div class="card" id="ow-sellers-list"></div>
+        <div class="sec-header">Registered Buyers</div>
+        <div class="card" id="ow-buyer-list"></div>
       </div>
+
     </div>
-
-    <!-- Owner Bottom Nav -->
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="switchOwnerView('home', this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    <div class="bottom-nav" id="owner-nav">
+      <div class="nav-item active" onclick="ownerTab('home',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         Home
       </div>
-      <div class="nav-item" onclick="switchOwnerView('products', this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-        Products
+      <div class="nav-item" onclick="ownerTab('inventory',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Inventory
       </div>
-      <div class="nav-item" onclick="switchOwnerView('assign', this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+      <div class="nav-item" style="position:relative" onclick="ownerTab('preorders',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Preorders
+      </div>
+      <div class="nav-item" onclick="ownerTab('assign',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
         Assign
       </div>
-      <div class="nav-item" onclick="switchOwnerView('sellers', this)">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      <div class="nav-item" onclick="ownerTab('sellers',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         Sellers
       </div>
     </div>
+    <button class="fab" id="ow-fab" onclick="ownerFab()">+</button>
+  </div>
 
-    <!-- FAB for adding things -->
-    <button class="fab" id="owner-fab" onclick="handleFabClick()">+</button>
+  <!-- ===== BUYER VIEW ===== -->
+  <div id="view-buyer" class="hidden screen">
+    <div class="page-header">
+      <div>
+        <div style="font-size:12px;color:var(--text2)">Hi,</div>
+        <div style="font-size:18px;font-weight:700" id="bv-name"></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+    </div>
+    <div class="container">
+      <div id="bv-browse">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="buyerBrowseTab('preorders',this)">Preorders</button>
+          <button class="tab-btn" onclick="buyerBrowseTab('market',this)">Marketplace</button>
+        </div>
+        <div id="bv-preorders"></div>
+        <div id="bv-market" class="hidden">
+          <div class="search-wrap">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input class="search-input" id="bv-search" placeholder="Search by town..." oninput="filterMarket()">
+          </div>
+          <div id="bv-market-list"></div>
+        </div>
+      </div>
+      <div id="bv-orders" class="hidden">
+        <div class="sec-header">My Orders</div>
+        <div id="bv-orders-list"></div>
+      </div>
+      <div id="bv-wishlist" class="hidden">
+        <div class="sec-header">Wishlist</div>
+        <div id="bv-wish-list"></div>
+      </div>
+      <div id="bv-profile" class="hidden">
+        <div class="sec-header">My Profile</div>
+        <div class="card">
+          <div id="bv-profile-info"></div>
+          <div class="divider"></div>
+          <button class="btn btn-wa" onclick="waOwner()">💬 Contact Owner on WhatsApp</button>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active" onclick="buyerTab('browse',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Browse
+      </div>
+      <div class="nav-item" style="position:relative" onclick="buyerTab('orders',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        <span id="bv-order-badge" class="nav-badge hidden">0</span>
+        My Orders
+      </div>
+      <div class="nav-item" onclick="buyerTab('wishlist',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        Wishlist
+      </div>
+      <div class="nav-item" onclick="buyerTab('profile',this)">
+        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        Profile
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ADD PRODUCT MODAL -->
-<div id="modal-add-product" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('active')">
-  <div class="modal-content">
+<!-- ===== MODALS ===== -->
+
+<!-- Add Product -->
+<div id="modal-add-product" class="modal-overlay" onclick="if(event.target===this)closeModal('add-product')">
+  <div class="modal-box">
     <div class="modal-handle"></div>
-    <h2>Add New Product</h2>
-    <input type="text" id="prod-name" class="input" placeholder="Product Name">
-    <input type="number" id="prod-price" class="input" placeholder="Owner Return Price (GH₵)">
-    <input type="number" id="prod-qty" class="input" placeholder="Total Quantity">
-    <label style="font-size:14px; font-weight:600; display:block; margin-bottom:8px;">Product Image</label>
-    <input type="file" id="prod-img" accept="image/*" class="input" style="padding:10px;">
-    <button class="btn btn-primary" id="save-prod-btn" onclick="addProduct()">Save Product</button>
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Add Product</h2>
+    <input type="text" id="ap-name" class="input" placeholder="Product Name">
+    <input type="number" id="ap-price" class="input" placeholder="Owner Return Price (GH₵)">
+    <input type="number" id="ap-qty" class="input" placeholder="Total Quantity">
+    <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:8px">Product Image</label>
+    <input type="file" id="ap-img" accept="image/*" class="input" style="padding:10px">
+    <button class="btn btn-primary" id="ap-btn" onclick="addProduct()">Save Product</button>
   </div>
 </div>
 
-<!-- ADD SELLER MODAL -->
-<div id="modal-add-seller" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('active')">
-  <div class="modal-content">
+<!-- Add Seller -->
+<div id="modal-add-seller" class="modal-overlay" onclick="if(event.target===this)closeModal('add-seller')">
+  <div class="modal-box">
     <div class="modal-handle"></div>
-    <h2>Add New Seller</h2>
-    <input type="text" id="seller-name" class="input" placeholder="Full Name">
-    <input type="text" id="seller-user" class="input" placeholder="Login Username">
-    <input type="text" id="seller-pass" class="input" placeholder="Login Password">
-    <input type="text" id="seller-phone" class="input" placeholder="Phone Number">
-    <button class="btn btn-primary" onclick="addSeller()">Save Seller</button>
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Add Seller</h2>
+    <input type="text" id="as-name" class="input" placeholder="Full Name">
+    <input type="text" id="as-mname" class="input" placeholder="Market Name (shown to buyers)">
+    <input type="text" id="as-user" class="input" placeholder="Login Username">
+    <input type="text" id="as-pass" class="input" placeholder="Login Password">
+    <input type="text" id="as-phone" class="input" placeholder="Phone Number">
+    <button class="btn btn-primary" onclick="addSeller()">Add Seller</button>
+  </div>
+</div>
+
+<!-- Add Preorder Item -->
+<div id="modal-add-preorder" class="modal-overlay" onclick="if(event.target===this)closeModal('add-preorder')">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">New Preorder Item</h2>
+    <input type="text" id="pr-name" class="input" placeholder="Product Name">
+    <textarea id="pr-desc" class="input" placeholder="Description (what it is, why it's good)"></textarea>
+    <input type="number" id="pr-price" class="input" placeholder="Price (GH₵)">
+    <div style="display:flex;gap:10px">
+      <div style="flex:1">
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">Payment Type</label>
+        <select id="pr-paytype" class="input" style="margin-bottom:0" onchange="toggleDeposit()">
+          <option value="full">Full Payment</option>
+          <option value="partial">Partial / Deposit</option>
+        </select>
+      </div>
+      <div style="flex:1" id="pr-deposit-wrap" class="hidden">
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">Deposit Amount (GH₵)</label>
+        <input type="number" id="pr-deposit" class="input" style="margin-bottom:0" placeholder="e.g. 50">
+      </div>
+    </div>
+    <div style="margin-top:12px"></div>
+    <input type="number" id="pr-slots" class="input" placeholder="Total slots available (e.g. 30)">
+    <input type="text" id="pr-eta" class="input" placeholder="Estimated arrival (e.g. 2 weeks)">
+    <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:8px">Product Image</label>
+    <input type="file" id="pr-img" accept="image/*" class="input" style="padding:10px">
+    <button class="btn btn-primary" id="pr-btn" onclick="addPreorderItem()">Create Preorder</button>
+  </div>
+</div>
+
+<!-- Place Preorder (Buyer) -->
+<div id="modal-place-order" class="modal-overlay" onclick="if(event.target===this)closeModal('place-order')">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px" id="po-title"></h2>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px" id="po-sub"></p>
+    <div id="po-pay-info" style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;font-size:13px;line-height:1.7"></div>
+    <input type="number" id="po-qty" class="input" placeholder="Quantity" min="1" value="1">
+    <div id="po-total-row" style="font-size:14px;color:var(--text2);margin-bottom:12px">Total: <span id="po-total" style="color:var(--primary);font-weight:700"></span></div>
+    <input type="text" id="po-proof" class="input" placeholder="Transaction ID or payment note (optional)">
+    <p style="font-size:12px;color:var(--text3);margin-bottom:14px" id="po-cancel-note"></p>
+    <button class="btn btn-primary" id="po-btn" onclick="placeOrder()">Confirm Preorder</button>
+  </div>
+</div>
+
+<!-- Seller Profile Edit -->
+<div id="modal-seller-profile" class="modal-overlay" onclick="if(event.target===this)closeModal('seller-profile')">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Edit Your Profile</h2>
+    <input type="text" id="sp-mname" class="input" placeholder="Market Name (shown to buyers)">
+    <input type="text" id="sp-town" class="input" placeholder="Your Town / Location">
+    <input type="text" id="sp-phone" class="input" placeholder="Phone Number">
+    <select id="sp-delivery" class="input">
+      <option value="">Delivery Method</option>
+      <option value="Car">Car</option>
+      <option value="Motorbike">Motorbike</option>
+      <option value="Bicycle">Bicycle</option>
+      <option value="Walk-in only">Walk-in only</option>
+      <option value="Delivery available">Delivery available</option>
+      <option value="No delivery">No delivery</option>
+    </select>
+    <button class="btn btn-primary" onclick="saveSellerProfile()">Save Changes</button>
   </div>
 </div>
 
 <script>
-  // --- CONFIG ---
-  const API_URL = 'https://script.google.com/macros/s/AKfycbzQf0h5t57xYqdnoi8XA_uURzls9_xDogB86EHLot_rRYtGQ4YPVQ2bH66lswjoXa_jTA/exec';
-  let currentUser = null;
-  let db = {};
+// ============================================================
+//  CONFIG — SET YOUR APPS SCRIPT URL HERE
+// ============================================================
+const API_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
 
-  // --- UI HELPERS ---
-  function toast(msg, type = '') {
-    const t = document.getElementById('toast');
-    t.innerText = msg;
-    t.className = `toast show ${type}`;
-    setTimeout(() => t.classList.remove('show'), 3000);
+// ============================================================
+//  STATE
+// ============================================================
+let currentUser = null;
+let db = {};
+let currentPreorderItem = null;
+let currentOwnerTab = 'home';
+let currentBuyerBrowseTab = 'preorders';
+
+// ============================================================
+//  UTILS
+// ============================================================
+function toast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function showConfirm(title, msg, onOk) {
+  document.getElementById('mc-title').textContent = title;
+  document.getElementById('mc-msg').textContent = msg;
+  document.getElementById('modal-confirm').classList.add('active');
+  document.getElementById('mc-btn').onclick = () => { closeModal('confirm'); onOk(); };
+}
+
+function openModal(id) { document.getElementById('modal-' + id).classList.add('active'); }
+function closeModal(id) { document.getElementById('modal-' + id).classList.remove('active'); }
+
+async function apiCall(action, payload = {}) {
+  try {
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
+    return await res.json();
+  } catch (err) {
+    toast('Network error. Check connection.', 'error');
+    return { success: false };
   }
+}
 
-  function showModal(title, msg, onConfirm) {
-    document.getElementById('modal-title').innerText = title;
-    document.getElementById('modal-msg').innerText = msg;
-    document.getElementById('modal').classList.add('active');
-    document.getElementById('modal-confirm-btn').onclick = () => { closeModal(); onConfirm(); };
-  }
-  function closeModal() { document.getElementById('modal').classList.remove('active'); }
-
-  // --- API & IMAGE COMPRESS ---
-  async function apiCall(action, payload = {}) {
-    try {
-      const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
-      return await res.json();
-    } catch (err) {
-      toast('Network error. Check internet.', 'error');
-      return { success: false };
-    }
-  }
-
-  function compressImage(file) {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let w = img.width, h = img.height;
-          if (w > 800) { h *= 800 / w; w = 800; }
-          canvas.width = w; canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-          resolve(canvas.toDataURL('image/jpeg', 0.7));
-        };
-        img.src = e.target.result;
+function compressImage(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        if (w > 800) { h = h * 800 / w; w = 800; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
       };
-      reader.readAsDataURL(file);
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function setLoading(btnId, loading) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.dataset.orig = btn.dataset.orig || btn.innerHTML;
+  btn.innerHTML = loading ? '<span class="loader"></span>' : btn.dataset.orig;
+  btn.disabled = loading;
+}
+
+function getVal(obj, keys) {
+  for (const k of keys) if (obj[k] !== undefined && obj[k] !== '') return obj[k];
+  return undefined;
+}
+function getId(obj) { return String(getVal(obj, ['id','ID']) || Object.values(obj)[0] || ''); }
+function getSellerId(obj) { return String(getVal(obj, ['seller_id','Seller ID','sellerId']) || ''); }
+function getProductId(obj) { return String(getVal(obj, ['product_id','Product ID','productId']) || ''); }
+function getBuyerId(obj) { return String(getVal(obj, ['buyer_id','Buyer ID','buyerId']) || ''); }
+
+function waOwner(extraMsg = '') {
+  const num = (currentUser && currentUser.wa) ? currentUser.wa : 'OWNER_NUMBER';
+  const msg = extraMsg || `Hi, I am ${currentUser ? currentUser.name : 'a customer'} on BLACKMARKET.`;
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function waSeller(phone, sellerName, productName) {
+  const msg = `Hi ${sellerName}, I saw your listing for ${productName} on BLACKMARKET. I'm interested!`;
+  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function waSellerOwner(phone, sellerName) {
+  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent('Hi ' + sellerName + ', I\'m reaching out from BLACKMARKET.')}`, '_blank');
+}
+
+function statusBadge(status) {
+  const map = {
+    'ordered': 'badge-muted', 'payment_pending': 'badge-warning', 'payment_confirmed': 'badge-info',
+    'pending': 'badge-warning', 'item_sourced': 'badge-info', 'ready_for_delivery': 'badge-success',
+    'delivered': 'badge-success', 'cancelled': 'badge-danger', 'confirmed': 'badge-success',
+    'approved': 'badge-success', 'rejected': 'badge-danger', 'open': 'badge-success',
+    'closed': 'badge-muted', 'arrived': 'badge-info', 'active': 'badge-success', 'blocked': 'badge-danger'
+  };
+  const label = status ? status.replace(/_/g, ' ') : 'unknown';
+  return `<span class="badge ${map[status] || 'badge-muted'}">${label}</span>`;
+}
+
+function milestoneHtml(filled, total, itemId) {
+  if (!total || total <= 0) return '';
+  const pct = Math.min(100, Math.round((filled / total) * 100));
+  let msg = 'Be one of the first to secure yours!';
+  if (pct >= 90) msg = 'Almost fully subscribed — secure your spot now!';
+  else if (pct >= 70) msg = 'Moving fast — most spots taken!';
+  else if (pct >= 50) msg = 'Over halfway there — good momentum!';
+  else if (pct >= 25) msg = 'Growing fast — join the list!';
+  return `<div class="milestone-bar">
+    <div class="milestone-track"><div class="milestone-fill" style="width:${pct}%"></div></div>
+    <div class="milestone-text"><span>${filled}/${total}</span> slots filled — ${msg}</div>
+  </div>`;
+}
+
+// ============================================================
+//  AUTH
+// ============================================================
+function switchLoginTab(tab) {
+  document.querySelectorAll('.role-tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'login')));
+  document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('signup-form').classList.toggle('hidden', tab !== 'signup');
+}
+
+async function login() {
+  const user = document.getElementById('l-user').value.trim();
+  const pass = document.getElementById('l-pass').value.trim();
+  if (!user || !pass) return toast('Enter username and password', 'error');
+  setLoading('login-btn', true);
+  const res = await apiCall('login', { username: user, password: pass });
+  setLoading('login-btn', false);
+  if (res.success) {
+    currentUser = res;
+    showApp();
+  } else {
+    toast(res.error || 'Login failed', 'error');
+  }
+}
+
+async function signup() {
+  const name = document.getElementById('s-name').value.trim();
+  const phone = document.getElementById('s-phone').value.trim();
+  const user = document.getElementById('s-user').value.trim();
+  const pass = document.getElementById('s-pass').value.trim();
+  if (!name || !phone || !user || !pass) return toast('Fill all fields', 'error');
+  setLoading('signup-btn', true);
+  const res = await apiCall('buyer_signup', { name, phone, username: user, password: pass });
+  setLoading('signup-btn', false);
+  if (res.success) {
+    currentUser = res;
+    toast('Welcome to BLACKMARKET!', 'success');
+    showApp();
+  } else {
+    toast(res.error || 'Signup failed', 'error');
+  }
+}
+
+function showApp() {
+  document.getElementById('screen-login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('view-seller').classList.add('hidden');
+  document.getElementById('view-owner').classList.add('hidden');
+  document.getElementById('view-buyer').classList.add('hidden');
+  document.getElementById(`view-${currentUser.role}`).classList.remove('hidden');
+  loadDashboard();
+  // Auto-refresh every 3 minutes
+  if (window._refreshTimer) clearInterval(window._refreshTimer);
+  window._refreshTimer = setInterval(() => { if (currentUser) loadDashboard(); }, 180000);
+}
+
+function logout() {
+  currentUser = null; db = {};
+  if (window._refreshTimer) clearInterval(window._refreshTimer);
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('screen-login').classList.remove('hidden');
+  document.getElementById('l-user').value = '';
+  document.getElementById('l-pass').value = '';
+}
+
+// ============================================================
+//  DASHBOARD LOAD
+// ============================================================
+async function loadDashboard() {
+  const payload = currentUser.role === 'owner'
+    ? { role: 'owner' }
+    : currentUser.role === 'seller'
+    ? { role: 'seller', sellerId: currentUser.id }
+    : { role: 'buyer', buyerId: currentUser.id };
+  const res = await apiCall('get_dashboard', payload);
+  if (res.success) {
+    db = res;
+    if (currentUser.role === 'seller') renderSeller();
+    else if (currentUser.role === 'owner') renderOwner();
+    else renderBuyer();
+  }
+}
+
+// ============================================================
+//  SELLER RENDER
+// ============================================================
+function renderSeller() {
+  document.getElementById('sv-name').textContent = currentUser.market_name || currentUser.name;
+  const { products, assignments, sales, payments } = db;
+
+  // Pre-fill profile modal
+  document.getElementById('sp-mname').value = currentUser.market_name || '';
+  document.getElementById('sp-town').value = currentUser.town || '';
+  document.getElementById('sp-phone').value = currentUser.phone || '';
+
+  let totalOwed = 0, totalPaid = 0, html = '';
+
+  assignments.forEach(a => {
+    const pId = getProductId(a);
+    const p = products.find(x => getId(x) === pId);
+    if (!p) return;
+    const sold = sales.filter(s => getProductId(s) === pId)
+      .reduce((sum, s) => sum + Number(getVal(s, ['qty_sold','qty']) || 0), 0);
+    const assigned = Number(getVal(a, ['qty_assigned','qty','quantity']) || 0);
+    const remaining = Math.max(0, assigned - sold);
+    const price = Number(getVal(p, ['owner_price','price','Price']) || 0);
+    totalOwed += sold * price;
+
+    html += `<div class="prod-card">
+      <div class="prod-img"><img src="${getVal(p,['image_url','Image URL'])||''}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23222%22 width=%22200%22 height=%22200%22/></svg>'" loading="lazy"></div>
+      <div class="prod-info">
+        <div class="prod-name">${getVal(p,['name','Name'])}</div>
+        <div class="prod-price">GH₵ ${price}</div>
+        <div class="prod-stock">${remaining} left</div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="step('${pId}',-1)">−</button>
+          <input type="number" id="qty-${pId}" value="0" min="0" max="${remaining}" readonly>
+          <button class="stepper-btn" onclick="step('${pId}',1)">+</button>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  payments.forEach(p => totalPaid += Number(getVal(p, ['amount','Amount']) || 0));
+  const bal = totalOwed - totalPaid;
+  document.getElementById('sv-balance').textContent = `GH₵ ${bal.toFixed(2)}`;
+  document.getElementById('sv-products').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;color:var(--text3);padding:32px 0">No stock assigned yet.</p>';
+  updateSubmitBtn();
+
+  // Payment statement
+  let stHtml = `<div class="inv-row"><span class="inv-label">Total owed</span><span class="inv-val" style="color:var(--danger)">GH₵${totalOwed.toFixed(2)}</span></div>
+    <div class="inv-row"><span class="inv-label">Total paid</span><span class="inv-val" style="color:var(--success)">GH₵${totalPaid.toFixed(2)}</span></div>
+    <div class="inv-row"><span class="inv-label">Balance remaining</span><span class="inv-val" style="color:var(--primary)">GH₵${bal.toFixed(2)}</span></div>`;
+  payments.slice().reverse().forEach(p => {
+    const amt = Number(getVal(p, ['amount','Amount']) || 0);
+    const ts = getVal(p, ['timestamp','Timestamp']) || '';
+    stHtml += `<div class="inv-row"><span class="inv-label">${ts ? new Date(ts).toLocaleDateString() : 'Payment'}</span><span class="inv-val" style="color:var(--success)">GH₵${amt.toFixed(2)}</span></div>`;
+  });
+  document.getElementById('sv-statement').innerHTML = stHtml;
+
+  // Product dropdowns for request & listing
+  let prodOpts = '<option value="">Select product</option>';
+  products.forEach(p => { prodOpts += `<option value="${getId(p)}">${getVal(p,['name','Name'])}</option>`; });
+  document.getElementById('sv-req-prod').innerHTML = prodOpts;
+  document.getElementById('sv-list-prod').innerHTML = prodOpts;
+
+  // Listings
+  let lHtml = '';
+  if (db.listings && db.listings.length) {
+    db.listings.forEach(l => {
+      const pid = getProductId(l);
+      const p = products.find(x => getId(x) === pid);
+      const st = String(getVal(l, ['listing_status','Listing Status']) || '').toLowerCase();
+      lHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
+        <div>
+          <div style="font-size:13px;font-weight:600">${p ? getVal(p,['name','Name']) : 'Product'}</div>
+          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(l,['selling_price','Selling Price'])}</div>
+        </div>
+        ${statusBadge(st)}
+      </div>`;
     });
+  } else { lHtml = '<p style="font-size:13px;color:var(--text3)">No listings yet.</p>'; }
+  document.getElementById('sv-listings').innerHTML = lHtml;
+}
+
+function step(id, change) {
+  const input = document.getElementById(`qty-${id}`);
+  if (!input) return;
+  let val = parseInt(input.value) || 0;
+  val = Math.max(0, Math.min(parseInt(input.max) || 999, val + change));
+  input.value = val;
+  updateSubmitBtn();
+}
+
+function updateSubmitBtn() {
+  const inputs = document.querySelectorAll('[id^="qty-"]');
+  let total = 0;
+  inputs.forEach(i => total += parseInt(i.value) || 0);
+  const btn = document.getElementById('sv-submit-btn');
+  if (btn) btn.textContent = `Submit Sales (${total} items)`;
+}
+
+async function submitSales() {
+  const inputs = document.querySelectorAll('[id^="qty-"]');
+  const batch = [];
+  inputs.forEach(i => {
+    const q = parseInt(i.value);
+    if (q > 0) batch.push({ productId: i.id.replace('qty-', ''), qty: q });
+  });
+  if (!batch.length) return toast('Select items to submit', 'error');
+  const total = batch.reduce((s, i) => s + i.qty, 0);
+  showConfirm('Submit Sales?', `You are logging ${total} items sold.`, async () => {
+    const res = await apiCall('record_sale', { sellerId: currentUser.id, sales: batch });
+    if (res.success) { toast('Sales recorded!', 'success'); loadDashboard(); }
+  });
+}
+
+async function requestStock() {
+  const pid = document.getElementById('sv-req-prod').value;
+  const qty = document.getElementById('sv-req-qty').value;
+  if (!pid || !qty) return toast('Select product and quantity', 'error');
+  const res = await apiCall('request_stock', { sellerId: currentUser.id, productId: pid, qty });
+  if (res.success) { toast('Request sent to owner!', 'success'); document.getElementById('sv-req-qty').value = ''; loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+async function submitListing() {
+  const pid = document.getElementById('sv-list-prod').value;
+  const price = document.getElementById('sv-list-price').value;
+  if (!pid || !price) return toast('Select product and set price', 'error');
+  const res = await apiCall('submit_listing', { sellerId: currentUser.id, productId: pid, sellingPrice: price });
+  if (res.success) { toast('Listing submitted for approval!', 'success'); document.getElementById('sv-list-price').value = ''; loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+async function saveSellerProfile() {
+  const payload = {
+    sellerId: currentUser.id,
+    market_name: document.getElementById('sp-mname').value,
+    town: document.getElementById('sp-town').value,
+    phone: document.getElementById('sp-phone').value,
+    delivery_method: document.getElementById('sp-delivery').value
+  };
+  const res = await apiCall('update_seller_profile', payload);
+  if (res.success) {
+    currentUser.market_name = payload.market_name;
+    currentUser.town = payload.town;
+    currentUser.phone = payload.phone;
+    toast('Profile updated!', 'success');
+    closeModal('seller-profile');
+    loadDashboard();
+  } else toast(res.error || 'Failed', 'error');
+}
+
+// ============================================================
+//  OWNER RENDER
+// ============================================================
+function ownerTab(tab, el) {
+  currentOwnerTab = tab;
+  document.querySelectorAll('#owner-nav .nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  ['home','inventory','preorders','assign','sellers'].forEach(v => {
+    document.getElementById('ow-' + v).classList.toggle('hidden', v !== tab);
+  });
+  const fab = document.getElementById('ow-fab');
+  fab.classList.toggle('hidden', !['home','inventory','preorders','sellers'].includes(tab));
+}
+
+function ownerFab() {
+  if (currentOwnerTab === 'home' || currentOwnerTab === 'inventory') openModal('add-product');
+  else if (currentOwnerTab === 'preorders') openModal('add-preorder');
+  else if (currentOwnerTab === 'sellers') openModal('add-seller');
+}
+
+function renderOwner() {
+  const { products, sellers, assignments, sales, payments, buyers, preorderItems, preorderOrders, sellerListings, stockRequests } = db;
+
+  document.getElementById('ow-stat-p').textContent = products.length;
+  document.getElementById('ow-stat-s').textContent = sellers.length;
+  document.getElementById('ow-stat-b').textContent = buyers ? buyers.length : 0;
+
+  // Seller balances
+  let totalDebt = 0, sHtml = '';
+  sellers.forEach(s => {
+    const sId = getId(s);
+    let owed = 0, paid = 0;
+    sales.filter(x => getSellerId(x) === sId).forEach(sl => {
+      const pId = getProductId(sl);
+      const p = products.find(pr => getId(pr) === pId);
+      if (p) owed += Number(getVal(sl,['qty_sold','qty'])||0) * Number(getVal(p,['owner_price','price','Price'])||0);
+    });
+    payments.filter(x => getSellerId(x) === sId).forEach(p => paid += Number(getVal(p,['amount','Amount'])||0));
+    const bal = owed - paid;
+    if (bal > 0) totalDebt += bal;
+    const mname = getVal(s,['market_name','Market Name']) || getVal(s,['name','Name']) || 'Seller';
+    const town = getVal(s,['town','Town']) || '';
+    const phone = getVal(s,['phone','Phone']) || '';
+    sHtml += `<div class="list-item">
+      <div class="list-avatar">${mname.charAt(0).toUpperCase()}</div>
+      <div class="list-info">
+        <h4>${mname}</h4>
+        <p>${town ? town + ' · ' : ''}Owed: GH₵${owed.toFixed(0)} | Paid: GH₵${paid.toFixed(0)}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        <span class="badge ${bal > 0 ? 'badge-danger' : 'badge-success'}">GH₵${bal.toFixed(0)}</span>
+        <div style="display:flex;gap:6px">
+          ${bal > 0 ? `<button class="btn btn-success btn-sm" onclick="collectPayment('${sId}',${bal})">Collect</button>` : ''}
+          ${phone ? `<button class="btn btn-wa btn-sm" onclick="waSellerOwner('${phone}','${mname}')">WA</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('ow-stat-d').textContent = `GH₵${totalDebt.toFixed(0)}`;
+  document.getElementById('ow-seller-list').innerHTML = sHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No sellers yet.</p>';
+  document.getElementById('ow-sellers-list').innerHTML = sHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No sellers yet.</p>';
+
+  // Pending actions
+  const pendingListings = (sellerListings || []).filter(l => String(getVal(l,['listing_status','Listing Status'])||'').toLowerCase() === 'pending');
+  const pendingRequests = (stockRequests || []).filter(r => String(getVal(r,['status','Status'])||'').toLowerCase() === 'pending');
+  const pendingPayments = (preorderOrders || []).filter(o => String(getVal(o,['payment_status','Payment Status'])||'').toLowerCase() === 'pending');
+  let pHtml = '';
+  if (!pendingListings.length && !pendingRequests.length && !pendingPayments.length) {
+    pHtml = '<div class="card-sm" style="text-align:center;color:var(--text3);font-size:13px">All clear — nothing pending!</div>';
   }
+  pendingListings.forEach(l => {
+    const sid = getSellerId(l); const pid = getProductId(l);
+    const sel = sellers.find(s => getId(s) === sid);
+    const prod = products.find(p => getId(p) === pid);
+    const lid = getId(l);
+    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
+      <div>
+        <div style="font-size:12px;color:var(--text3)">Listing request</div>
+        <div style="font-size:14px;font-weight:600">${prod ? getVal(prod,['name','Name']) : pid} @ GH₵${getVal(l,['selling_price','Selling Price'])}</div>
+        <div style="font-size:12px;color:var(--text2)">${sel ? (getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])) : sid}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-success btn-sm" onclick="approveListing('${lid}')">✓</button>
+        <button class="btn btn-danger btn-sm" onclick="rejectListing('${lid}')">✗</button>
+      </div>
+    </div>`;
+  });
+  pendingRequests.forEach(r => {
+    const sid = getSellerId(r); const pid = getProductId(r);
+    const sel = sellers.find(s => getId(s) === sid);
+    const prod = products.find(p => getId(p) === pid);
+    const rid = getId(r); const qty = getVal(r,['qty_requested','Qty Requested']) || '?';
+    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
+      <div>
+        <div style="font-size:12px;color:var(--text3)">Stock request</div>
+        <div style="font-size:14px;font-weight:600">${prod ? getVal(prod,['name','Name']) : pid} × ${qty}</div>
+        <div style="font-size:12px;color:var(--text2)">${sel ? (getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])) : sid}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-success btn-sm" onclick="approveRequest('${rid}',${qty})">✓ Assign</button>
+        <button class="btn btn-danger btn-sm" onclick="rejectRequest('${rid}')">✗</button>
+      </div>
+    </div>`;
+  });
+  pendingPayments.forEach(o => {
+    const bid = getBuyerId(o); const oid = getId(o);
+    const buyer = buyers ? buyers.find(b => getId(b) === bid) : null;
+    const total = getVal(o,['total_price','Total Price','totalPrice']) || '?';
+    const proof = getVal(o,['payment_proof','Payment Proof','paymentProof']) || 'No proof given';
+    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
+      <div>
+        <div style="font-size:12px;color:var(--text3)">Buyer payment pending</div>
+        <div style="font-size:14px;font-weight:600">GH₵${total}</div>
+        <div style="font-size:12px;color:var(--text2)">${buyer ? getVal(buyer,['name','Name']) : bid} · ${proof}</div>
+      </div>
+      <button class="btn btn-success btn-sm" onclick="confirmBuyerPayment('${oid}')">Confirm</button>
+    </div>`;
+  });
+  document.getElementById('ow-pending').innerHTML = pHtml;
 
-  // --- AUTH ---
-  async function login() {
-    const user = document.getElementById('login-user').value;
-    const pass = document.getElementById('login-pass').value;
-    if(!user || !pass) return toast('Enter credentials', 'error');
-    
-    const btn = document.getElementById('login-btn');
-    btn.innerHTML = '<span class="loader"></span>';
-    
-    const res = await apiCall('login', { username: user, password: pass });
-    btn.innerText = 'Sign In';
-    
-    if (res.success) {
-      currentUser = res;
-      document.getElementById('screen-login').classList.add('hidden');
-      document.getElementById('app').classList.remove('hidden');
-      document.getElementById(`view-${res.role}`).classList.remove('hidden');
-      loadDashboard();
-    } else {
-      toast(res.error || 'Login failed', 'error');
-    }
-  }
+  // Inventory
+  let invHtml = '';
+  products.forEach(p => {
+    const pId = getId(p);
+    const totalQty = Number(getVal(p,['total_qty','Total Qty','totalQty','quantity'])||0);
+    const assigned = assignments.filter(a => getProductId(a) === pId).reduce((s,a) => s + Number(getVal(a,['qty_assigned','qty','quantity'])||0), 0);
+    const sold = sales.filter(s => getProductId(s) === pId).reduce((s,sl) => s + Number(getVal(sl,['qty_sold','qty'])||0), 0);
+    const withOwner = Math.max(0, totalQty - assigned);
+    const withSellers = Math.max(0, assigned - sold);
+    invHtml += `<div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <img src="${getVal(p,['image_url','Image URL'])||''}" style="width:44px;height:44px;border-radius:var(--radius-xs);object-fit:cover;background:var(--bg3)">
+        <div>
+          <div style="font-weight:600;font-size:15px">${getVal(p,['name','Name'])}</div>
+          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(p,['owner_price','price','Price'])} / unit</div>
+        </div>
+      </div>
+      <div class="inv-row"><span class="inv-label">Total purchased</span><span class="inv-val">${totalQty}</span></div>
+      <div class="inv-row"><span class="inv-label">Assigned to sellers</span><span class="inv-val" style="color:var(--info)">−${assigned}</span></div>
+      <div class="inv-row"><span class="inv-label">Sold by sellers</span><span class="inv-val" style="color:var(--success)">−${sold}</span></div>
+      <div class="divider"></div>
+      <div class="inv-row"><span class="inv-label" style="font-weight:600;color:var(--text)">With you now</span><span class="inv-val" style="color:var(--primary);font-size:16px">${withOwner}</span></div>
+      <div class="inv-row"><span class="inv-label">Out in market (unsold)</span><span class="inv-val">${withSellers}</span></div>
+      ${withOwner === 0 ? '<div style="text-align:center;margin-top:10px"><span class="badge badge-danger">Out of stock with you</span></div>' : ''}
+    </div>`;
+  });
+  document.getElementById('ow-inv-list').innerHTML = invHtml || '<p style="text-align:center;color:var(--text3);padding:32px 0">No products yet.</p>';
 
-  function logout() {
-    currentUser = null;
-    document.getElementById('app').classList.add('hidden');
-    document.getElementById('view-seller').classList.add('hidden');
-    document.getElementById('view-owner').classList.add('hidden');
-    document.getElementById('screen-login').classList.remove('hidden');
-    document.getElementById('login-user').value = '';
-    document.getElementById('login-pass').value = '';
-  }
+  // Preorders
+  let prHtml = '';
+  (preorderItems || []).forEach(item => {
+    const id = getId(item);
+    const name = getVal(item,['name','Name'])||'';
+    const price = getVal(item,['price','Price'])||0;
+    const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
+    const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
+    const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
+    const eta = getVal(item,['eta','ETA'])||'TBC';
+    const status = String(getVal(item,['status','Status'])||'open');
+    const orders = (preorderOrders||[]).filter(o => String(getVal(o,['item_id','Item ID','itemId'])||'') === id);
+    prHtml += `<div class="card">
+      <div class="row-between" style="margin-bottom:8px">
+        <div style="font-size:16px;font-weight:700">${name}</div>
+        ${statusBadge(status)}
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">
+        GH₵${price} · ETA: ${eta} · <span class="${payType==='partial'?'pay-partial':'pay-full'}">${payType} payment</span>
+      </div>
+      ${milestoneHtml(filled, slots, id)}
+      <div style="font-size:13px;color:var(--text2);margin-bottom:12px">${orders.length} order(s)</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${status==='open'?`<button class="btn btn-muted btn-sm" onclick="updatePreorderStatus('${id}','closed')">Close</button>`:''}
+        ${status==='closed'||status==='open'?`<button class="btn btn-info btn-sm" style="background:var(--info-dim);color:var(--info)" onclick="updatePreorderStatus('${id}','arrived')">Mark Arrived</button>`:''}
+        ${status==='arrived'?`<button class="btn btn-success btn-sm" onclick="updatePreorderStatus('${id}','ready')">Mark Ready</button>`:''}
+        ${status==='ready'?`<button class="btn btn-success btn-sm" onclick="updatePreorderStatus('${id}','delivered')">Mark Delivered</button>`:''}
+      </div>
+    </div>`;
+  });
+  document.getElementById('ow-preorder-list').innerHTML = prHtml || '<p style="text-align:center;color:var(--text3);padding:32px 0">No preorder items yet. Tap + to add one.</p>';
 
-  // --- DATA ---
-  async function loadDashboard() {
-    const payload = currentUser.role === 'owner' ? { role: 'owner' } : { role: 'seller', sellerId: currentUser.id };
-    const res = await apiCall('get_dashboard', payload);
-    if (res.success) {
-      db = res;
-      if (currentUser.role === 'seller') renderSeller();
-      else renderOwner();
-    }
-  }
+  // Buyers
+  let bHtml = '';
+  (buyers||[]).forEach(b => {
+    const bid = getId(b);
+    const name = getVal(b,['name','Name'])||'Buyer';
+    const phone = getVal(b,['phone','Phone'])||'';
+    const status = String(getVal(b,['status','Status'])||'active').toLowerCase();
+    const joined = getVal(b,['join_date','Join Date','joinDate'])||'';
+    bHtml += `<div class="list-item">
+      <div class="list-avatar">${name.charAt(0).toUpperCase()}</div>
+      <div class="list-info">
+        <h4>${name}</h4>
+        <p>${phone}${joined ? ' · Joined ' + new Date(joined).toLocaleDateString() : ''}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        ${statusBadge(status)}
+        <button class="btn btn-muted btn-sm" onclick="toggleBuyer('${bid}','${status}')">
+          ${status==='active'?'Block':'Unblock'}
+        </button>
+      </div>
+    </div>`;
+  });
+  document.getElementById('ow-buyer-list').innerHTML = bHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No buyers yet.</p>';
 
-  // --- SELLER LOGIC ---
-  function renderSeller() {
-    document.getElementById('seller-name-display').innerText = currentUser.name;
-    const { products, assignments, sales, payments } = db;
-    let totalOwed = 0, totalPaid = 0;
-    let html = '';
+  // Assign dropdowns
+  let selOpts = '<option value="">Select Seller</option>';
+  sellers.forEach(s => { selOpts += `<option value="${getId(s)}">${getVal(s,['market_name','Market Name'])||getVal(s,['name','Name'])}</option>`; });
+  document.getElementById('ow-as-seller').innerHTML = selOpts;
+  let prodOpts = '<option value="">Select Product</option>';
+  products.forEach(p => { prodOpts += `<option value="${getId(p)}">${getVal(p,['name','Name'])}</option>`; });
+  document.getElementById('ow-as-prod').innerHTML = prodOpts;
 
-    assignments.forEach(a => {
-      const pId = a.product_id || a.productId || a.Product_ID;
-      const p = products.find(x => (x.product_id || x.productId || x.Product_ID) === pId);
-      if (!p) return;
-      
-      const sold = sales.filter(s => (s.product_id || s.productId || s.Product_ID) === pId).reduce((sum, s) => sum + Number(s.qty_sold || 0), 0);
-      const remaining = Math.max(0, a.qty_assigned - sold);
-      totalOwed += sold * Number(p.owner_price || p.Owner_Price || 0);
+  // Stock requests (in assign tab)
+  let reqHtml = '';
+  const pending = (stockRequests||[]).filter(r => String(getVal(r,['status','Status'])||'').toLowerCase() === 'pending');
+  if (pending.length) {
+    pending.forEach(r => {
+      const sid = getSellerId(r); const pid = getProductId(r);
+      const sel = sellers.find(s => getId(s) === sid);
+      const prod = products.find(p => getId(p) === pid);
+      const rid = getId(r); const qty = getVal(r,['qty_requested','Qty Requested'])||'?';
+      reqHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
+        <div>
+          <div style="font-size:14px;font-weight:600">${prod?getVal(prod,['name','Name']):pid} × ${qty}</div>
+          <div style="font-size:12px;color:var(--text2)">${sel?(getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])):sid}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-success btn-sm" onclick="approveRequest('${rid}',${qty})">Assign</button>
+          <button class="btn btn-danger btn-sm" onclick="rejectRequest('${rid}')">Reject</button>
+        </div>
+      </div>`;
+    });
+  } else { reqHtml = '<p style="font-size:13px;color:var(--text3)">No pending stock requests.</p>'; }
+  document.getElementById('ow-req-list').innerHTML = reqHtml;
+}
 
-      html += `
-        <div class="prod-card">
-          <div class="prod-img-wrap"><img src="${p.image_url || p.Image_URL}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
-          <div class="prod-details">
-            <h4>${p.name || p.Name}</h4>
-            <div class="price">GH₵ ${p.owner_price || p.Owner_Price}</div>
-            <div class="stock">${remaining} left in stock</div>
-            <div class="stepper">
-              <button onclick="step('${pId}', -1)">-</button>
-              <input type="number" id="qty-${pId}" value="0" min="0" max="${remaining}" readonly>
-              <button onclick="step('${pId}', 1)">+</button>
-            </div>
+// Owner actions
+async function addProduct() {
+  const name = document.getElementById('ap-name').value;
+  const price = document.getElementById('ap-price').value;
+  const qty = document.getElementById('ap-qty').value;
+  const file = document.getElementById('ap-img').files[0];
+  if (!name || !price || !qty || !file) return toast('Fill all fields and select image', 'error');
+  setLoading('ap-btn', true);
+  const compressed = await compressImage(file);
+  const imgRes = await apiCall('upload_image', { imageData: compressed, mimeType: 'image/jpeg', fileName: name + '.jpg' });
+  if (!imgRes.success) { setLoading('ap-btn', false); return toast('Image upload failed', 'error'); }
+  const res = await apiCall('add_product', { name, price, totalQty: qty, imageUrl: imgRes.url });
+  setLoading('ap-btn', false);
+  if (res.success) { toast('Product added!', 'success'); closeModal('add-product'); loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+async function addSeller() {
+  const name = document.getElementById('as-name').value;
+  const mname = document.getElementById('as-mname').value;
+  const user = document.getElementById('as-user').value;
+  const pass = document.getElementById('as-pass').value;
+  const phone = document.getElementById('as-phone').value;
+  if (!name || !user || !pass || !phone) return toast('Fill all required fields', 'error');
+  const res = await apiCall('add_seller', { name, market_name: mname, username: user, password: pass, phone });
+  if (res.success) { toast('Seller added!', 'success'); closeModal('add-seller'); loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+function toggleDeposit() {
+  const t = document.getElementById('pr-paytype').value;
+  document.getElementById('pr-deposit-wrap').classList.toggle('hidden', t !== 'partial');
+}
+
+async function addPreorderItem() {
+  const name = document.getElementById('pr-name').value;
+  const desc = document.getElementById('pr-desc').value;
+  const price = document.getElementById('pr-price').value;
+  const payType = document.getElementById('pr-paytype').value;
+  const deposit = document.getElementById('pr-deposit').value;
+  const slots = document.getElementById('pr-slots').value;
+  const eta = document.getElementById('pr-eta').value;
+  const file = document.getElementById('pr-img').files[0];
+  if (!name || !price || !slots || !eta || !file) return toast('Fill all fields', 'error');
+  setLoading('pr-btn', true);
+  const compressed = await compressImage(file);
+  const imgRes = await apiCall('upload_image', { imageData: compressed, mimeType: 'image/jpeg', fileName: name + '.jpg' });
+  if (!imgRes.success) { setLoading('pr-btn', false); return toast('Image upload failed', 'error'); }
+  const res = await apiCall('add_preorder_item', {
+    name, description: desc, price, paymentType: payType,
+    depositAmount: payType === 'partial' ? deposit : price,
+    totalSlots: slots, eta, imageUrl: imgRes.url
+  });
+  setLoading('pr-btn', false);
+  if (res.success) { toast('Preorder item created!', 'success'); closeModal('add-preorder'); loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+async function assignProduct() {
+  const sid = document.getElementById('ow-as-seller').value;
+  const pid = document.getElementById('ow-as-prod').value;
+  const qty = document.getElementById('ow-as-qty').value;
+  if (!sid || sid === 'undefined' || !pid || !qty) return toast('Select seller, product and quantity', 'error');
+  const res = await apiCall('assign_product', { sellerId: sid, productId: pid, qty });
+  if (res.success) { toast('Stock assigned!', 'success'); document.getElementById('ow-as-qty').value = ''; loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+function collectPayment(sellerId, amount) {
+  showConfirm('Confirm Payment', `Confirm you received GH₵${amount} from this seller?`, async () => {
+    const res = await apiCall('confirm_payment', { sellerId, amount });
+    if (res.success) { toast('Payment confirmed!', 'success'); loadDashboard(); }
+  });
+}
+
+async function confirmBuyerPayment(orderId) {
+  showConfirm('Confirm Buyer Payment', 'Mark this buyer payment as confirmed?', async () => {
+    const res = await apiCall('confirm_buyer_payment', { orderId });
+    if (res.success) { toast('Payment confirmed!', 'success'); loadDashboard(); }
+  });
+}
+
+async function updatePreorderStatus(itemId, status) {
+  const res = await apiCall('update_preorder_status', { itemId, status });
+  if (res.success) { toast(`Status updated to ${status}`, 'success'); loadDashboard(); }
+  else toast(res.error || 'Failed', 'error');
+}
+
+async function approveListing(listingId) {
+  const res = await apiCall('approve_listing', { listingId });
+  if (res.success) { toast('Listing approved!', 'success'); loadDashboard(); }
+}
+async function rejectListing(listingId) {
+  const res = await apiCall('reject_listing', { listingId });
+  if (res.success) { toast('Listing rejected', 'success'); loadDashboard(); }
+}
+async function approveRequest(requestId, qty) {
+  const res = await apiCall('approve_stock_request', { requestId, qty });
+  if (res.success) { toast('Stock assigned via request!', 'success'); loadDashboard(); }
+}
+async function rejectRequest(requestId) {
+  const res = await apiCall('reject_stock_request', { requestId });
+  if (res.success) { toast('Request rejected', 'success'); loadDashboard(); }
+}
+async function toggleBuyer(buyerId, currentStatus) {
+  const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
+  const res = await apiCall('manage_buyer', { buyerId, status: newStatus });
+  if (res.success) { toast(`Buyer ${newStatus}`, 'success'); loadDashboard(); }
+}
+
+// ============================================================
+//  BUYER RENDER
+// ============================================================
+function buyerTab(tab, el) {
+  document.querySelectorAll('#view-buyer .nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  ['browse','orders','wishlist','profile'].forEach(v => {
+    document.getElementById('bv-' + v).classList.toggle('hidden', v !== tab);
+  });
+}
+
+function buyerBrowseTab(tab, el) {
+  currentBuyerBrowseTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('bv-preorders').classList.toggle('hidden', tab !== 'preorders');
+  document.getElementById('bv-market').classList.toggle('hidden', tab !== 'market');
+}
+
+function renderBuyer() {
+  document.getElementById('bv-name').textContent = currentUser.name;
+  const { preorderItems, listings, orders, wishlist } = db;
+  const wishIds = (wishlist || []).map(w => String(getVal(w,['item_id','Item ID','itemId'])||''));
+
+  // Pending orders badge
+  const pendingCount = (orders||[]).filter(o => String(getVal(o,['order_status','Order Status'])||'').toLowerCase() !== 'delivered' && String(getVal(o,['order_status','Order Status'])||'').toLowerCase() !== 'cancelled').length;
+  const badge = document.getElementById('bv-order-badge');
+  if (pendingCount > 0) { badge.textContent = pendingCount; badge.classList.remove('hidden'); }
+  else { badge.classList.add('hidden'); }
+
+  // Preorder items
+  let prHtml = '';
+  (preorderItems||[]).forEach(item => {
+    const id = getId(item);
+    const name = getVal(item,['name','Name'])||'';
+    const price = getVal(item,['price','Price'])||0;
+    const desc = getVal(item,['description','Description'])||'';
+    const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
+    const depositAmt = getVal(item,['deposit_amount','Deposit Amount','depositAmount'])||price;
+    const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
+    const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
+    const eta = getVal(item,['eta','ETA'])||'TBC';
+    const status = String(getVal(item,['status','Status'])||'open');
+    const imgUrl = getVal(item,['image_url','Image URL','imageUrl'])||'';
+    const isWished = wishIds.includes(id);
+    const isFull = slots > 0 && filled >= slots;
+
+    prHtml += `<div class="preorder-card">
+      ${imgUrl ? `<img src="${imgUrl}" class="preorder-img" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <div class="preorder-body">
+        <div class="row-between">
+          <div class="preorder-title">${name}</div>
+          <button class="wish-btn ${isWished?'active':''}" onclick="toggleWishlist('${id}',this)" title="${isWished?'Remove from wishlist':'Add to wishlist'}">
+            ${isWished ? '♥' : '♡'}
+          </button>
+        </div>
+        <div class="preorder-desc">${desc}</div>
+        <div class="preorder-meta">
+          <span class="preorder-eta">ETA: ${eta}</span>
+          <span class="${payType==='partial'?'pay-partial':'pay-full'} pay-type">${payType === 'partial' ? `Deposit: GH₵${depositAmt}` : 'Full payment'}</span>
+          ${statusBadge(isFull ? 'closed' : status)}
+        </div>
+        <div class="preorder-price-row">
+          <span class="preorder-price">GH₵ ${price}</span>
+        </div>
+        ${milestoneHtml(filled, slots, id)}
+        <button class="btn ${isFull ? 'btn-muted' : 'btn-primary'}" ${isFull ? 'disabled' : ''} onclick="openPreorder('${id}')">
+          ${isFull ? 'Fully Subscribed' : 'Preorder Now'}
+        </button>
+      </div>
+    </div>`;
+  });
+  document.getElementById('bv-preorders').innerHTML = prHtml || '<p style="text-align:center;color:var(--text3);padding:40px 0">No preorder items available right now.</p>';
+
+  // Marketplace
+  renderMarket(listings || []);
+
+  // Orders
+  let ordHtml = '';
+  if (orders && orders.length) {
+    orders.slice().reverse().forEach(o => {
+      const oid = getId(o);
+      const iid = String(getVal(o,['item_id','Item ID','itemId'])||'');
+      const item = (preorderItems||[]).find(i => getId(i) === iid);
+      const qty = getVal(o,['qty','Qty'])||1;
+      const total = getVal(o,['total_price','Total Price','totalPrice'])||'?';
+      const payStatus = String(getVal(o,['payment_status','Payment Status'])||'pending').toLowerCase();
+      const ordStatus = String(getVal(o,['order_status','Order Status'])||'ordered').toLowerCase();
+      const ts = getVal(o,['timestamp','Timestamp'])||'';
+      const canCancel = payStatus !== 'confirmed' && ordStatus !== 'cancelled' && ordStatus !== 'delivered';
+
+      ordHtml += `<div class="order-card">
+        <div class="order-header">
+          <div>
+            <div class="order-id">#${oid.substring(0,8).toUpperCase()}</div>
+            <div class="order-product">${item ? getVal(item,['name','Name']) : 'Preorder item'} × ${qty}</div>
+            <div class="order-meta">GH₵${total} · ${ts ? new Date(ts).toLocaleDateString() : ''}</div>
           </div>
-        </div>`;
-    });
-
-    payments.forEach(p => totalPaid += Number(p.amount || p.Amount || 0));
-    const bal = totalOwed - totalPaid;
-    document.getElementById('seller-balance').innerText = `GH₵ ${bal.toFixed(2)}`;
-    document.getElementById('seller-products').innerHTML = html || '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">No stock assigned yet.</p>';
-    updateSubmitBtn();
-  }
-
-  function step(id, change) {
-    const input = document.getElementById(`qty-${id}`);
-    let val = parseInt(input.value) || 0;
-    val = Math.max(0, Math.min(parseInt(input.max), val + change));
-    input.value = val;
-    updateSubmitBtn();
-  }
-
-  function updateSubmitBtn() {
-    const inputs = document.querySelectorAll('[id^="qty-"]');
-    let total = 0;
-    inputs.forEach(i => total += parseInt(i.value) || 0);
-    document.getElementById('seller-submit-btn').innerText = `Submit Sales (${total} items)`;
-  }
-
-  async function submitSales() {
-    const inputs = document.querySelectorAll('[id^="qty-"]');
-    const batch = [];
-    inputs.forEach(i => { const q = parseInt(i.value); if(q > 0) batch.push({ productId: i.id.replace('qty-', ''), qty: q }); });
-    if (batch.length === 0) return toast('Select items to submit', 'error');
-
-    showModal('Submit Sales?', `You are logging ${batch.reduce((s,i)=>s+i.qty,0)} items sold. This cannot be undone.`, async () => {
-      const res = await apiCall('record_sale', { sellerId: currentUser.id, sales: batch });
-      if (res.success) { toast('Sales recorded successfully!', 'success'); loadDashboard(); }
-    });
-  }
-
-  function openWhatsApp() {
-    const bal = document.getElementById('seller-balance').innerText;
-    window.open(`https://wa.me/?text=${encodeURIComponent(`Hi Boss, I am ${currentUser.name}. My current balance is ${bal}.`)}`, '_blank');
-  }
-
-  // --- OWNER LOGIC ---
-  let currentOwnerView = 'home';
-  function switchOwnerView(view, el) {
-    currentOwnerView = view;
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    if(el) el.classList.add('active');
-    ['home', 'products', 'assign', 'sellers'].forEach(v => document.getElementById(`owner-${v}`).classList.add('hidden'));
-    document.getElementById(`owner-${view}`).classList.remove('hidden');
-    
-    const fab = document.getElementById('owner-fab');
-    if (view === 'products' || view === 'sellers') fab.classList.remove('hidden');
-    else fab.classList.add('hidden');
-  }
-
-  function handleFabClick() {
-    if (currentOwnerView === 'products') document.getElementById('modal-add-product').classList.add('active');
-    if (currentOwnerView === 'sellers') document.getElementById('modal-add-seller').classList.add('active');
-  }
-
-  function renderOwner() {
-    const { products, sellers, assignments, sales, payments } = db;
-    
-    let totalDebt = 0;
-    document.getElementById('stat-products').innerText = products.length;
-    document.getElementById('stat-sellers').innerText = sellers.length;
-    document.getElementById('stat-sales').innerText = sales.reduce((s, x) => s + Number(x.qty_sold || 0), 0);
-    
-    let sHtml = '';
-    sellers.forEach(s => {
-      let owed = 0, paid = 0;
-      // BULLETPROOF ID MATCHING
-      const sId = s.seller_id || s.sellerId || s['Seller ID'] || s.id || Object.values(s)[0]; 
-      
-      sales.filter(x => (x.seller_id || x.sellerId || x['Seller ID']) === sId).forEach(sl => {
-        const pId = sl.product_id || sl.productId || sl['Product ID'];
-        const p = products.find(pr => (pr.product_id || pr.productId || pr['Product ID']) === pId);
-        if(p) owed += sl.qty_sold * Number(p.owner_price || p['Owner Price'] || 0);
-      });
-      
-      payments.filter(x => (x.seller_id || x.sellerId || x['Seller ID']) === sId).forEach(p => paid += Number(p.amount || p.Amount || 0));
-      
-      const bal = owed - paid;
-      if(bal > 0) totalDebt += bal;
-
-      sHtml += `
-        <div class="list-item">
-          <div class="avatar">${(s.name || s.Name || 'U').charAt(0)}</div>
-          <div class="info">
-            <h4>${s.name || s.Name || 'Unknown'}</h4>
-            <p>Owed: GH₵${owed.toFixed(0)} | Paid: GH₵${paid.toFixed(0)}</p>
+          <div style="text-align:right">
+            <div style="margin-bottom:4px">${statusBadge(ordStatus)}</div>
+            <div>${statusBadge(payStatus)}</div>
           </div>
-          <span class="badge ${bal > 0 ? 'badge-danger' : 'badge-success'}">GH₵${bal.toFixed(0)}</span>
-          ${bal > 0 ? `<button class="btn btn-success btn-sm" onclick="confirmPay('${sId}', ${bal})" style="margin-left:8px;">Collect</button>` : ''}
-        </div>`;
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-wa btn-sm" onclick="waOwner('Hi, I am ${currentUser.name}. My order is #${oid.substring(0,8).toUpperCase()} on BLACKMARKET.')">Contact Owner</button>
+          ${canCancel ? `<button class="btn btn-danger btn-sm" onclick="cancelOrder('${oid}')">Cancel Order</button>` : ''}
+        </div>
+      </div>`;
     });
-    document.getElementById('stat-debt').innerText = `GH₵${totalDebt.toFixed(0)}`;
-    document.getElementById('owner-sellers-list').innerHTML = sHtml || '<p style="text-align:center; color:var(--muted); padding:20px;">No sellers yet.</p>';
-    document.getElementById('owner-sellers-manage-list').innerHTML = sHtml || '<p style="text-align:center; color:var(--muted); padding:20px;">No sellers yet.</p>';
+  } else { ordHtml = '<p style="text-align:center;color:var(--text3);padding:32px 0">No orders yet.</p>'; }
+  document.getElementById('bv-orders-list').innerHTML = ordHtml;
 
-    let pHtml = '';
-    products.forEach(p => {
-      const pId = p.product_id || p.productId || p['Product ID'] || p.id || Object.values(p)[0];
-      pHtml += `
-        <div class="prod-card">
-          <div class="prod-img-wrap"><img src="${p.image_url || p['Image URL']}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'"></div>
-          <div class="prod-details">
-            <h4>${p.name || p.Name}</h4>
-            <div class="price">GH₵ ${p.owner_price || p['Owner Price']}</div>
-            <div class="stock">Total: ${p.total_qty || p['Total Qty']}</div>
-          </div>
-        </div>`;
+  // Wishlist view
+  let wHtml = '';
+  const wishItems = (preorderItems||[]).filter(i => wishIds.includes(getId(i)));
+  if (wishItems.length) {
+    wishItems.forEach(item => {
+      const id = getId(item);
+      const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
+      const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
+      wHtml += `<div class="card-sm row-between" style="margin-bottom:10px">
+        <div>
+          <div style="font-size:14px;font-weight:600">${getVal(item,['name','Name'])}</div>
+          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(item,['price','Price'])} · ETA: ${getVal(item,['eta','ETA'])}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          ${milestoneHtml(filled, slots, id)}
+          <button class="btn btn-primary btn-sm" onclick="openPreorder('${id}')">Order</button>
+        </div>
+      </div>`;
     });
-    document.getElementById('owner-prod-grid').innerHTML = pHtml || '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:40px 0;">No products yet.</p>';
+  } else { wHtml = '<p style="text-align:center;color:var(--text3);padding:32px 0">No wishlisted items.</p>'; }
+  document.getElementById('bv-wish-list').innerHTML = wHtml;
 
-    // BULLETPROOF DROPDOWNS
-    let selOpts = '<option value="">Select Seller</option>';
-    sellers.forEach(s => {
-      const sId = s.seller_id || s.sellerId || s['Seller ID'] || s.id || Object.values(s)[0];
-      const sName = s.name || s.Name || 'Unknown';
-      selOpts += `<option value="${sId}">${sName}</option>`;
-    });
-    document.getElementById('assign-seller').innerHTML = selOpts;
+  // Profile
+  document.getElementById('bv-profile-info').innerHTML = `
+    <div class="profile-field"><span>Name</span><span>${currentUser.name}</span></div>
+    <div class="profile-field"><span>Phone</span><span>${currentUser.phone}</span></div>
+    <div class="profile-field"><span>Username</span><span>${currentUser.id ? 'Member' : ''}</span></div>
+    <div class="profile-field"><span>Orders</span><span>${(orders||[]).length}</span></div>
+  `;
+}
 
-    let prodOpts = '<option value="">Select Product</option>';
-    products.forEach(p => {
-      const pId = p.product_id || p.productId || p['Product ID'] || p.id || Object.values(p)[0];
-      const pName = p.name || p.Name || 'Unknown';
-      prodOpts += `<option value="${pId}">${pName}</option>`;
-    });
-    document.getElementById('assign-product').innerHTML = prodOpts;
+function renderMarket(listings) {
+  let html = '';
+  listings.forEach(l => {
+    const market = l.market_name || 'Seller';
+    const town = l.town || '';
+    const delivery = l.delivery_method || '';
+    const phone = l.phone || '';
+    const productName = l.product_name || 'Product';
+    const imgUrl = l.image_url || '';
+    const price = l.selling_price || '?';
+
+    html += `<div class="market-card" data-town="${town.toLowerCase()}">
+      ${imgUrl ? `<img src="${imgUrl}" style="width:100%;height:160px;object-fit:cover" loading="lazy">` : ''}
+      <div class="market-card-body">
+        <div class="market-name">${market}</div>
+        ${town ? `<div class="market-town">📍 ${town}</div>` : ''}
+        ${delivery ? `<div class="market-delivery">🚗 ${delivery}</div>` : ''}
+        <div class="market-product">${productName}</div>
+        <div class="market-price">GH₵ ${price}</div>
+        ${phone ? `<div style="margin-top:12px"><button class="btn btn-wa btn-sm" onclick="waSeller('${phone}','${market}','${productName}')">💬 Contact ${market}</button></div>` : ''}
+      </div>
+    </div>`;
+  });
+  document.getElementById('bv-market-list').innerHTML = html || '<p style="text-align:center;color:var(--text3);padding:40px 0">No marketplace listings yet.</p>';
+}
+
+function filterMarket() {
+  const query = document.getElementById('bv-search').value.toLowerCase().trim();
+  document.querySelectorAll('.market-card').forEach(card => {
+    const town = card.dataset.town || '';
+    card.style.display = (!query || town.includes(query)) ? '' : 'none';
+  });
+}
+
+// Buyer actions
+function openPreorder(itemId) {
+  const item = (db.preorderItems || []).find(i => getId(i) === itemId);
+  if (!item) return;
+  currentPreorderItem = item;
+  const name = getVal(item,['name','Name'])||'';
+  const price = Number(getVal(item,['price','Price'])||0);
+  const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
+  const depositAmt = Number(getVal(item,['deposit_amount','Deposit Amount','depositAmount'])||price);
+  const eta = getVal(item,['eta','ETA'])||'TBC';
+
+  document.getElementById('po-title').textContent = name;
+  document.getElementById('po-sub').textContent = `ETA: ${eta}`;
+
+  let payInfo = '';
+  if (payType === 'partial') {
+    payInfo = `<strong style="color:var(--primary)">Deposit required: GH₵${depositAmt}</strong><br>
+    Full price: GH₵${price}<br>
+    Pay the deposit now to secure your order. Remainder due on delivery.`;
+    document.getElementById('po-cancel-note').textContent = 'You can cancel before payment is confirmed. Once confirmed, deposit is non-refundable.';
+  } else {
+    payInfo = `<strong style="color:var(--primary)">Full payment: GH₵${price} per unit</strong><br>
+    Payment must be sent and confirmed before your order is secured.`;
+    document.getElementById('po-cancel-note').textContent = 'You can cancel before your payment is confirmed. Once confirmed, no cancellation.';
   }
+  document.getElementById('po-pay-info').innerHTML = payInfo;
 
-  async function addProduct() {
-    const name = document.getElementById('prod-name').value;
-    const price = document.getElementById('prod-price').value;
-    const qty = document.getElementById('prod-qty').value;
-    const file = document.getElementById('prod-img').files[0];
-    if (!name || !price || !qty || !file) return toast('Fill all fields & select image', 'error');
+  const qtyInput = document.getElementById('po-qty');
+  qtyInput.value = 1;
+  document.getElementById('po-total').textContent = `GH₵${(payType === 'partial' ? depositAmt : price).toFixed(2)}`;
+  qtyInput.oninput = () => {
+    const q = parseInt(qtyInput.value) || 1;
+    const amt = payType === 'partial' ? depositAmt : price;
+    document.getElementById('po-total').textContent = `GH₵${(amt * q).toFixed(2)}`;
+  };
+  openModal('place-order');
+}
 
-    const btn = document.getElementById('save-prod-btn');
-    btn.innerHTML = '<span class="loader"></span> Uploading...';
+async function placeOrder() {
+  if (!currentPreorderItem) return;
+  const qty = parseInt(document.getElementById('po-qty').value) || 1;
+  const proof = document.getElementById('po-proof').value;
+  const res = await apiCall('place_preorder', {
+    buyerId: currentUser.id,
+    itemId: getId(currentPreorderItem),
+    qty, paymentProof: proof
+  });
+  if (res.success) {
+    toast('Order placed! Awaiting payment confirmation.', 'success');
+    closeModal('place-order');
+    loadDashboard();
+  } else toast(res.error || 'Order failed', 'error');
+}
 
-    const compressedImg = await compressImage(file);
-    const imgRes = await apiCall('upload_image', { imageData: compressedImg, mimeType: 'image/jpeg', fileName: name + '.jpg' });
-    
-    if (imgRes.success) {
-      const res = await apiCall('add_product', { name, price, totalQty: qty, imageUrl: imgRes.url });
-      btn.innerText = 'Save Product';
-      if (res.success) {
-        toast('Product added!', 'success');
-        document.getElementById('modal-add-product').classList.remove('active');
-        document.getElementById('prod-name').value = ''; 
-        document.getElementById('prod-price').value = ''; 
-        document.getElementById('prod-qty').value = ''; 
-        document.getElementById('prod-img').value = '';
-        loadDashboard();
-      }
-    } else {
-      btn.innerText = 'Save Product';
-      toast('Image upload failed', 'error');
-    }
+async function cancelOrder(orderId) {
+  showConfirm('Cancel Order', 'Are you sure? This cannot be undone.', async () => {
+    const res = await apiCall('cancel_preorder', { orderId, buyerId: currentUser.id });
+    if (res.success) { toast('Order cancelled', 'success'); loadDashboard(); }
+    else toast(res.error || 'Cannot cancel', 'error');
+  });
+}
+
+async function toggleWishlist(itemId, btn) {
+  const res = await apiCall('toggle_wishlist', { buyerId: currentUser.id, itemId });
+  if (res.success) {
+    if (res.action === 'added') { btn.textContent = '♥'; btn.classList.add('active'); toast('Added to wishlist!'); }
+    else { btn.textContent = '♡'; btn.classList.remove('active'); toast('Removed from wishlist'); }
+    loadDashboard();
   }
-
-  async function addSeller() {
-    const name = document.getElementById('seller-name').value;
-    const user = document.getElementById('seller-user').value;
-    const pass = document.getElementById('seller-pass').value;
-    const phone = document.getElementById('seller-phone').value;
-    if (!name || !user || !pass || !phone) return toast('Fill all fields', 'error');
-
-    const res = await apiCall('add_seller', { name, username: user, password: pass, phone });
-    if (res.success) {
-      toast('Seller added!', 'success');
-      document.getElementById('modal-add-seller').classList.remove('active');
-      document.getElementById('seller-name').value = ''; 
-      document.getElementById('seller-user').value = '';
-      document.getElementById('seller-pass').value = ''; 
-      document.getElementById('seller-phone').value = '';
-      loadDashboard();
-    }
-  }
-
-  async function assignProduct() {
-    const s = document.getElementById('assign-seller').value;
-    const p = document.getElementById('assign-product').value;
-    const q = document.getElementById('assign-qty').value;
-    
-    // PREVENT "undefined" FROM BEING SAVED
-    if (!s || s === "undefined" || !p || p === "undefined" || !q) {
-      return toast('Please select a valid Seller and Product', 'error');
-    }
-    
-    const res = await apiCall('assign_product', { sellerId: s, productId: p, qty: q });
-    if (res.success) {
-      toast('Stock assigned!', 'success');
-      document.getElementById('assign-qty').value = '';
-      loadDashboard();
-    }
-  }
-
-  function confirmPay(sellerId, amount) {
-    showModal('Confirm Payment', `Confirm you received GH₵${amount} from this seller?`, async () => {
-      const res = await apiCall('confirm_payment', { sellerId, amount });
-      if (res.success) { toast('Payment confirmed!', 'success'); loadDashboard(); }
-    });
-  }
+}
 </script>
 </body>
 </html>
