@@ -2,775 +2,793 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>BLACKMARKET</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BLACKMARKET">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<title>BLACKMARKET</title>
 <style>
-:root {
-  --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a; --bg4: #222222;
-  --card: #141414; --card2: #1c1c1c;
-  --primary: #f5c518; --primary-dim: rgba(245,197,24,0.12); --primary-border: rgba(245,197,24,0.3);
-  --success: #22c55e; --success-dim: rgba(34,197,94,0.12);
-  --danger: #ef4444; --danger-dim: rgba(239,68,68,0.12);
-  --warning: #f59e0b; --warning-dim: rgba(245,158,11,0.12);
-  --info: #3b82f6; --info-dim: rgba(59,130,246,0.12);
-  --text: #f0f0f0; --text2: #a0a0a0; --text3: #606060;
-  --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.1);
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
-  --radius: 14px; --radius-sm: 8px; --radius-xs: 5px;
-  --safe-b: env(safe-area-inset-bottom, 0px);
-  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#181818;--bg4:#222;
+  --card:#141414;--card2:#1c1c1c;
+  --gold:#f5c518;--gold-dim:rgba(245,197,24,.12);--gold-bdr:rgba(245,197,24,.28);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.13);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.13);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,.13);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,.13);
+  --text:#f0f0f0;--text2:#9a9a9a;--text3:#555;
+  --bdr:rgba(255,255,255,.06);--bdr2:rgba(255,255,255,.11);
+  --r:14px;--rs:8px;--rx:5px;
+  --sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px);
 }
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
-
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden;min-height:100dvh}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'DM Sans','Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 .hidden{display:none!important}
+img{display:block;max-width:100%}
 
-/* ---- LAYOUT ---- */
+/* LAYOUT */
 .screen{min-height:100dvh;display:flex;flex-direction:column}
-.container{max-width:640px;margin:0 auto;padding:16px;padding-bottom:calc(100px + var(--safe-b));width:100%}
-.page-header{display:flex;align-items:center;justify-content:space-between;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));max-width:640px;margin:0 auto;width:100%}
+.container{max-width:640px;margin:0 auto;padding:14px;padding-bottom:calc(110px + var(--sb));width:100%}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;padding-top:calc(12px + var(--st));max-width:640px;margin:0 auto;width:100%}
 
-/* ---- CARDS ---- */
-.card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:14px;border:1px solid var(--border)}
-.card-sm{background:var(--card2);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border)}
+/* CARDS */
+.card{background:var(--card);border-radius:var(--r);padding:18px;margin-bottom:12px;border:1px solid var(--bdr)}
+.card2{background:var(--card2);border-radius:var(--rs);padding:12px;border:1px solid var(--bdr)}
 
-/* ---- INPUTS ---- */
-.input,select{width:100%;padding:14px 16px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:15px;color:var(--text);font-family:var(--font);margin-bottom:12px;transition:border-color .2s,box-shadow .2s}
-.input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-dim)}
-.input::placeholder{color:var(--text3)}
-select option{background:var(--bg3);color:var(--text)}
-textarea.input{resize:vertical;min-height:80px}
+/* INPUTS */
+.inp,select{width:100%;padding:13px 15px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--rs);font-size:15px;color:var(--text);font-family:inherit;margin-bottom:11px;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.inp:focus,select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+.inp::placeholder{color:var(--text3)}
+select option{background:var(--bg3)}
+textarea.inp{resize:vertical;min-height:72px;line-height:1.5}
+.inp-row{display:flex;gap:10px}
+.inp-row>*{flex:1;min-width:0}
 
-/* ---- BUTTONS ---- */
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:600;cursor:pointer;transition:transform .12s,opacity .2s,background .2s;font-family:var(--font);width:100%}
-.btn:active{transform:scale(0.97);opacity:.9}
-.btn-primary{background:var(--primary);color:#0a0a0a}
-.btn-success{background:var(--success);color:#fff}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-ghost{background:transparent;color:var(--primary);border:1px solid var(--primary-border)}
-.btn-muted{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
-.btn-sm{padding:8px 14px;font-size:13px;width:auto;border-radius:var(--radius-xs)}
-.btn-info{background:var(--info-dim);color:var(--info);border:1px solid rgba(59,130,246,.3)}
+/* BUTTONS */
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 18px;border:none;border-radius:var(--rs);font-size:14px;font-weight:600;cursor:pointer;transition:transform .1s,opacity .15s;font-family:inherit;width:100%;letter-spacing:.01em}
+.btn:active{transform:scale(.97)}
+.btn-gold{background:var(--gold);color:#0a0a0a}
+.btn-green{background:var(--green);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold-bdr)}
+.btn-muted{background:var(--bg3);color:var(--text2);border:1px solid var(--bdr2)}
+.btn-blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,.25)}
 .btn-wa{background:#25D366;color:#fff}
+.btn-sm{padding:7px 13px;font-size:12px;width:auto;border-radius:var(--rx)}
+.btn-xs{padding:5px 10px;font-size:11px;width:auto;border-radius:var(--rx)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 
-/* ---- BOTTOM NAV ---- */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border2);display:flex;padding-bottom:var(--safe-b);z-index:100;max-width:100%}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px;color:var(--text3);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:color .15s}
-.nav-item.active{color:var(--primary)}
-.nav-item svg{width:22px;height:22px;margin-bottom:3px;stroke:currentColor}
-.nav-badge{background:var(--danger);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:6px;right:50%;transform:translateX(8px)}
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--bdr2);display:flex;padding-bottom:var(--sb);z-index:100}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 4px;color:var(--text3);font-size:9px;font-weight:600;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:color .15s;position:relative}
+.ni.act{color:var(--gold)}
+.ni svg{width:20px;height:20px;margin-bottom:2px;stroke:currentColor;fill:none;stroke-width:2}
+.nbadge{background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:15px;height:15px;border-radius:99px;display:flex;align-items:center;justify-content:center;position:absolute;top:5px;right:50%;transform:translateX(12px);padding:0 3px}
 
-/* ---- LOGIN SCREEN ---- */
-#screen-login{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-height:100dvh}
-.login-logo{text-align:center;margin-bottom:36px}
-.login-logo h1{font-size:36px;font-weight:700;letter-spacing:-.5px;color:var(--primary)}
-.login-logo p{color:var(--text2);font-size:14px;margin-top:6px;letter-spacing:.08em;text-transform:uppercase}
-.login-card{width:100%;max-width:420px}
-.role-tabs{display:flex;gap:8px;margin-bottom:20px;background:var(--bg3);border-radius:var(--radius-sm);padding:4px}
-.role-tab{flex:1;padding:10px;text-align:center;border-radius:var(--radius-xs);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s}
-.role-tab.active{background:var(--primary);color:#0a0a0a}
+/* SUBMIT BAR */
+.subbar{position:fixed;bottom:0;left:0;right:0;padding:10px 14px calc(10px + var(--sb));background:rgba(10,10,10,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--bdr2);z-index:99}
+.subbar .btn{max-width:640px;margin:0 auto;display:flex}
 
-/* ---- BALANCE CARD ---- */
-.balance-card{background:var(--bg3);border:1px solid var(--primary-border);border-radius:var(--radius);padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
-.balance-card::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:var(--primary-dim);border-radius:50%}
-.balance-amount{font-size:32px;font-weight:700;color:var(--primary);letter-spacing:-1px}
-.balance-label{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+/* LOGIN */
+#scr-login{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-height:100dvh}
+.logo{text-align:center;margin-bottom:32px}
+.logo h1{font-size:38px;font-weight:800;letter-spacing:-1px;color:var(--gold)}
+.logo p{color:var(--text2);font-size:12px;margin-top:5px;letter-spacing:.15em;text-transform:uppercase}
+.login-wrap{width:100%;max-width:420px}
+.role-tabs{display:flex;background:var(--bg3);border-radius:var(--rs);padding:3px;margin-bottom:18px}
+.rtab{flex:1;padding:9px;text-align:center;border-radius:var(--rx);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:inherit}
+.rtab.act{background:var(--gold);color:#0a0a0a}
 
-/* ---- PRODUCT GRID ---- */
-.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media(min-width:480px){.product-grid{grid-template-columns:repeat(3,1fr)}}
-.prod-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column}
-.prod-img{width:100%;aspect-ratio:1;background:var(--bg3);overflow:hidden}
-.prod-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
-.prod-card:hover .prod-img img{transform:scale(1.04)}
-.prod-info{padding:10px 12px;flex:1;display:flex;flex-direction:column}
-.prod-name{font-size:13px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.prod-price{font-size:12px;color:var(--primary);font-weight:700;margin-bottom:6px}
-.prod-stock{font-size:11px;color:var(--text3);margin-bottom:8px}
+/* BALANCE CARD */
+.bal-card{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:var(--r);padding:18px;margin-bottom:14px;position:relative;overflow:hidden}
+.bal-card::before{content:'';position:absolute;top:-50px;right:-50px;width:140px;height:140px;background:var(--gold-dim);border-radius:50%}
+.bal-amt{font-size:30px;font-weight:700;color:var(--gold);letter-spacing:-1px}
+.bal-lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
 
-/* ---- STEPPER ---- */
-.stepper{display:flex;align-items:center;gap:4px;background:var(--bg3);border-radius:var(--radius-xs);padding:4px;margin-top:auto}
-.stepper-btn{width:30px;height:30px;border-radius:var(--radius-xs);border:none;background:var(--bg4);color:var(--primary);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.stepper input{flex:1;text-align:center;background:transparent;border:none;color:var(--text);font-size:15px;font-weight:700;font-family:var(--font)}
+/* PRODUCT GRID */
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:460px){.pgrid{grid-template-columns:repeat(3,1fr)}}
+.pcrd{background:var(--card2);border-radius:var(--r);overflow:hidden;border:1px solid var(--bdr);display:flex;flex-direction:column;cursor:pointer}
+.pimg{width:100%;aspect-ratio:1;background:var(--bg3);overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.pcrd:hover .pimg img{transform:scale(1.05)}
+.pinfo{padding:9px 11px;flex:1;display:flex;flex-direction:column}
+.pname{font-size:13px;font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pprice{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:5px}
+.pstock{font-size:11px;color:var(--text3);margin-bottom:6px}
 
-/* ---- STAT GRID ---- */
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px}
-.stat-card{background:var(--card2);padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border)}
-.stat-label{font-size:11px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-.stat-val{font-size:22px;font-weight:700}
+/* STEPPER */
+.stepper{display:flex;align-items:center;gap:3px;background:var(--bg4);border-radius:var(--rx);padding:3px;margin-top:auto}
+.stbtn{width:28px;height:28px;border-radius:var(--rx);border:none;background:var(--bg2);color:var(--gold);font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stepper input{flex:1;text-align:center;background:transparent;border:none;color:var(--text);font-size:14px;font-weight:700;font-family:inherit;min-width:0}
 
-/* ---- LIST ITEMS ---- */
-.list-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
-.list-item:last-child{border-bottom:none}
-.list-avatar{width:40px;height:40px;border-radius:50%;background:var(--primary-dim);border:1px solid var(--primary-border);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex-shrink:0}
-.list-info{flex:1;min-width:0}
-.list-info h4{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.list-info p{font-size:12px;color:var(--text2)}
+/* STATS */
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:16px}
+.scrd{background:var(--card2);padding:13px;border-radius:var(--rs);border:1px solid var(--bdr)}
+.slbl{font-size:10px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.sval{font-size:20px;font-weight:700}
 
-/* ---- BADGES ---- */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700}
-.badge-success{background:var(--success-dim);color:var(--success)}
-.badge-danger{background:var(--danger-dim);color:var(--danger)}
-.badge-warning{background:var(--warning-dim);color:var(--warning)}
-.badge-info{background:var(--info-dim);color:var(--info)}
-.badge-muted{background:var(--bg3);color:var(--text2)}
-.badge-gold{background:var(--primary-dim);color:var(--primary)}
+/* LIST ITEMS */
+.li{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--bdr)}
+.li:last-child{border-bottom:none}
+.av{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold-bdr);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.li-info{flex:1;min-width:0}
+.li-info h4{font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li-info p{font-size:11px;color:var(--text2);margin-top:1px}
 
-/* ---- PROGRESS / MILESTONE ---- */
-.milestone-bar{margin:12px 0}
-.milestone-track{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-bottom:6px}
-.milestone-fill{height:100%;background:var(--primary);border-radius:99px;transition:width .6s ease}
-.milestone-text{font-size:12px;color:var(--text2)}
-.milestone-text span{color:var(--primary);font-weight:600}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
+.bg-green{background:var(--green-dim);color:var(--green)}
+.bg-red{background:var(--red-dim);color:var(--red)}
+.bg-amber{background:var(--amber-dim);color:var(--amber)}
+.bg-blue{background:var(--blue-dim);color:var(--blue)}
+.bg-muted{background:var(--bg3);color:var(--text2);border:1px solid var(--bdr2)}
+.bg-gold{background:var(--gold-dim);color:var(--gold)}
 
-/* ---- PREORDER CARD ---- */
-.preorder-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:12px}
-.preorder-img{width:100%;height:180px;object-fit:cover;background:var(--bg3)}
-.preorder-body{padding:14px}
-.preorder-title{font-size:16px;font-weight:700;margin-bottom:4px}
-.preorder-desc{font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5}
-.preorder-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.preorder-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
-.preorder-price{font-size:22px;font-weight:700;color:var(--primary)}
-.preorder-eta{font-size:12px;color:var(--text2);background:var(--bg3);padding:4px 10px;border-radius:99px}
+/* MILESTONE */
+.mile{margin:10px 0}
+.mile-track{height:5px;background:var(--bg4);border-radius:99px;overflow:hidden;margin-bottom:5px}
+.mile-fill{height:100%;background:var(--gold);border-radius:99px;transition:width .6s ease}
+.mile-txt{font-size:11px;color:var(--text2)}
+.mile-txt b{color:var(--gold)}
 
-/* ---- ORDER STATUS ---- */
-.order-card{background:var(--card2);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border);margin-bottom:10px}
-.order-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.order-id{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
-.order-product{font-size:14px;font-weight:600;margin-bottom:4px}
-.order-meta{font-size:12px;color:var(--text2)}
+/* PREORDER CARDS */
+.prcrd{background:var(--card2);border-radius:var(--r);overflow:hidden;border:1px solid var(--bdr);margin-bottom:12px}
+.primg-wrap{position:relative;width:100%;height:200px;overflow:hidden;cursor:pointer;background:var(--bg3)}
+.primg-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.primg-wrap:hover img{transform:scale(1.03)}
+.primg-expand{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.65);color:#fff;font-size:11px;padding:4px 8px;border-radius:99px;backdrop-filter:blur(4px)}
+.prbody{padding:13px}
+.prtitle{font-size:16px;font-weight:700;margin-bottom:4px}
+.prdesc{font-size:13px;color:var(--text2);margin-bottom:9px;line-height:1.5}
+.prmeta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.eta-pill{font-size:11px;color:var(--text2);background:var(--bg3);padding:3px 9px;border-radius:99px}
+.pay-full{background:var(--red-dim);color:var(--red);font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
+.pay-partial{background:var(--amber-dim);color:var(--amber);font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px}
 
-/* ---- SELLER MARKETPLACE CARD ---- */
-.market-card{background:var(--card2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:12px}
-.market-card-body{padding:14px}
-.market-name{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:2px}
-.market-town{font-size:12px;color:var(--text2);margin-bottom:8px}
-.market-delivery{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:99px;margin-bottom:10px}
-.market-product{font-size:14px;font-weight:500;margin-bottom:4px}
-.market-price{font-size:18px;font-weight:700;color:var(--primary)}
+/* MOMO BOX */
+.momo-box{background:var(--bg3);border:1px solid var(--gold-bdr);border-radius:var(--rs);padding:13px;margin:10px 0;font-size:13px;line-height:1.7}
+.momo-box b{color:var(--gold)}
 
-/* ---- SEARCH BAR ---- */
-.search-wrap{position:relative;margin-bottom:14px}
-.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--text3)}
-.search-input{width:100%;padding:12px 14px 12px 40px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-family:var(--font)}
-.search-input:focus{outline:none;border-color:var(--primary)}
+/* ORDER CARDS */
+.ocrd{background:var(--card2);border-radius:var(--rs);padding:13px;border:1px solid var(--bdr);margin-bottom:9px}
+.oid{font-size:10px;color:var(--text3);font-family:monospace;margin-bottom:3px}
+.oprod{font-size:14px;font-weight:600;margin-bottom:3px}
+.ometa{font-size:11px;color:var(--text2)}
 
-/* ---- TOAST ---- */
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--bg3);color:var(--text);padding:12px 24px;border-radius:99px;font-size:14px;font-weight:600;z-index:10000;transition:transform .3s;box-shadow:var(--shadow);text-align:center;width:90%;max-width:400px;border:1px solid var(--border2)}
+/* MARKET CARDS */
+.mcrd{background:var(--card2);border-radius:var(--r);overflow:hidden;border:1px solid var(--bdr);margin-bottom:11px}
+.mcrd-img{width:100%;height:150px;object-fit:cover;background:var(--bg3);cursor:pointer}
+.mcrd-body{padding:13px}
+.mname{font-size:15px;font-weight:700;color:var(--gold);margin-bottom:2px}
+.mtown{font-size:11px;color:var(--text2);margin-bottom:6px}
+.mdel{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);background:var(--bg3);padding:3px 8px;border-radius:99px;margin-bottom:9px}
+.mpname{font-size:13px;font-weight:500;margin-bottom:2px}
+.mprice{font-size:18px;font-weight:700;color:var(--gold)}
+
+/* SEARCH */
+.srch{position:relative;margin-bottom:12px}
+.srch svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--text3);fill:none}
+.srch input{width:100%;padding:11px 13px 11px 38px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:var(--rs);color:var(--text);font-size:14px;font-family:inherit}
+.srch input:focus{outline:none;border-color:var(--gold)}
+
+/* TABS */
+.tabbar{display:flex;background:var(--bg3);border-radius:var(--rs);padding:3px;margin-bottom:14px}
+.tabbtn{flex:1;padding:8px;text-align:center;border-radius:var(--rx);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:inherit}
+.tabbtn.act{background:var(--gold);color:#0a0a0a}
+
+/* SECTION HEADER */
+.sh{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:18px 0 9px}
+
+/* DIVIDER */
+.dv{height:1px;background:var(--bdr);margin:14px 0}
+
+/* ROWS */
+.row{display:flex;align-items:center;gap:9px}
+.rowb{display:flex;justify-content:space-between;align-items:center}
+
+/* INVENTORY */
+.invrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bdr);font-size:13px}
+.invrow:last-child{border-bottom:none}
+.invlbl{color:var(--text2)}
+.invval{font-weight:600}
+
+/* PROFILE */
+.pfield{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bdr);font-size:13px}
+.pfield:last-child{border-bottom:none}
+.pfield span:first-child{color:var(--text2)}
+.pfield span:last-child{font-weight:500}
+
+/* MESSAGES */
+.msg-list{display:flex;flex-direction:column;gap:8px;padding-bottom:8px}
+.msg-bubble{max-width:82%;padding:9px 12px;border-radius:12px;font-size:13px;line-height:1.5;word-break:break-word}
+.msg-out{background:var(--gold-dim);border:1px solid var(--gold-bdr);align-self:flex-end;border-bottom-right-radius:3px}
+.msg-in{background:var(--bg3);border:1px solid var(--bdr2);align-self:flex-start;border-bottom-left-radius:3px}
+.msg-sys{background:transparent;border:none;color:var(--text3);font-size:11px;align-self:center;text-align:center;padding:3px 0;max-width:100%}
+.msg-time{font-size:10px;color:var(--text3);margin-top:3px}
+.msg-name{font-size:10px;color:var(--gold);margin-bottom:2px;font-weight:600}
+.msg-input-row{position:fixed;bottom:0;left:0;right:0;padding:10px 14px calc(10px + var(--sb));background:rgba(10,10,10,.96);backdrop-filter:blur(24px);border-top:1px solid var(--bdr2);display:flex;gap:8px;z-index:99;max-width:640px;margin:0 auto}
+.msg-input-row .inp{margin:0;flex:1}
+
+/* TOAST */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--bg3);color:var(--text);padding:11px 22px;border-radius:99px;font-size:13px;font-weight:600;z-index:10000;transition:transform .3s cubic-bezier(.34,1.56,.64,1);text-align:center;width:90%;max-width:400px;border:1px solid var(--bdr2);box-shadow:0 8px 32px rgba(0,0,0,.5)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.toast.success{background:var(--success);border-color:var(--success);color:#fff}
-.toast.error{background:var(--danger);border-color:var(--danger);color:#fff}
+.toast.ok{background:var(--green);border-color:var(--green);color:#fff}
+.toast.err{background:var(--red);border-color:var(--red);color:#fff}
+.toast.info{background:var(--gold);border-color:var(--gold);color:#0a0a0a}
 
-/* ---- MODAL ---- */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
-.modal-overlay.active{opacity:1;pointer-events:auto}
-.modal-box{background:var(--bg2);width:100%;max-width:640px;border-radius:var(--radius) var(--radius) 0 0;padding:24px;padding-bottom:calc(24px + var(--safe-b));transform:translateY(100%);transition:transform .3s;max-height:90dvh;overflow-y:auto;border-top:1px solid var(--border2)}
-.modal-overlay.active .modal-box{transform:translateY(0)}
-.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:99px;margin:0 auto 20px}
+/* MODAL */
+.moverlay{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.moverlay.act{opacity:1;pointer-events:auto}
+.mbox{background:var(--bg2);width:100%;max-width:640px;border-radius:var(--r) var(--r) 0 0;padding:22px;padding-bottom:calc(22px + var(--sb));transform:translateY(100%);transition:transform .3s cubic-bezier(.34,1,.64,1);max-height:92dvh;overflow-y:auto;border-top:1px solid var(--bdr2)}
+.moverlay.act .mbox{transform:translateY(0)}
+.mhandle{width:34px;height:4px;background:var(--bdr2);border-radius:99px;margin:0 auto 18px}
 
-/* ---- FAB ---- */
-.fab{position:fixed;bottom:calc(80px + var(--safe-b));right:20px;width:52px;height:52px;border-radius:50%;background:var(--primary);color:#0a0a0a;border:none;font-size:26px;box-shadow:0 8px 24px rgba(245,197,24,.35);cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;font-weight:700}
-.fab:active{transform:scale(.95)}
+/* LIGHTBOX */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;opacity:0;pointer-events:none;transition:opacity .2s}
+#lightbox.act{opacity:1;pointer-events:auto}
+#lightbox img{max-width:95vw;max-height:92dvh;object-fit:contain;border-radius:var(--rs)}
 
-/* ---- SUBMIT BAR ---- */
-.submit-bar{position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + var(--safe-b));background:rgba(10,10,10,.95);backdrop-filter:blur(20px);border-top:1px solid var(--border2);z-index:50}
-.submit-bar .btn{max-width:640px;margin:0 auto;display:flex}
+/* FAB */
+.fab{position:fixed;bottom:calc(74px + var(--sb));right:18px;width:50px;height:50px;border-radius:50%;background:var(--gold);color:#0a0a0a;border:none;font-size:25px;box-shadow:0 8px 24px rgba(245,197,24,.35);cursor:pointer;z-index:50;display:flex;align-items:center;justify-content:center;font-weight:700}
+.fab:active{transform:scale(.94)}
 
-/* ---- INVENTORY ---- */
-.inv-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.inv-row:last-child{border-bottom:none}
-.inv-label{color:var(--text2)}
-.inv-val{font-weight:600}
+/* REFRESH BTN */
+.refbtn{background:none;border:1px solid var(--bdr2);border-radius:var(--rx);color:var(--text2);font-size:16px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s}
+.refbtn:hover{color:var(--gold)}
+.refbtn.spin svg{animation:spin .7s linear}
 
-/* ---- SECTION HEADER ---- */
-.sec-header{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px}
+/* TOGGLE SWITCH */
+.tog{position:relative;width:42px;height:24px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tog-slider{position:absolute;inset:0;background:var(--bg4);border-radius:99px;cursor:pointer;transition:.3s;border:1px solid var(--bdr2)}
+.tog-slider::before{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.3s}
+.tog input:checked+.tog-slider{background:var(--gold)}
+.tog input:checked+.tog-slider::before{transform:translateX(18px)}
 
-/* ---- TABS ---- */
-.tab-bar{display:flex;gap:0;background:var(--bg3);border-radius:var(--radius-sm);padding:3px;margin-bottom:16px}
-.tab-btn{flex:1;padding:9px;text-align:center;border-radius:var(--radius-xs);font-size:13px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:var(--font)}
-.tab-btn.active{background:var(--primary);color:#0a0a0a}
-
-/* ---- LOADER ---- */
-.loader{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.2);border-radius:50%;border-top-color:#fff;animation:spin 1s linear infinite;display:inline-block}
+/* LOADER */
+.loader{width:17px;height:17px;border:2.5px solid rgba(255,255,255,.2);border-radius:50%;border-top-color:#fff;animation:spin .9s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loader-dark{border:2.5px solid rgba(0,0,0,.15);border-top-color:#0a0a0a}
 
-/* ---- PAYMENT TYPE LABEL ---- */
-.pay-type{font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px}
-.pay-full{background:var(--danger-dim);color:var(--danger)}
-.pay-partial{background:var(--warning-dim);color:var(--warning)}
+/* SELLER ASSIGNED WITH IMG */
+.aasgn{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bdr)}
+.aasgn:last-child{border-bottom:none}
+.aasgn img{width:40px;height:40px;object-fit:cover;border-radius:var(--rx);background:var(--bg3);flex-shrink:0}
 
-/* ---- WISHLIST BTN ---- */
-.wish-btn{background:none;border:none;cursor:pointer;padding:4px;color:var(--text3);font-size:20px;line-height:1;transition:color .2s}
-.wish-btn.active{color:var(--primary)}
-
-/* ---- PROFILE CARD ---- */
-.profile-field{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px}
-.profile-field:last-child{border-bottom:none}
-.profile-field span:first-child{color:var(--text2);font-size:13px}
-.profile-field span:last-child{font-weight:500}
-
-/* ---- RESPONSIVE ---- */
-@media(max-width:380px){
-  .product-grid{grid-template-columns:repeat(2,1fr)}
-  .stat-grid{grid-template-columns:repeat(2,1fr)}
-  .balance-amount{font-size:26px}
-}
+/* RESPONSIVE */
 @media(min-width:640px){
-  .bottom-nav,.submit-bar{left:50%;transform:translateX(-50%);width:640px;border-radius:var(--radius) var(--radius) 0 0}
-  .modal-box{border-radius:var(--radius)}
+  .bnav,.subbar,.msg-input-row{left:50%;transform:translateX(-50%);width:640px}
+  .mbox{border-radius:var(--r)}
   .fab{right:calc(50% - 300px)}
 }
-
-.divider{height:1px;background:var(--border);margin:16px 0}
-.row{display:flex;gap:10px;align-items:center}
-.row-between{display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body>
 
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()"><img id="lb-img" src="" alt=""></div>
+
+<!-- TOAST -->
 <div id="toast" class="toast"></div>
 
-<!-- ===== CONFIRM MODAL ===== -->
-<div id="modal-confirm" class="modal-overlay" onclick="if(event.target===this)closeModal('confirm')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 id="mc-title" style="font-size:18px;font-weight:700;margin-bottom:8px"></h2>
-    <p id="mc-msg" style="color:var(--text2);margin-bottom:20px;font-size:14px"></p>
-    <div style="display:flex;gap:10px">
-      <button class="btn btn-muted" onclick="closeModal('confirm')">Cancel</button>
-      <button class="btn btn-primary" id="mc-btn">Confirm</button>
-    </div>
+<!-- CONFIRM MODAL -->
+<div id="m-confirm" class="moverlay" onclick="if(event.target===this)mclose('confirm')">
+  <div class="mbox">
+    <div class="mhandle"></div>
+    <h2 id="mc-t" style="font-size:17px;font-weight:700;margin-bottom:7px"></h2>
+    <p id="mc-m" style="color:var(--text2);margin-bottom:18px;font-size:13px"></p>
+    <div style="display:flex;gap:9px"><button class="btn btn-muted" onclick="mclose('confirm')">Cancel</button><button class="btn btn-gold" id="mc-ok">Confirm</button></div>
   </div>
 </div>
 
-<!-- ===== LOGIN SCREEN ===== -->
-<div id="screen-login">
-  <div class="login-logo">
-    <div style="font-size:52px;margin-bottom:8px">🖤</div>
+<!-- ===== LOGIN ===== -->
+<div id="scr-login">
+  <div class="logo">
+    <div style="font-size:54px;margin-bottom:8px">🖤</div>
     <h1>BLACKMARKET</h1>
-    <p>your source, your hustle</p>
+    <p>your source · your hustle</p>
   </div>
-  <div class="login-card">
+  <div class="login-wrap">
     <div class="role-tabs">
-      <div class="role-tab active" onclick="switchLoginTab('login')">Sign In</div>
-      <div class="role-tab" onclick="switchLoginTab('signup')">Join as Buyer</div>
+      <button class="rtab act" onclick="loginTab('in')">Sign In</button>
+      <button class="rtab" onclick="loginTab('up')">Join as Buyer</button>
     </div>
-
-    <div id="login-form" class="card">
-      <input type="text" id="l-user" class="input" placeholder="Username" autocomplete="username">
-      <input type="password" id="l-pass" class="input" placeholder="Password" autocomplete="current-password">
-      <button class="btn btn-primary" id="login-btn" onclick="login()">Sign In</button>
-      <p style="text-align:center;font-size:12px;color:var(--text3);margin-top:12px">Sellers: contact owner for your account</p>
+    <div id="f-in" class="card">
+      <input id="l-u" class="inp" placeholder="Username" autocomplete="username">
+      <input id="l-p" class="inp" type="password" placeholder="Password" autocomplete="current-password">
+      <button class="btn btn-gold" id="btn-login" onclick="doLogin()">Sign In</button>
+      <p style="text-align:center;font-size:11px;color:var(--text3);margin-top:10px">Sellers: get your account from the owner</p>
     </div>
-
-    <div id="signup-form" class="card hidden">
-      <input type="text" id="s-name" class="input" placeholder="Full Name">
-      <input type="text" id="s-phone" class="input" placeholder="Phone Number">
-      <input type="text" id="s-user" class="input" placeholder="Choose Username">
-      <input type="password" id="s-pass" class="input" placeholder="Choose Password">
-      <button class="btn btn-primary" id="signup-btn" onclick="signup()">Create Account</button>
+    <div id="f-up" class="card hidden">
+      <input id="su-n" class="inp" placeholder="Full Name">
+      <input id="su-ph" class="inp" placeholder="Phone Number">
+      <input id="su-u" class="inp" placeholder="Choose Username">
+      <input id="su-p" class="inp" type="password" placeholder="Choose Password">
+      <button class="btn btn-gold" id="btn-signup" onclick="doSignup()">Create Account</button>
     </div>
   </div>
 </div>
 
-<!-- ===== APP SHELL ===== -->
+<!-- ===== APP ===== -->
 <div id="app" class="hidden">
 
-  <!-- ===== SELLER VIEW ===== -->
-  <div id="view-seller" class="hidden screen">
-    <div class="page-header">
-      <div>
-        <div style="font-size:12px;color:var(--text2)">Welcome back,</div>
-        <div style="font-size:18px;font-weight:700" id="sv-name"></div>
-      </div>
-      <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+<!-- ==== SELLER VIEW ==== -->
+<div id="v-seller" class="hidden screen">
+  <div class="ph">
+    <div>
+      <div style="font-size:11px;color:var(--text2)">Welcome,</div>
+      <div id="sv-name" style="font-size:18px;font-weight:700"></div>
     </div>
-    <div class="container">
-      <div class="balance-card">
-        <div class="balance-label">Total owed to owner</div>
-        <div class="balance-amount" id="sv-balance">GH₵ 0.00</div>
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn btn-wa btn-sm" onclick="waOwner()">💬 WhatsApp Owner</button>
-          <button class="btn btn-muted btn-sm" onclick="openModal('seller-profile')">Edit Profile</button>
-        </div>
-      </div>
-
-      <div class="sec-header">My Assigned Stock</div>
-      <div id="sv-products" class="product-grid"></div>
-
-      <div class="sec-header">Payment Statement</div>
-      <div id="sv-statement" class="card"></div>
-
-      <div class="sec-header">Request More Stock</div>
-      <div class="card">
-        <select id="sv-req-prod" class="input"><option value="">Select product</option></select>
-        <input type="number" id="sv-req-qty" class="input" placeholder="Quantity needed">
-        <button class="btn btn-ghost" onclick="requestStock()">Request Stock from Owner</button>
-      </div>
-
-      <div class="sec-header">List a Product in Marketplace</div>
-      <div class="card">
-        <select id="sv-list-prod" class="input"><option value="">Select product to list</option></select>
-        <input type="number" id="sv-list-price" class="input" placeholder="Your selling price (GH₵)">
-        <p style="font-size:12px;color:var(--text3);margin-bottom:12px">Owner will approve before it goes live</p>
-        <button class="btn btn-ghost" onclick="submitListing()">Submit for Approval</button>
-      </div>
-
-      <div class="sec-header">My Marketplace Listings</div>
-      <div id="sv-listings"></div>
-    </div>
-    <div class="submit-bar">
-      <button class="btn btn-success" id="sv-submit-btn" onclick="submitSales()">Submit Sales (0 items)</button>
+    <div class="row">
+      <button class="refbtn" id="sv-ref" onclick="doRefresh(this)" title="Refresh"><svg fill="none" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+      <button class="btn btn-ghost btn-sm" onclick="mopen('seller-profile')">Profile</button>
+      <button class="btn btn-muted btn-sm" onclick="doLogout()">Out</button>
     </div>
   </div>
-
-  <!-- ===== OWNER VIEW ===== -->
-  <div id="view-owner" class="hidden screen">
-    <div class="page-header">
-      <h1 style="font-size:20px;font-weight:700;color:var(--primary)">BLACKMARKET</h1>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn btn-ghost btn-sm" onclick="loadDashboard()" title="Refresh data" style="padding:8px 10px">↻</button>
-        <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
+  <div class="container">
+    <div class="bal-card">
+      <div class="bal-lbl">Total owed to owner</div>
+      <div id="sv-bal" class="bal-amt">GH₵ 0.00</div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn btn-wa btn-sm" onclick="waOwner()">💬 WhatsApp Owner</button>
       </div>
     </div>
-    <div class="container">
-
-      <!-- Home -->
-      <div id="ow-home">
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-label">Products</div><div class="stat-val" id="ow-stat-p">0</div></div>
-          <div class="stat-card"><div class="stat-label">Sellers</div><div class="stat-val" id="ow-stat-s">0</div></div>
-          <div class="stat-card"><div class="stat-label">Buyers</div><div class="stat-val" id="ow-stat-b">0</div></div>
-          <div class="stat-card"><div class="stat-label">Outstanding</div><div class="stat-val" id="ow-stat-d" style="color:var(--danger)">GH₵0</div></div>
-        </div>
-        <div class="sec-header">Pending Actions</div>
-        <div id="ow-pending"></div>
-        <div class="sec-header">Seller Balances</div>
-        <div class="card" id="ow-seller-list"></div>
-      </div>
-
-      <!-- Inventory -->
-      <div id="ow-inventory" class="hidden">
-        <div class="sec-header">Live Inventory</div>
-        <div id="ow-inv-list"></div>
-      </div>
-
-      <!-- Preorders -->
-      <div id="ow-preorders" class="hidden">
-        <div class="sec-header">Preorder Items</div>
-        <div id="ow-preorder-list"></div>
-      </div>
-
-      <!-- Assign -->
-      <div id="ow-assign" class="hidden">
-        <div class="sec-header">Assign Stock</div>
-        <div class="card">
-          <select id="ow-as-seller" class="input"></select>
-          <select id="ow-as-prod" class="input"></select>
-          <input type="number" id="ow-as-qty" class="input" placeholder="Quantity">
-          <button class="btn btn-primary" onclick="assignProduct()">Assign Stock</button>
-        </div>
-        <div class="sec-header">Stock Requests from Sellers</div>
-        <div id="ow-req-list"></div>
-      </div>
-
-      <!-- Sellers + Buyers -->
-      <div id="ow-sellers" class="hidden">
-        <div class="sec-header">Your Sellers</div>
-        <div class="card" id="ow-sellers-list"></div>
-        <div class="sec-header">Registered Buyers</div>
-        <div class="card" id="ow-buyer-list"></div>
-      </div>
-
+    <div class="sh">My Assigned Stock</div>
+    <div id="sv-prods" class="pgrid"></div>
+    <div class="sh">Payment Statement</div>
+    <div id="sv-stmt" class="card"></div>
+    <div class="sh">Request More Stock</div>
+    <div class="card">
+      <select id="sv-rp" class="inp"><option value="">Select product</option></select>
+      <input type="number" id="sv-rq" class="inp" placeholder="Quantity needed">
+      <button class="btn btn-ghost" onclick="reqStock()">Request from Owner</button>
     </div>
-    <div class="bottom-nav" id="owner-nav">
-      <div class="nav-item active" onclick="ownerTab('home',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-        Home
+    <div class="sh">List a Product in Marketplace</div>
+    <div class="card" id="sv-listing-panel">
+      <div id="sv-open-notice" class="hidden" style="background:var(--green-dim);border:1px solid var(--green);border-radius:var(--rx);padding:9px 12px;font-size:12px;color:var(--green);margin-bottom:10px">✅ Open selling is enabled. You can list any product.</div>
+      <div id="sv-listing-type" class="tabbar" style="margin-bottom:12px">
+        <button class="tabbtn act" onclick="listingTab('owner',this)">Owner's Products</button>
+        <button class="tabbtn" id="sv-custom-tab" onclick="listingTab('custom',this)">My Own Product</button>
       </div>
-      <div class="nav-item" onclick="ownerTab('inventory',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        Inventory
+      <div id="sv-list-owner">
+        <select id="sv-lp" class="inp"><option value="">Select product</option></select>
       </div>
-      <div class="nav-item" style="position:relative" onclick="ownerTab('preorders',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Preorders
+      <div id="sv-list-custom" class="hidden">
+        <input type="text" id="sv-lname" class="inp" placeholder="Product Name">
+        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:7px">Product Image</label>
+        <input type="file" id="sv-limg" accept="image/*" class="inp" style="padding:9px">
       </div>
-      <div class="nav-item" onclick="ownerTab('assign',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-        Assign
-      </div>
-      <div class="nav-item" onclick="ownerTab('sellers',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        Sellers
-      </div>
+      <input type="number" id="sv-lprice" class="inp" placeholder="Your selling price (GH₵)">
+      <p style="font-size:11px;color:var(--text3);margin-bottom:10px">Price requires owner approval before going live</p>
+      <button class="btn btn-ghost" id="sv-list-btn" onclick="submitListing()">Submit for Approval</button>
     </div>
-    <button class="fab" id="ow-fab" onclick="ownerFab()">+</button>
+    <div class="sh">My Active Listings</div>
+    <div id="sv-listings"></div>
+    <div class="sh">Messages</div>
+    <div id="sv-msgs" class="msg-list" style="min-height:60px"></div>
+    <div style="height:60px"></div>
   </div>
-
-  <!-- ===== BUYER VIEW ===== -->
-  <div id="view-buyer" class="hidden screen">
-    <div class="page-header">
-      <div>
-        <div style="font-size:12px;color:var(--text2)">Hi,</div>
-        <div style="font-size:18px;font-weight:700" id="bv-name"></div>
-      </div>
-      <button class="btn btn-ghost btn-sm" onclick="logout()">Logout</button>
-    </div>
-    <div class="container">
-      <div id="bv-browse">
-        <div class="tab-bar">
-          <button class="tab-btn active" onclick="buyerBrowseTab('preorders',this)">Preorders</button>
-          <button class="tab-btn" onclick="buyerBrowseTab('market',this)">Marketplace</button>
-        </div>
-        <div id="bv-preorders"></div>
-        <div id="bv-market" class="hidden">
-          <div class="search-wrap">
-            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input class="search-input" id="bv-search" placeholder="Search by town..." oninput="filterMarket()">
-          </div>
-          <div id="bv-market-list"></div>
-        </div>
-      </div>
-      <div id="bv-orders" class="hidden">
-        <div class="sec-header">My Orders</div>
-        <div id="bv-orders-list"></div>
-      </div>
-      <div id="bv-wishlist" class="hidden">
-        <div class="sec-header">Wishlist</div>
-        <div id="bv-wish-list"></div>
-      </div>
-      <div id="bv-profile" class="hidden">
-        <div class="sec-header">My Profile</div>
-        <div class="card">
-          <div id="bv-profile-info"></div>
-          <div class="divider"></div>
-          <button class="btn btn-wa" onclick="waOwner()">💬 Contact Owner on WhatsApp</button>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="buyerTab('browse',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Browse
-      </div>
-      <div class="nav-item" style="position:relative" onclick="buyerTab('orders',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-        <span id="bv-order-badge" class="nav-badge hidden">0</span>
-        My Orders
-      </div>
-      <div class="nav-item" onclick="buyerTab('wishlist',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-        Wishlist
-      </div>
-      <div class="nav-item" onclick="buyerTab('profile',this)">
-        <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-        Profile
-      </div>
-    </div>
+  <div class="msg-input-row" id="sv-msg-bar">
+    <input id="sv-msg-inp" class="inp" placeholder="Message to owner…" onkeydown="if(event.key==='Enter')sendMsg('seller')">
+    <button class="btn btn-gold btn-sm" style="flex-shrink:0;width:auto;padding:11px 14px" onclick="sendMsg('seller')">Send</button>
+  </div>
+  <div class="subbar" id="sv-subbar" style="bottom:calc(56px + var(--sb))">
+    <button class="btn btn-green" id="sv-sub-btn" onclick="submitSales()">Submit Sales (0 items)</button>
   </div>
 </div>
 
-<!-- ===== MODALS ===== -->
+<!-- ==== OWNER VIEW ==== -->
+<div id="v-owner" class="hidden screen">
+  <div class="ph">
+    <h1 style="font-size:19px;font-weight:800;color:var(--gold)">BLACKMARKET</h1>
+    <div class="row">
+      <button class="refbtn" id="ow-ref" onclick="doRefresh(this)" title="Refresh"><svg fill="none" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+      <button class="btn btn-muted btn-sm" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div id="ow-home">
+      <div class="sgrid">
+        <div class="scrd"><div class="slbl">Products</div><div id="os-p" class="sval">0</div></div>
+        <div class="scrd"><div class="slbl">Sellers</div><div id="os-s" class="sval">0</div></div>
+        <div class="scrd"><div class="slbl">Buyers</div><div id="os-b" class="sval">0</div></div>
+        <div class="scrd"><div class="slbl">Outstanding</div><div id="os-d" class="sval" style="color:var(--red)">GH₵0</div></div>
+      </div>
+      <div class="sh">Pending Actions <span id="ow-pcount" class="badge bg-red hidden"></span></div>
+      <div id="ow-pending"></div>
+      <div class="sh">Seller Balances</div>
+      <div class="card" id="ow-slist"></div>
+      <div class="sh">Messages</div>
+      <div id="ow-msgs" class="msg-list" style="min-height:60px"></div>
+      <div style="height:60px"></div>
+    </div>
+    <div id="ow-inventory" class="hidden"><div class="sh">Live Inventory</div><div id="ow-inv"></div></div>
+    <div id="ow-preorders" class="hidden"><div class="sh">Preorder Items</div><div id="ow-prl"></div></div>
+    <div id="ow-assign" class="hidden">
+      <div class="sh">Assign Stock to Seller</div>
+      <div class="card">
+        <select id="ow-as" class="inp"></select>
+        <select id="ow-ap" class="inp"></select>
+        <input type="number" id="ow-aq" class="inp" placeholder="Quantity">
+        <button class="btn btn-gold" onclick="assignProd()">Assign Stock</button>
+      </div>
+      <div class="sh">Stock Requests</div>
+      <div id="ow-reqlist"></div>
+    </div>
+    <div id="ow-sellers" class="hidden">
+      <div class="sh">Sellers</div>
+      <div class="card" id="ow-smanage"></div>
+      <div class="sh">Registered Buyers</div>
+      <div class="card" id="ow-blist"></div>
+    </div>
+  </div>
+  <div id="ow-msg-wrap" class="msg-input-row hidden">
+    <select id="ow-msg-to" class="inp" style="margin:0;flex:0 0 110px;font-size:12px">
+      <option value="">To…</option>
+    </select>
+    <input id="ow-msg-inp" class="inp" placeholder="Message…" style="flex:1" onkeydown="if(event.key==='Enter')sendMsg('owner')">
+    <button class="btn btn-gold btn-sm" style="flex-shrink:0;width:auto;padding:11px 14px" onclick="sendMsg('owner')">Send</button>
+  </div>
+  <div class="bnav" id="ow-nav">
+    <div class="ni act" onclick="owTab('home',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>Home</div>
+    <div class="ni" onclick="owTab('inventory',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>Stock</div>
+    <div class="ni" onclick="owTab('preorders',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Preorders</div>
+    <div class="ni" onclick="owTab('assign',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>Assign</div>
+    <div class="ni" onclick="owTab('sellers',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Sellers</div>
+  </div>
+  <button class="fab" id="ow-fab" onclick="owFab()">+</button>
+</div>
+
+<!-- ==== BUYER VIEW ==== -->
+<div id="v-buyer" class="hidden screen">
+  <div class="ph">
+    <div>
+      <div style="font-size:11px;color:var(--text2)">Hi,</div>
+      <div id="bv-name" style="font-size:18px;font-weight:700"></div>
+    </div>
+    <div class="row">
+      <button class="refbtn" id="bv-ref" onclick="doRefresh(this)" title="Refresh"><svg fill="none" stroke-width="2" viewBox="0 0 24 24" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+      <button class="btn btn-muted btn-sm" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="container">
+    <div id="bv-browse">
+      <div class="tabbar">
+        <button class="tabbtn act" onclick="bTab('preorders',this)">Preorders</button>
+        <button class="tabbtn" onclick="bTab('market',this)">Marketplace</button>
+      </div>
+      <div id="bv-preorders"></div>
+      <div id="bv-market" class="hidden">
+        <div class="srch"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input id="bv-srch" placeholder="Search by town…" oninput="filterMkt()"></div>
+        <div id="bv-mktlist"></div>
+      </div>
+    </div>
+    <div id="bv-orders" class="hidden"><div class="sh">My Orders</div><div id="bv-olist"></div></div>
+    <div id="bv-wishlist" class="hidden"><div class="sh">Wishlist</div><div id="bv-wlist"></div></div>
+    <div id="bv-msgs-view" class="hidden">
+      <div class="sh">Messages</div>
+      <div id="bv-msgs" class="msg-list" style="min-height:80px"></div>
+      <div style="height:60px"></div>
+    </div>
+    <div id="bv-profile" class="hidden">
+      <div class="sh">My Profile</div>
+      <div class="card">
+        <div id="bv-pinfo"></div>
+        <div class="dv"></div>
+        <button class="btn btn-wa" onclick="waOwner()">💬 Contact Owner on WhatsApp</button>
+      </div>
+    </div>
+  </div>
+  <div id="bv-msg-bar" class="msg-input-row hidden">
+    <input id="bv-msg-inp" class="inp" placeholder="Message to owner…" onkeydown="if(event.key==='Enter')sendMsg('buyer')">
+    <button class="btn btn-gold btn-sm" style="flex-shrink:0;width:auto;padding:11px 14px" onclick="sendMsg('buyer')">Send</button>
+  </div>
+  <div class="bnav">
+    <div class="ni act" onclick="bvTab('browse',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Browse</div>
+    <div class="ni" onclick="bvTab('orders',this)" style="position:relative"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><span id="bv-obadge" class="nbadge hidden"></span>Orders</div>
+    <div class="ni" onclick="bvTab('wishlist',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>Wishlist</div>
+    <div class="ni" onclick="bvTab('msgs',this)" style="position:relative"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg><span id="bv-mbadge" class="nbadge hidden"></span>Messages</div>
+    <div class="ni" onclick="bvTab('profile',this)"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>Profile</div>
+  </div>
+</div>
+
+</div><!-- end #app -->
+
+<!-- MODALS -->
 
 <!-- Add Product -->
-<div id="modal-add-product" class="modal-overlay" onclick="if(event.target===this)closeModal('add-product')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Add Product</h2>
-    <input type="text" id="ap-name" class="input" placeholder="Product Name">
-    <input type="number" id="ap-price" class="input" placeholder="Owner Return Price (GH₵)">
-    <input type="number" id="ap-qty" class="input" placeholder="Total Quantity">
-    <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:8px">Product Image</label>
-    <input type="file" id="ap-img" accept="image/*" class="input" style="padding:10px">
-    <button class="btn btn-primary" id="ap-btn" onclick="addProduct()">Save Product</button>
-  </div>
+<div id="m-add-product" class="moverlay" onclick="if(event.target===this)mclose('add-product')">
+  <div class="mbox"><div class="mhandle"></div><h2 style="font-size:17px;font-weight:700;margin-bottom:14px">Add Product</h2>
+  <input id="ap-n" class="inp" placeholder="Product Name">
+  <input id="ap-pr" type="number" class="inp" placeholder="Owner Return Price (GH₵)">
+  <input id="ap-q" type="number" class="inp" placeholder="Total Quantity">
+  <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:7px">Product Image</label>
+  <input type="file" id="ap-img" accept="image/*" class="inp" style="padding:9px">
+  <button class="btn btn-gold" id="ap-btn" onclick="addProduct()">Save Product</button></div>
 </div>
 
 <!-- Add Seller -->
-<div id="modal-add-seller" class="modal-overlay" onclick="if(event.target===this)closeModal('add-seller')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Add Seller</h2>
-    <input type="text" id="as-name" class="input" placeholder="Full Name">
-    <input type="text" id="as-mname" class="input" placeholder="Market Name (shown to buyers)">
-    <input type="text" id="as-user" class="input" placeholder="Login Username">
-    <input type="text" id="as-pass" class="input" placeholder="Login Password">
-    <input type="text" id="as-phone" class="input" placeholder="Phone Number">
-    <button class="btn btn-primary" onclick="addSeller()">Add Seller</button>
-  </div>
+<div id="m-add-seller" class="moverlay" onclick="if(event.target===this)mclose('add-seller')">
+  <div class="mbox"><div class="mhandle"></div><h2 style="font-size:17px;font-weight:700;margin-bottom:14px">Add Seller</h2>
+  <input id="as-n" class="inp" placeholder="Full Name">
+  <input id="as-mn" class="inp" placeholder="Market Name (shown to buyers)">
+  <input id="as-u" class="inp" placeholder="Username">
+  <input id="as-pw" class="inp" placeholder="Password">
+  <input id="as-ph" class="inp" placeholder="Phone Number">
+  <button class="btn btn-gold" onclick="addSeller()">Add Seller</button></div>
 </div>
 
-<!-- Add Preorder Item -->
-<div id="modal-add-preorder" class="modal-overlay" onclick="if(event.target===this)closeModal('add-preorder')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">New Preorder Item</h2>
-    <input type="text" id="pr-name" class="input" placeholder="Product Name">
-    <textarea id="pr-desc" class="input" placeholder="Description (what it is, why it's good)"></textarea>
-    <input type="number" id="pr-price" class="input" placeholder="Price (GH₵)">
-    <div style="display:flex;gap:10px">
-      <div style="flex:1">
-        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">Payment Type</label>
-        <select id="pr-paytype" class="input" style="margin-bottom:0" onchange="toggleDeposit()">
-          <option value="full">Full Payment</option>
-          <option value="partial">Partial / Deposit</option>
-        </select>
-      </div>
-      <div style="flex:1" id="pr-deposit-wrap" class="hidden">
-        <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px">Deposit Amount (GH₵)</label>
-        <input type="number" id="pr-deposit" class="input" style="margin-bottom:0" placeholder="e.g. 50">
-      </div>
+<!-- Add Preorder -->
+<div id="m-add-preorder" class="moverlay" onclick="if(event.target===this)mclose('add-preorder')">
+  <div class="mbox"><div class="mhandle"></div><h2 style="font-size:17px;font-weight:700;margin-bottom:14px">New Preorder Item</h2>
+  <input id="pr-n" class="inp" placeholder="Product Name">
+  <textarea id="pr-d" class="inp" placeholder="Description"></textarea>
+  <input id="pr-pr" type="number" class="inp" placeholder="Price (GH₵)">
+  <div class="inp-row">
+    <div>
+      <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:5px">Payment Type</label>
+      <select id="pr-pt" class="inp" style="margin-bottom:0" onchange="togDeposit()">
+        <option value="full">Full Payment</option>
+        <option value="partial">Deposit First</option>
+      </select>
     </div>
-    <div style="margin-top:12px"></div>
-    <input type="number" id="pr-slots" class="input" placeholder="Total slots available (e.g. 30)">
-    <input type="text" id="pr-eta" class="input" placeholder="Estimated arrival (e.g. 2 weeks)">
-    <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:8px">Product Image</label>
-    <input type="file" id="pr-img" accept="image/*" class="input" style="padding:10px">
-    <button class="btn btn-primary" id="pr-btn" onclick="addPreorderItem()">Create Preorder</button>
+    <div id="pr-dw" class="hidden">
+      <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:5px">Deposit Amount (GH₵)</label>
+      <input id="pr-da" type="number" class="inp" style="margin-bottom:0" placeholder="e.g. 50">
+    </div>
   </div>
+  <div style="margin-top:10px"></div>
+  <input id="pr-sl" type="number" class="inp" placeholder="Total slots (e.g. 30)">
+  <input id="pr-eta" class="inp" placeholder="Estimated arrival (e.g. 2 weeks)">
+  <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:7px">Product Image</label>
+  <input type="file" id="pr-img" accept="image/*" class="inp" style="padding:9px">
+  <button class="btn btn-gold" id="pr-btn" onclick="addPreorder()">Create Preorder</button></div>
 </div>
 
 <!-- Place Preorder (Buyer) -->
-<div id="modal-place-order" class="modal-overlay" onclick="if(event.target===this)closeModal('place-order')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:4px" id="po-title"></h2>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px" id="po-sub"></p>
-    <div id="po-pay-info" style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;font-size:13px;line-height:1.7"></div>
-    <input type="number" id="po-qty" class="input" placeholder="Quantity" min="1" value="1">
-    <div id="po-total-row" style="font-size:14px;color:var(--text2);margin-bottom:12px">Total: <span id="po-total" style="color:var(--primary);font-weight:700"></span></div>
-    <input type="text" id="po-proof" class="input" placeholder="Transaction ID or payment note (optional)">
-    <p style="font-size:12px;color:var(--text3);margin-bottom:14px" id="po-cancel-note"></p>
-    <button class="btn btn-primary" id="po-btn" onclick="placeOrder()">Confirm Preorder</button>
-  </div>
+<div id="m-place-order" class="moverlay" onclick="if(event.target===this)mclose('place-order')">
+  <div class="mbox"><div class="mhandle"></div>
+  <h2 id="po-t" style="font-size:17px;font-weight:700;margin-bottom:4px"></h2>
+  <p id="po-s" style="font-size:12px;color:var(--text2);margin-bottom:13px"></p>
+  <div id="po-momo" class="momo-box"></div>
+  <input id="po-q" type="number" class="inp" placeholder="Quantity" min="1" value="1" oninput="updateOrderTotal()">
+  <div id="po-tot" style="font-size:13px;color:var(--text2);margin-bottom:11px">Total: <span id="po-tval" style="color:var(--gold);font-weight:700"></span></div>
+  <input id="po-proof" class="inp" placeholder="Transaction ID or payment note (optional)">
+  <p id="po-cnote" style="font-size:11px;color:var(--text3);margin-bottom:13px"></p>
+  <button class="btn btn-gold" onclick="placeOrder()">Confirm Preorder</button></div>
 </div>
 
-<!-- Seller Profile Edit -->
-<div id="modal-seller-profile" class="modal-overlay" onclick="if(event.target===this)closeModal('seller-profile')">
-  <div class="modal-box">
-    <div class="modal-handle"></div>
-    <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">Edit Your Profile</h2>
-    <input type="text" id="sp-mname" class="input" placeholder="Market Name (shown to buyers)">
-    <input type="text" id="sp-town" class="input" placeholder="Your Town / Location">
-    <input type="text" id="sp-phone" class="input" placeholder="Phone Number">
-    <select id="sp-delivery" class="input">
-      <option value="">Delivery Method</option>
-      <option value="Car">Car</option>
-      <option value="Motorbike">Motorbike</option>
-      <option value="Bicycle">Bicycle</option>
-      <option value="Walk-in only">Walk-in only</option>
-      <option value="Delivery available">Delivery available</option>
-      <option value="No delivery">No delivery</option>
-    </select>
-    <button class="btn btn-primary" onclick="saveSellerProfile()">Save Changes</button>
-  </div>
+<!-- Seller Profile -->
+<div id="m-seller-profile" class="moverlay" onclick="if(event.target===this)mclose('seller-profile')">
+  <div class="mbox"><div class="mhandle"></div><h2 style="font-size:17px;font-weight:700;margin-bottom:14px">Your Profile</h2>
+  <input id="sp-mn" class="inp" placeholder="Market Name (shown to buyers)">
+  <input id="sp-tw" class="inp" placeholder="Town / Location">
+  <input id="sp-ph" class="inp" placeholder="Phone Number">
+  <select id="sp-dm" class="inp">
+    <option value="">Delivery Method</option>
+    <option value="Car">Car</option>
+    <option value="Motorbike">Motorbike</option>
+    <option value="Bicycle">Bicycle</option>
+    <option value="Walk-in only">Walk-in only</option>
+    <option value="Delivery available">Delivery available</option>
+    <option value="No delivery">No delivery</option>
+  </select>
+  <button class="btn btn-gold" onclick="saveProfile()">Save Changes</button></div>
 </div>
 
 <script>
 // ============================================================
-//  CONFIG — SET YOUR APPS SCRIPT URL HERE
+//  CONFIG
 // ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbyd37XhDSSmKARkqdaBcCyHbU-h2kXSqhJ9nJsvIqUcn5DYj4Jc5L4dljRqbOC9KlK5IQ/exec';
+const API = 'https://script.google.com/macros/s/AKfycbwPdp4tORiEeu18uzLMwMhIuA4TwCuh8nX5Pajk_xg82jEzGX0N4cExnZrXp-yrMmZo-g/exec';
 
 // ============================================================
 //  STATE
 // ============================================================
-let currentUser = null;
-let db = {};
-let currentPreorderItem = null;
-let currentOwnerTab = 'home';
-let currentBuyerBrowseTab = 'preorders';
+let U = null; // current user
+let DB = {};  // dashboard data
+let curOwnerTab = 'home';
+let curPreorderItem = null;
+let curListingIsCustom = false;
+let lastMsgCount = 0;
+let refreshTimer = null;
+let notifSound = null;
+
+// ============================================================
+//  SOUND
+// ============================================================
+function initSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    notifSound = () => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.setValueAtTime(880, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.05);
+      g.gain.setValueAtTime(0.18, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      o.start(); o.stop(ctx.currentTime + 0.3);
+    };
+  } catch(e) {}
+}
+function playNotif() { try { if(notifSound) notifSound(); } catch(e){} }
 
 // ============================================================
 //  UTILS
 // ============================================================
-function toast(msg, type = '') {
+function toast(msg, type='') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast show ${type}`;
-  setTimeout(() => t.classList.remove('show'), 3000);
+  t.textContent = msg; t.className = `toast show ${type}`;
+  setTimeout(()=>t.classList.remove('show'), 3200);
 }
 
-function showConfirm(title, msg, onOk) {
-  document.getElementById('mc-title').textContent = title;
-  document.getElementById('mc-msg').textContent = msg;
-  document.getElementById('modal-confirm').classList.add('active');
-  document.getElementById('mc-btn').onclick = () => { closeModal('confirm'); onOk(); };
+function confirm$(title, msg, onOk) {
+  document.getElementById('mc-t').textContent = title;
+  document.getElementById('mc-m').textContent = msg;
+  document.getElementById('m-confirm').classList.add('act');
+  document.getElementById('mc-ok').onclick = () => { mclose('confirm'); onOk(); };
 }
 
-function openModal(id) { document.getElementById('modal-' + id).classList.add('active'); }
-function closeModal(id) { document.getElementById('modal-' + id).classList.remove('active'); }
+function mopen(id) { document.getElementById('m-'+id).classList.add('act'); }
+function mclose(id) { document.getElementById('m-'+id).classList.remove('act'); }
 
-async function apiCall(action, payload = {}) {
+async function api(action, payload={}) {
   try {
-    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...payload }) });
-    return await res.json();
-  } catch (err) {
-    toast('Network error. Check connection.', 'error');
-    return { success: false };
-  }
+    const r = await fetch(API, { method:'POST', body: JSON.stringify({action,...payload}) });
+    return await r.json();
+  } catch(e) { toast('Network error','err'); return {success:false}; }
 }
 
-function compressImage(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        let w = img.width, h = img.height;
-        if (w > 800) { h = h * 800 / w; w = 800; }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', 0.72));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+function setBtn(id, loading, orig) {
+  const b = document.getElementById(id); if(!b) return;
+  if(loading) { b._orig = b.innerHTML; b.innerHTML='<span class="loader"></span>'; b.disabled=true; }
+  else { b.innerHTML = b._orig||orig||b.innerHTML; b.disabled=false; }
+}
+
+async function compressImg(file) {
+  return new Promise(res=>{
+    const r=new FileReader(); r.onload=e=>{
+      const i=new Image(); i.onload=()=>{
+        const c=document.createElement('canvas');
+        let w=i.width,h=i.height;
+        if(w>900){h=h*900/w;w=900;}
+        c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);
+        res(c.toDataURL('image/jpeg',0.72));
+      }; i.src=e.target.result;
+    }; r.readAsDataURL(file);
   });
 }
 
-function setLoading(btnId, loading) {
-  const btn = document.getElementById(btnId);
-  if (!btn) return;
-  btn.dataset.orig = btn.dataset.orig || btn.innerHTML;
-  btn.innerHTML = loading ? '<span class="loader"></span>' : btn.dataset.orig;
-  btn.disabled = loading;
+function gv(o,keys) { for(const k of keys) if(o[k]!=null&&o[k]!=='') return o[k]; return ''; }
+function gid(o) { return String(gv(o,['id','ID'])||Object.values(o)[0]||''); }
+function gsid(o){ return String(gv(o,['seller_id','Seller ID','sellerId'])||''); }
+function gpid(o){ return String(gv(o,['product_id','Product ID','productId'])||''); }
+function gbid(o){ return String(gv(o,['buyer_id','Buyer ID','buyerId'])||''); }
+
+function badge(status) {
+  const m={
+    'ordered':'bg-muted','payment_pending':'bg-amber','payment_confirmed':'bg-blue',
+    'pending':'bg-amber','item_sourced':'bg-blue','ready_for_delivery':'bg-green',
+    'ready':'bg-green','delivered':'bg-green','cancelled':'bg-red',
+    'confirmed':'bg-green','approved':'bg-green','rejected':'bg-red',
+    'open':'bg-green','closed':'bg-muted','arrived':'bg-blue',
+    'active':'bg-green','blocked':'bg-red','payment_confirmed_slot':'bg-green'
+  };
+  const lbl = (status||'unknown').replace(/_/g,' ');
+  return `<span class="badge ${m[status]||'bg-muted'}">${lbl}</span>`;
 }
 
-function getVal(obj, keys) {
-  for (const k of keys) if (obj[k] !== undefined && obj[k] !== '') return obj[k];
-  return undefined;
+function milestoneHtml(filled, total) {
+  if(!total||total<=0) return '';
+  const pct = Math.min(100,Math.round(filled/total*100));
+  let msg = 'Be first to secure a spot!';
+  if(pct>=90) msg='<b>Almost full!</b> Secure your spot now!';
+  else if(pct>=70) msg='<b>Moving fast</b> — most slots taken!';
+  else if(pct>=50) msg='Over halfway — strong demand!';
+  else if(pct>=25) msg='Growing fast — join the list!';
+  return `<div class="mile"><div class="mile-track"><div class="mile-fill" style="width:${pct}%"></div></div><div class="mile-txt"><b>${filled}/${total}</b> slots filled — ${msg}</div></div>`;
 }
-function getId(obj) { return String(getVal(obj, ['id','ID']) || Object.values(obj)[0] || ''); }
-function getSellerId(obj) { return String(getVal(obj, ['seller_id','Seller ID','sellerId']) || ''); }
-function getProductId(obj) { return String(getVal(obj, ['product_id','Product ID','productId']) || ''); }
-function getBuyerId(obj) { return String(getVal(obj, ['buyer_id','Buyer ID','buyerId']) || ''); }
 
-function waOwner(extraMsg = '') {
-  const num = (currentUser && currentUser.wa) ? currentUser.wa : 'OWNER_NUMBER';
-  const msg = extraMsg || `Hi, I am ${currentUser ? currentUser.name : 'a customer'} on BLACKMARKET.`;
+function lb(src) {
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lightbox').classList.add('act');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('act'); }
+
+function waOwner(extra='') {
+  const num = (U&&U.wa)||''; if(!num) return;
+  const msg = extra||`Hi, I am ${U?U.name:'a user'} on BLACKMARKET.`;
   window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
 }
-
-function waSeller(phone, sellerName, productName) {
-  const msg = `Hi ${sellerName}, I saw your listing for ${productName} on BLACKMARKET. I'm interested!`;
-  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+function waSeller(phone, mname, pname) {
+  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(`Hi ${mname}, I saw your listing for ${pname} on BLACKMARKET. I'm interested!`)}`, '_blank');
+}
+function waSellerDirect(phone, mname) {
+  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(`Hi ${mname}, reaching out from BLACKMARKET.`)}`, '_blank');
 }
 
-function waSellerOwner(phone, sellerName) {
-  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent('Hi ' + sellerName + ', I\'m reaching out from BLACKMARKET.')}`, '_blank');
+function doRefresh(btn) {
+  btn.classList.add('spin');
+  loadDash().then(()=>setTimeout(()=>btn.classList.remove('spin'),500));
 }
 
-function statusBadge(status) {
-  const map = {
-    'ordered': 'badge-muted', 'payment_pending': 'badge-warning', 'payment_confirmed': 'badge-info',
-    'pending': 'badge-warning', 'item_sourced': 'badge-info', 'ready_for_delivery': 'badge-success',
-    'delivered': 'badge-success', 'cancelled': 'badge-danger', 'confirmed': 'badge-success',
-    'approved': 'badge-success', 'rejected': 'badge-danger', 'open': 'badge-success',
-    'closed': 'badge-muted', 'arrived': 'badge-info', 'active': 'badge-success', 'blocked': 'badge-danger'
-  };
-  const label = status ? status.replace(/_/g, ' ') : 'unknown';
-  return `<span class="badge ${map[status] || 'badge-muted'}">${label}</span>`;
-}
-
-function milestoneHtml(filled, total, itemId) {
-  if (!total || total <= 0) return '';
-  const pct = Math.min(100, Math.round((filled / total) * 100));
-  let msg = 'Be one of the first to secure yours!';
-  if (pct >= 90) msg = 'Almost fully subscribed — secure your spot now!';
-  else if (pct >= 70) msg = 'Moving fast — most spots taken!';
-  else if (pct >= 50) msg = 'Over halfway there — good momentum!';
-  else if (pct >= 25) msg = 'Growing fast — join the list!';
-  return `<div class="milestone-bar">
-    <div class="milestone-track"><div class="milestone-fill" style="width:${pct}%"></div></div>
-    <div class="milestone-text"><span>${filled}/${total}</span> slots filled — ${msg}</div>
-  </div>`;
+function fmtTime(ts) {
+  if(!ts) return '';
+  try { return new Date(ts).toLocaleString('en-GH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+  catch(e){ return String(ts).substring(0,16); }
 }
 
 // ============================================================
 //  AUTH
 // ============================================================
-function switchLoginTab(tab) {
-  document.querySelectorAll('.role-tab').forEach((t, i) => t.classList.toggle('active', (i === 0) === (tab === 'login')));
-  document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
-  document.getElementById('signup-form').classList.toggle('hidden', tab !== 'signup');
+function loginTab(t) {
+  document.querySelectorAll('.rtab').forEach((b,i)=>b.classList.toggle('act',(i===0)===(t==='in')));
+  document.getElementById('f-in').classList.toggle('hidden', t!=='in');
+  document.getElementById('f-up').classList.toggle('hidden', t!=='up');
 }
 
-async function login() {
-  const user = document.getElementById('l-user').value.trim();
-  const pass = document.getElementById('l-pass').value.trim();
-  if (!user || !pass) return toast('Enter username and password', 'error');
-  setLoading('login-btn', true);
-  const res = await apiCall('login', { username: user, password: pass });
-  setLoading('login-btn', false);
-  if (res.success) {
-    currentUser = res;
-    showApp();
-  } else {
-    toast(res.error || 'Login failed', 'error');
-  }
+async function doLogin() {
+  const u=document.getElementById('l-u').value.trim(), p=document.getElementById('l-p').value.trim();
+  if(!u||!p) return toast('Enter username and password','err');
+  setBtn('btn-login',true); initSound();
+  const r = await api('login',{username:u,password:p});
+  setBtn('btn-login',false);
+  if(r.success) { U=r; showApp(); } else toast(r.error||'Login failed','err');
 }
 
-async function signup() {
-  const name = document.getElementById('s-name').value.trim();
-  const phone = document.getElementById('s-phone').value.trim();
-  const user = document.getElementById('s-user').value.trim();
-  const pass = document.getElementById('s-pass').value.trim();
-  if (!name || !phone || !user || !pass) return toast('Fill all fields', 'error');
-  setLoading('signup-btn', true);
-  const res = await apiCall('buyer_signup', { name, phone, username: user, password: pass });
-  setLoading('signup-btn', false);
-  if (res.success) {
-    currentUser = res;
-    toast('Welcome to BLACKMARKET!', 'success');
-    showApp();
-  } else {
-    toast(res.error || 'Signup failed', 'error');
-  }
+async function doSignup() {
+  const n=document.getElementById('su-n').value.trim(), ph=document.getElementById('su-ph').value.trim(),
+        u=document.getElementById('su-u').value.trim(), p=document.getElementById('su-p').value.trim();
+  if(!n||!ph||!u||!p) return toast('Fill all fields','err');
+  setBtn('btn-signup',true); initSound();
+  const r = await api('buyer_signup',{name:n,phone:ph,username:u,password:p});
+  setBtn('btn-signup',false);
+  if(r.success) { U=r; toast('Welcome to BLACKMARKET!','ok'); showApp(); } else toast(r.error||'Signup failed','err');
 }
 
 function showApp() {
-  document.getElementById('screen-login').classList.add('hidden');
+  document.getElementById('scr-login').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
-  document.getElementById('view-seller').classList.add('hidden');
-  document.getElementById('view-owner').classList.add('hidden');
-  document.getElementById('view-buyer').classList.add('hidden');
-  document.getElementById(`view-${currentUser.role}`).classList.remove('hidden');
-  loadDashboard();
-  // Auto-refresh every 3 minutes
-  if (window._refreshTimer) clearInterval(window._refreshTimer);
-  window._refreshTimer = setInterval(() => { if (currentUser) loadDashboard(); }, 180000);
+  ['seller','owner','buyer'].forEach(r=>document.getElementById('v-'+r).classList.toggle('hidden',r!==U.role));
+  loadDash();
+  if(refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(()=>{ if(U) loadDash(true); }, 5000);
 }
 
-function logout() {
-  currentUser = null; db = {};
-  if (window._refreshTimer) clearInterval(window._refreshTimer);
+function doLogout() {
+  U=null; DB={};
+  if(refreshTimer) clearInterval(refreshTimer);
   document.getElementById('app').classList.add('hidden');
-  document.getElementById('screen-login').classList.remove('hidden');
-  document.getElementById('l-user').value = '';
-  document.getElementById('l-pass').value = '';
+  document.getElementById('scr-login').classList.remove('hidden');
+  document.getElementById('l-u').value=''; document.getElementById('l-p').value='';
 }
 
 // ============================================================
-//  DASHBOARD LOAD
+//  DASHBOARD
 // ============================================================
-async function loadDashboard() {
-  const payload = currentUser.role === 'owner'
-    ? { role: 'owner' }
-    : currentUser.role === 'seller'
-    ? { role: 'seller', sellerId: currentUser.id }
-    : { role: 'buyer', buyerId: currentUser.id };
-  const res = await apiCall('get_dashboard', payload);
-  if (res.success) {
-    db = res;
-    if (currentUser.role === 'seller') renderSeller();
-    else if (currentUser.role === 'owner') renderOwner();
+async function loadDash(silent=false) {
+  const payload = U.role==='owner' ? {role:'owner'} :
+    U.role==='seller' ? {role:'seller',sellerId:U.id} :
+    {role:'buyer',buyerId:U.id};
+  const r = await api('get_dashboard',payload);
+  if(r.success) {
+    // Check for new messages before updating DB
+    const oldMsgs = (DB.messages||[]).length;
+    DB = r;
+    const newMsgs = (DB.messages||[]).length;
+    if(silent && newMsgs > oldMsgs && oldMsgs > 0) {
+      playNotif();
+      toast('📩 New message received','info');
+    }
+    if(U.role==='seller') renderSeller();
+    else if(U.role==='owner') renderOwner();
     else renderBuyer();
   }
 }
@@ -779,745 +797,783 @@ async function loadDashboard() {
 //  SELLER RENDER
 // ============================================================
 function renderSeller() {
-  document.getElementById('sv-name').textContent = currentUser.market_name || currentUser.name;
-  const { products, assignments, sales, payments } = db;
+  const {products,assignments,sales,payments,listings,messages} = DB;
+  document.getElementById('sv-name').textContent = U.market_name||U.name;
+  // Fill profile modal
+  document.getElementById('sp-mn').value = U.market_name||'';
+  document.getElementById('sp-tw').value = U.town||'';
+  document.getElementById('sp-ph').value = U.phone||'';
 
-  // Pre-fill profile modal
-  document.getElementById('sp-mname').value = currentUser.market_name || '';
-  document.getElementById('sp-town').value = currentUser.town || '';
-  document.getElementById('sp-phone').value = currentUser.phone || '';
-
-  let totalOwed = 0, totalPaid = 0, html = '';
-
-  assignments.forEach(a => {
-    const pId = getProductId(a);
-    const p = products.find(x => getId(x) === pId);
-    if (!p) return;
-    const sold = sales.filter(s => getProductId(s) === pId)
-      .reduce((sum, s) => sum + Number(getVal(s, ['qty_sold','qty']) || 0), 0);
-    const assigned = Number(getVal(a, ['qty_assigned','qty','quantity']) || 0);
-    const remaining = Math.max(0, assigned - sold);
-    const price = Number(getVal(p, ['owner_price','price','Price']) || 0);
-    totalOwed += sold * price;
-
-    html += `<div class="prod-card">
-      <div class="prod-img"><img src="${getVal(p,['image_url','Image URL'])||''}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect fill=%22%23222%22 width=%22200%22 height=%22200%22/></svg>'" loading="lazy"></div>
-      <div class="prod-info">
-        <div class="prod-name">${getVal(p,['name','Name'])}</div>
-        <div class="prod-price">GH₵ ${price}</div>
-        <div class="prod-stock">${remaining} left</div>
+  let owed=0, paid=0, html='';
+  (assignments||[]).forEach(a => {
+    const pId = gpid(a);
+    const p   = (products||[]).find(x=>gid(x)===pId); if(!p) return;
+    const sold = (sales||[]).filter(s=>gpid(s)===pId).reduce((sm,s)=>sm+Number(gv(s,['qty_sold','qty'])||0),0);
+    const aQty = Number(gv(a,['qty_assigned','qty','quantity'])||0);
+    const rem  = Math.max(0,aQty-sold);
+    const price= Number(gv(p,['owner_price','price','Price'])||0);
+    owed += sold*price;
+    html += `<div class="pcrd" onclick="">
+      <div class="pimg" onclick="lb('${gv(p,['image_url','Image URL'])||''}')"><img src="${gv(p,['image_url','Image URL'])||''}" loading="lazy" onerror="this.style.display='none'"></div>
+      <div class="pinfo">
+        <div class="pname">${gv(p,['name','Name'])}</div>
+        <div class="pprice">GH₵${price}</div>
+        <div class="pstock">${rem} left</div>
         <div class="stepper">
-          <button class="stepper-btn" onclick="step('${pId}',-1)">−</button>
-          <input type="number" id="qty-${pId}" value="0" min="0" max="${remaining}" readonly>
-          <button class="stepper-btn" onclick="step('${pId}',1)">+</button>
+          <button class="stbtn" onclick="step('${pId}',-1)">−</button>
+          <input type="number" id="qty-${pId}" value="0" min="0" max="${rem}" readonly>
+          <button class="stbtn" onclick="step('${pId}',1)">+</button>
         </div>
       </div>
     </div>`;
   });
+  (payments||[]).forEach(p=>paid+=Number(gv(p,['amount','Amount'])||0));
+  document.getElementById('sv-bal').textContent = `GH₵ ${(owed-paid).toFixed(2)}`;
+  document.getElementById('sv-prods').innerHTML = html||'<p style="grid-column:1/-1;text-align:center;color:var(--text3);padding:28px 0">No stock assigned yet.</p>';
+  updateSubBtn();
 
-  payments.forEach(p => totalPaid += Number(getVal(p, ['amount','Amount']) || 0));
-  const bal = totalOwed - totalPaid;
-  document.getElementById('sv-balance').textContent = `GH₵ ${bal.toFixed(2)}`;
-  document.getElementById('sv-products').innerHTML = html || '<p style="grid-column:1/-1;text-align:center;color:var(--text3);padding:32px 0">No stock assigned yet.</p>';
-  updateSubmitBtn();
-
-  // Payment statement
-  let stHtml = `<div class="inv-row"><span class="inv-label">Total owed</span><span class="inv-val" style="color:var(--danger)">GH₵${totalOwed.toFixed(2)}</span></div>
-    <div class="inv-row"><span class="inv-label">Total paid</span><span class="inv-val" style="color:var(--success)">GH₵${totalPaid.toFixed(2)}</span></div>
-    <div class="inv-row"><span class="inv-label">Balance remaining</span><span class="inv-val" style="color:var(--primary)">GH₵${bal.toFixed(2)}</span></div>`;
-  payments.slice().reverse().forEach(p => {
-    const amt = Number(getVal(p, ['amount','Amount']) || 0);
-    const ts = getVal(p, ['timestamp','Timestamp']) || '';
-    stHtml += `<div class="inv-row"><span class="inv-label">${ts ? new Date(ts).toLocaleDateString() : 'Payment'}</span><span class="inv-val" style="color:var(--success)">GH₵${amt.toFixed(2)}</span></div>`;
+  // Statement
+  let st=`<div class="invrow"><span class="invlbl">Total owed</span><span class="invval" style="color:var(--red)">GH₵${owed.toFixed(2)}</span></div>
+  <div class="invrow"><span class="invlbl">Total paid</span><span class="invval" style="color:var(--green)">GH₵${paid.toFixed(2)}</span></div>
+  <div class="invrow"><span class="invlbl">Balance</span><span class="invval" style="color:var(--gold)">GH₵${(owed-paid).toFixed(2)}</span></div>`;
+  (payments||[]).slice().reverse().forEach(p=>{
+    st+=`<div class="invrow"><span class="invlbl">${fmtTime(gv(p,['timestamp','Timestamp']))}</span><span class="invval" style="color:var(--green)">GH₵${Number(gv(p,['amount','Amount'])||0).toFixed(2)}</span></div>`;
   });
-  document.getElementById('sv-statement').innerHTML = stHtml;
+  document.getElementById('sv-stmt').innerHTML=st;
 
-  // Product dropdowns for request & listing
-  let prodOpts = '<option value="">Select product</option>';
-  products.forEach(p => { prodOpts += `<option value="${getId(p)}">${getVal(p,['name','Name'])}</option>`; });
-  document.getElementById('sv-req-prod').innerHTML = prodOpts;
-  document.getElementById('sv-list-prod').innerHTML = prodOpts;
+  // Dropdowns
+  let opts='<option value="">Select product</option>';
+  (products||[]).forEach(p=>{ opts+=`<option value="${gid(p)}">${gv(p,['name','Name'])}</option>`; });
+  document.getElementById('sv-rp').innerHTML=opts;
+  document.getElementById('sv-lp').innerHTML=opts;
+
+  // Open selling UI
+  const openSelling = U.open_selling || (DB.sellers||[]).some(s=>gid(s)===U.id && String(gv(s,['open_selling','Open Selling'])||'').toLowerCase()==='true');
+  document.getElementById('sv-open-notice').classList.toggle('hidden',!openSelling);
+  document.getElementById('sv-custom-tab').classList.toggle('hidden',!openSelling);
 
   // Listings
-  let lHtml = '';
-  if (db.listings && db.listings.length) {
-    db.listings.forEach(l => {
-      const pid = getProductId(l);
-      const p = products.find(x => getId(x) === pid);
-      const st = String(getVal(l, ['listing_status','Listing Status']) || '').toLowerCase();
-      lHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
-        <div>
-          <div style="font-size:13px;font-weight:600">${p ? getVal(p,['name','Name']) : 'Product'}</div>
-          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(l,['selling_price','Selling Price'])}</div>
-        </div>
-        ${statusBadge(st)}
-      </div>`;
-    });
-  } else { lHtml = '<p style="font-size:13px;color:var(--text3)">No listings yet.</p>'; }
-  document.getElementById('sv-listings').innerHTML = lHtml;
-}
-
-function step(id, change) {
-  const input = document.getElementById(`qty-${id}`);
-  if (!input) return;
-  let val = parseInt(input.value) || 0;
-  val = Math.max(0, Math.min(parseInt(input.max) || 999, val + change));
-  input.value = val;
-  updateSubmitBtn();
-}
-
-function updateSubmitBtn() {
-  const inputs = document.querySelectorAll('[id^="qty-"]');
-  let total = 0;
-  inputs.forEach(i => total += parseInt(i.value) || 0);
-  const btn = document.getElementById('sv-submit-btn');
-  if (btn) btn.textContent = `Submit Sales (${total} items)`;
-}
-
-async function submitSales() {
-  const inputs = document.querySelectorAll('[id^="qty-"]');
-  const batch = [];
-  inputs.forEach(i => {
-    const q = parseInt(i.value);
-    if (q > 0) batch.push({ productId: i.id.replace('qty-', ''), qty: q });
+  let lHtml='';
+  (listings||[]).forEach(l=>{
+    const pid=gpid(l); const p=(products||[]).find(x=>gid(x)===pid);
+    const st=String(gv(l,['listing_status','Listing Status'])||'').toLowerCase();
+    const nm=gv(l,['product_name','Product Name'])||( p?gv(p,['name','Name']):'Item');
+    lHtml+=`<div class="card2 rowb" style="margin-bottom:7px">
+      <div><div style="font-size:13px;font-weight:600">${nm}</div><div style="font-size:11px;color:var(--text2)">GH₵${gv(l,['selling_price','Selling Price'])}</div></div>
+      ${badge(st)}
+    </div>`;
   });
-  if (!batch.length) return toast('Select items to submit', 'error');
-  const total = batch.reduce((s, i) => s + i.qty, 0);
-  showConfirm('Submit Sales?', `You are logging ${total} items sold.`, async () => {
-    const res = await apiCall('record_sale', { sellerId: currentUser.id, sales: batch });
-    if (res.success) { toast('Sales recorded!', 'success'); loadDashboard(); }
-  });
-}
+  document.getElementById('sv-listings').innerHTML=lHtml||'<p style="font-size:12px;color:var(--text3)">No listings yet.</p>';
 
-async function requestStock() {
-  const pid = document.getElementById('sv-req-prod').value;
-  const qty = document.getElementById('sv-req-qty').value;
-  if (!pid || !qty) return toast('Select product and quantity', 'error');
-  const res = await apiCall('request_stock', { sellerId: currentUser.id, productId: pid, qty });
-  if (res.success) { toast('Request sent to owner!', 'success'); document.getElementById('sv-req-qty').value = ''; loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
-
-async function submitListing() {
-  const pid = document.getElementById('sv-list-prod').value;
-  const price = document.getElementById('sv-list-price').value;
-  if (!pid || !price) return toast('Select product and set price', 'error');
-  const res = await apiCall('submit_listing', { sellerId: currentUser.id, productId: pid, sellingPrice: price });
-  if (res.success) { toast('Listing submitted for approval!', 'success'); document.getElementById('sv-list-price').value = ''; loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
-
-async function saveSellerProfile() {
-  const payload = {
-    sellerId: currentUser.id,
-    market_name: document.getElementById('sp-mname').value,
-    town: document.getElementById('sp-town').value,
-    phone: document.getElementById('sp-phone').value,
-    delivery_method: document.getElementById('sp-delivery').value
-  };
-  const res = await apiCall('update_seller_profile', payload);
-  if (res.success) {
-    currentUser.market_name = payload.market_name;
-    currentUser.town = payload.town;
-    currentUser.phone = payload.phone;
-    toast('Profile updated!', 'success');
-    closeModal('seller-profile');
-    loadDashboard();
-  } else toast(res.error || 'Failed', 'error');
+  // Messages
+  renderMsgs('sv-msgs', messages||[], U.id);
+  const unread=(messages||[]).filter(m=>String(m.to_id||'')===U.id&&String(m.read||'')!=='true').length;
+  if(unread>0) markRead(messages.filter(m=>String(m.to_id||'')===U.id&&String(m.read||'')!=='true').map(m=>gid(m)));
 }
 
 // ============================================================
 //  OWNER RENDER
 // ============================================================
-function ownerTab(tab, el) {
-  currentOwnerTab = tab;
-  document.querySelectorAll('#owner-nav .nav-item').forEach(n => n.classList.remove('active'));
-  if (el) el.classList.add('active');
-  ['home','inventory','preorders','assign','sellers'].forEach(v => {
-    document.getElementById('ow-' + v).classList.toggle('hidden', v !== tab);
+function owTab(tab, el) {
+  curOwnerTab=tab;
+  document.querySelectorAll('#ow-nav .ni').forEach(n=>n.classList.remove('act'));
+  if(el) el.classList.add('act');
+  ['home','inventory','preorders','assign','sellers'].forEach(v=>{
+    document.getElementById('ow-'+v).classList.toggle('hidden',v!==tab);
   });
-  const fab = document.getElementById('ow-fab');
-  fab.classList.toggle('hidden', !['home','inventory','preorders','sellers'].includes(tab));
+  document.getElementById('ow-fab').classList.toggle('hidden',!['home','inventory','preorders','sellers'].includes(tab));
+  // Show/hide message input for home
+  document.getElementById('ow-msg-wrap').classList.toggle('hidden', tab!=='home');
 }
 
-function ownerFab() {
-  if (currentOwnerTab === 'home' || currentOwnerTab === 'inventory') openModal('add-product');
-  else if (currentOwnerTab === 'preorders') openModal('add-preorder');
-  else if (currentOwnerTab === 'sellers') openModal('add-seller');
+function owFab() {
+  if(curOwnerTab==='home'||curOwnerTab==='inventory') mopen('add-product');
+  else if(curOwnerTab==='preorders') mopen('add-preorder');
+  else if(curOwnerTab==='sellers') mopen('add-seller');
 }
 
 function renderOwner() {
-  const { products, sellers, assignments, sales, payments, buyers, preorderItems, preorderOrders, sellerListings, stockRequests } = db;
+  const {products,sellers,assignments,sales,payments,buyers,preorderItems,preorderOrders,sellerListings,stockRequests,messages} = DB;
 
-  document.getElementById('ow-stat-p').textContent = products.length;
-  document.getElementById('ow-stat-s').textContent = sellers.length;
-  document.getElementById('ow-stat-b').textContent = buyers ? buyers.length : 0;
+  document.getElementById('os-p').textContent=products.length;
+  document.getElementById('os-s').textContent=sellers.length;
+  document.getElementById('os-b').textContent=(buyers||[]).length;
 
   // Seller balances
-  let totalDebt = 0, sHtml = '';
-  sellers.forEach(s => {
-    const sId = getId(s);
-    let owed = 0, paid = 0;
-    sales.filter(x => getSellerId(x) === sId).forEach(sl => {
-      const pId = getProductId(sl);
-      const p = products.find(pr => getId(pr) === pId);
-      if (p) owed += Number(getVal(sl,['qty_sold','qty'])||0) * Number(getVal(p,['owner_price','price','Price'])||0);
+  let debt=0, sHtml='';
+  sellers.forEach(s=>{
+    const sid=gid(s); let owed=0,paid=0;
+    sales.filter(x=>gsid(x)===sid).forEach(sl=>{
+      const p=(products||[]).find(pr=>gid(pr)===gpid(sl));
+      if(p) owed+=Number(gv(sl,['qty_sold','qty'])||0)*Number(gv(p,['owner_price','price','Price'])||0);
     });
-    payments.filter(x => getSellerId(x) === sId).forEach(p => paid += Number(getVal(p,['amount','Amount'])||0));
-    const bal = owed - paid;
-    if (bal > 0) totalDebt += bal;
-    const mname = getVal(s,['market_name','Market Name']) || getVal(s,['name','Name']) || 'Seller';
-    const town = getVal(s,['town','Town']) || '';
-    const phone = getVal(s,['phone','Phone']) || '';
-    sHtml += `<div class="list-item">
-      <div class="list-avatar">${mname.charAt(0).toUpperCase()}</div>
-      <div class="list-info">
-        <h4>${mname}</h4>
-        <p>${town ? town + ' · ' : ''}Owed: GH₵${owed.toFixed(0)} | Paid: GH₵${paid.toFixed(0)}</p>
+    payments.filter(x=>gsid(x)===sid).forEach(p=>paid+=Number(gv(p,['amount','Amount'])||0));
+    const bal=owed-paid; if(bal>0) debt+=bal;
+    const mn=gv(s,['market_name','Market Name'])||gv(s,['name','Name'])||'Seller';
+    const tw=gv(s,['town','Town'])||''; const ph=gv(s,['phone','Phone'])||'';
+    const os=String(gv(s,['open_selling','Open Selling'])||'').toLowerCase()==='true';
+    sHtml+=`<div class="li">
+      <div class="av">${mn.charAt(0).toUpperCase()}</div>
+      <div class="li-info">
+        <h4>${mn}${tw?` · <span style="font-weight:400;color:var(--text3)">${tw}</span>`:''}</h4>
+        <p>Owed: GH₵${owed.toFixed(0)} | Paid: GH₵${paid.toFixed(0)}</p>
       </div>
-      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
-        <span class="badge ${bal > 0 ? 'badge-danger' : 'badge-success'}">GH₵${bal.toFixed(0)}</span>
-        <div style="display:flex;gap:6px">
-          ${bal > 0 ? `<button class="btn btn-success btn-sm" onclick="collectPayment('${sId}',${bal})">Collect</button>` : ''}
-          ${phone ? `<button class="btn btn-wa btn-sm" onclick="waSellerOwner('${phone}','${mname}')">WA</button>` : ''}
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+        <span class="badge ${bal>0?'bg-red':'bg-green'}">GH₵${bal.toFixed(0)}</span>
+        <div class="btn-row" style="margin-top:0">
+          ${bal>0?`<button class="btn btn-green btn-xs" onclick="collectPay('${sid}',${bal})">Collect</button>`:''}
+          ${ph?`<button class="btn btn-wa btn-xs" onclick="waSellerDirect('${ph}','${mn}')">WA</button>`:''}
+        </div>
+        <div class="row" style="gap:6px">
+          <span style="font-size:10px;color:var(--text3)">Open sell</span>
+          <label class="tog"><input type="checkbox" ${os?'checked':''} onchange="toggleOpenSell('${sid}',this.checked)"><span class="tog-slider"></span></label>
         </div>
       </div>
     </div>`;
   });
-  document.getElementById('ow-stat-d').textContent = `GH₵${totalDebt.toFixed(0)}`;
-  document.getElementById('ow-seller-list').innerHTML = sHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No sellers yet.</p>';
-  document.getElementById('ow-sellers-list').innerHTML = sHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No sellers yet.</p>';
+  document.getElementById('os-d').textContent=`GH₵${debt.toFixed(0)}`;
+  document.getElementById('ow-slist').innerHTML=sHtml||'<p style="text-align:center;color:var(--text3);padding:18px">No sellers yet.</p>';
+  document.getElementById('ow-smanage').innerHTML=sHtml||'<p style="text-align:center;color:var(--text3);padding:18px">No sellers yet.</p>';
 
   // Pending actions
-  const pendingListings = (sellerListings || []).filter(l => String(getVal(l,['listing_status','Listing Status'])||'').toLowerCase() === 'pending');
-  const pendingRequests = (stockRequests || []).filter(r => String(getVal(r,['status','Status'])||'').toLowerCase() === 'pending');
-  const pendingPayments = (preorderOrders || []).filter(o => String(getVal(o,['payment_status','Payment Status'])||'').toLowerCase() === 'pending');
-  let pHtml = '';
-  if (!pendingListings.length && !pendingRequests.length && !pendingPayments.length) {
-    pHtml = '<div class="card-sm" style="text-align:center;color:var(--text3);font-size:13px">All clear — nothing pending!</div>';
-  }
-  pendingListings.forEach(l => {
-    const sid = getSellerId(l); const pid = getProductId(l);
-    const sel = sellers.find(s => getId(s) === sid);
-    const prod = products.find(p => getId(p) === pid);
-    const lid = getId(l);
-    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
-      <div>
-        <div style="font-size:12px;color:var(--text3)">Listing request</div>
-        <div style="font-size:14px;font-weight:600">${prod ? getVal(prod,['name','Name']) : pid} @ GH₵${getVal(l,['selling_price','Selling Price'])}</div>
-        <div style="font-size:12px;color:var(--text2)">${sel ? (getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])) : sid}</div>
+  const pL=(sellerListings||[]).filter(l=>String(gv(l,['listing_status','Listing Status'])||'').toLowerCase()==='pending');
+  const pR=(stockRequests||[]).filter(r=>String(gv(r,['status','Status'])||'').toLowerCase()==='pending');
+  const pP=(preorderOrders||[]).filter(o=>String(gv(o,['payment_status','Payment Status'])||'').toLowerCase()==='pending' && String(gv(o,['order_status','Order Status'])||'').toLowerCase()!=='cancelled');
+  const total=pL.length+pR.length+pP.length;
+  const pc=document.getElementById('ow-pcount');
+  if(total>0){pc.textContent=total;pc.classList.remove('hidden');}else pc.classList.add('hidden');
+  let pH='';
+  if(!total) pH='<div class="card2" style="text-align:center;color:var(--text3);font-size:12px">All clear ✓</div>';
+  pP.forEach(o=>{
+    const oid=gid(o); const bn=String(gv(o,['buyer_name','Buyer Name'])||'Buyer'); const bph=String(gv(o,['buyer_phone','Buyer Phone'])||'');
+    const iname=String(gv(o,['item_name','Item Name'])||'item'); const tot=gv(o,['total_price','Total Price'])||'?';
+    const proof=String(gv(o,['payment_proof','Payment Proof'])||'no proof given');
+    pH+=`<div class="card2 rowb" style="margin-bottom:7px">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:10px;color:var(--text3)">Buyer payment pending</div>
+        <div style="font-size:13px;font-weight:600">${bn} — "${iname}"</div>
+        <div style="font-size:11px;color:var(--text2)">${bph} · GH₵${tot} · ${proof}</div>
       </div>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-success btn-sm" onclick="approveListing('${lid}')">✓</button>
-        <button class="btn btn-danger btn-sm" onclick="rejectListing('${lid}')">✗</button>
+      <button class="btn btn-green btn-xs" style="margin-left:8px" onclick="confBuyerPay('${oid}')">Confirm</button>
+    </div>`;
+  });
+  pL.forEach(l=>{
+    const lid=gid(l); const sid=gsid(l); const pid=gpid(l);
+    const sel=(sellers||[]).find(s=>gid(s)===sid); const prod=(products||[]).find(p=>gid(p)===pid);
+    const mn=sel?(gv(sel,['market_name','Market Name'])||gv(sel,['name','Name'])):'Seller';
+    const pn=gv(l,['product_name','Product Name'])||(prod?gv(prod,['name','Name']):pid);
+    const ic=String(gv(l,['is_custom','Is Custom'])||'').toLowerCase()==='true';
+    pH+=`<div class="card2 rowb" style="margin-bottom:7px">
+      <div><div style="font-size:10px;color:var(--text3)">Listing request${ic?' (own product)':''}</div>
+      <div style="font-size:13px;font-weight:600">"${pn}" at GH₵${gv(l,['selling_price','Selling Price'])}</div>
+      <div style="font-size:11px;color:var(--text2)">${mn}</div></div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-green btn-xs" onclick="apprList('${lid}')">✓</button>
+        <button class="btn btn-red btn-xs" onclick="rejList('${lid}')">✗</button>
       </div>
     </div>`;
   });
-  pendingRequests.forEach(r => {
-    const sid = getSellerId(r); const pid = getProductId(r);
-    const sel = sellers.find(s => getId(s) === sid);
-    const prod = products.find(p => getId(p) === pid);
-    const rid = getId(r); const qty = getVal(r,['qty_requested','Qty Requested']) || '?';
-    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
-      <div>
-        <div style="font-size:12px;color:var(--text3)">Stock request</div>
-        <div style="font-size:14px;font-weight:600">${prod ? getVal(prod,['name','Name']) : pid} × ${qty}</div>
-        <div style="font-size:12px;color:var(--text2)">${sel ? (getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])) : sid}</div>
-      </div>
-      <div style="display:flex;gap:6px">
-        <button class="btn btn-success btn-sm" onclick="approveRequest('${rid}',${qty})">✓ Assign</button>
-        <button class="btn btn-danger btn-sm" onclick="rejectRequest('${rid}')">✗</button>
+  pR.forEach(r=>{
+    const rid=gid(r); const sid=gsid(r); const pid=gpid(r);
+    const sel=(sellers||[]).find(s=>gid(s)===sid); const prod=(products||[]).find(p=>gid(p)===pid);
+    const mn=sel?(gv(sel,['market_name','Market Name'])||gv(sel,['name','Name'])):'Seller';
+    const pn=prod?gv(prod,['name','Name']):pid; const qty=gv(r,['qty_requested','Qty Requested'])||'?';
+    pH+=`<div class="card2 rowb" style="margin-bottom:7px">
+      <div><div style="font-size:10px;color:var(--text3)">Stock request</div>
+      <div style="font-size:13px;font-weight:600">${pn} × ${qty}</div>
+      <div style="font-size:11px;color:var(--text2)">${mn}</div></div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-green btn-xs" onclick="apprReq('${rid}',${qty})">Assign</button>
+        <button class="btn btn-red btn-xs" onclick="rejReq('${rid}')">✗</button>
       </div>
     </div>`;
   });
-  pendingPayments.forEach(o => {
-    const bid = getBuyerId(o); const oid = getId(o);
-    const buyer = buyers ? buyers.find(b => getId(b) === bid) : null;
-    const total = getVal(o,['total_price','Total Price','totalPrice']) || '?';
-    const proof = getVal(o,['payment_proof','Payment Proof','paymentProof']) || 'No proof given';
-    pHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
-      <div>
-        <div style="font-size:12px;color:var(--text3)">Buyer payment pending</div>
-        <div style="font-size:14px;font-weight:600">GH₵${total}</div>
-        <div style="font-size:12px;color:var(--text2)">${buyer ? getVal(buyer,['name','Name']) : bid} · ${proof}</div>
-      </div>
-      <button class="btn btn-success btn-sm" onclick="confirmBuyerPayment('${oid}')">Confirm</button>
-    </div>`;
-  });
-  document.getElementById('ow-pending').innerHTML = pHtml;
+  document.getElementById('ow-pending').innerHTML=pH;
 
   // Inventory
-  let invHtml = '';
-  products.forEach(p => {
-    const pId = getId(p);
-    const totalQty = Number(getVal(p,['total_qty','Total Qty','totalQty','quantity'])||0);
-    const assigned = assignments.filter(a => getProductId(a) === pId).reduce((s,a) => s + Number(getVal(a,['qty_assigned','qty','quantity'])||0), 0);
-    const sold = sales.filter(s => getProductId(s) === pId).reduce((s,sl) => s + Number(getVal(sl,['qty_sold','qty'])||0), 0);
-    const withOwner = Math.max(0, totalQty - assigned);
-    const withSellers = Math.max(0, assigned - sold);
-    invHtml += `<div class="card">
-      <div class="row" style="margin-bottom:12px">
-        <img src="${getVal(p,['image_url','Image URL'])||''}" style="width:44px;height:44px;border-radius:var(--radius-xs);object-fit:cover;background:var(--bg3)">
-        <div>
-          <div style="font-weight:600;font-size:15px">${getVal(p,['name','Name'])}</div>
-          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(p,['owner_price','price','Price'])} / unit</div>
-        </div>
+  let iHtml='';
+  products.forEach(p=>{
+    const pid=gid(p); const tq=Number(gv(p,['total_qty','Total Qty','totalQty','quantity'])||0);
+    const asgn=assignments.filter(a=>gpid(a)===pid).reduce((s,a)=>s+Number(gv(a,['qty_assigned','qty','quantity'])||0),0);
+    const sold=sales.filter(s=>gpid(s)===pid).reduce((s,sl)=>s+Number(gv(sl,['qty_sold','qty'])||0),0);
+    const withMe=Math.max(0,tq-asgn); const withSel=Math.max(0,asgn-sold);
+    iHtml+=`<div class="card">
+      <div class="row" style="margin-bottom:10px;cursor:pointer" onclick="lb('${gv(p,['image_url','Image URL'])||''}')">
+        <img src="${gv(p,['image_url','Image URL'])||''}" style="width:42px;height:42px;border-radius:var(--rx);object-fit:cover;background:var(--bg3)" onerror="this.style.display='none'">
+        <div><div style="font-weight:600;font-size:14px">${gv(p,['name','Name'])}</div><div style="font-size:11px;color:var(--text2)">GH₵${gv(p,['owner_price','price','Price'])} / unit</div></div>
       </div>
-      <div class="inv-row"><span class="inv-label">Total purchased</span><span class="inv-val">${totalQty}</span></div>
-      <div class="inv-row"><span class="inv-label">Assigned to sellers</span><span class="inv-val" style="color:var(--info)">−${assigned}</span></div>
-      <div class="inv-row"><span class="inv-label">Sold by sellers</span><span class="inv-val" style="color:var(--success)">−${sold}</span></div>
-      <div class="divider"></div>
-      <div class="inv-row"><span class="inv-label" style="font-weight:600;color:var(--text)">With you now</span><span class="inv-val" style="color:var(--primary);font-size:16px">${withOwner}</span></div>
-      <div class="inv-row"><span class="inv-label">Out in market (unsold)</span><span class="inv-val">${withSellers}</span></div>
-      ${withOwner === 0 ? '<div style="text-align:center;margin-top:10px"><span class="badge badge-danger">Out of stock with you</span></div>' : ''}
+      <div class="invrow"><span class="invlbl">Total purchased</span><span class="invval">${tq}</span></div>
+      <div class="invrow"><span class="invlbl">Assigned to sellers</span><span class="invval" style="color:var(--blue)">−${asgn}</span></div>
+      <div class="invrow"><span class="invlbl">Sold by sellers</span><span class="invval" style="color:var(--green)">−${sold}</span></div>
+      <div class="dv"></div>
+      <div class="invrow"><span class="invlbl" style="font-weight:600;color:var(--text)">With you now</span><span class="invval" style="color:var(--gold);font-size:15px">${withMe}</span></div>
+      <div class="invrow"><span class="invlbl">Out with sellers (unsold)</span><span class="invval">${withSel}</span></div>
+      ${withMe===0?'<div style="text-align:center;margin-top:8px"><span class="badge bg-red">Out of stock with you</span></div>':''}
     </div>`;
   });
-  document.getElementById('ow-inv-list').innerHTML = invHtml || '<p style="text-align:center;color:var(--text3);padding:32px 0">No products yet.</p>';
+  document.getElementById('ow-inv').innerHTML=iHtml||'<p style="text-align:center;color:var(--text3);padding:28px">No products yet.</p>';
 
-  // Preorders
-  let prHtml = '';
-  (preorderItems || []).forEach(item => {
-    const id = getId(item);
-    const name = getVal(item,['name','Name'])||'';
-    const price = getVal(item,['price','Price'])||0;
-    const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
-    const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
-    const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
-    const eta = getVal(item,['eta','ETA'])||'TBC';
-    const status = String(getVal(item,['status','Status'])||'open');
-    const orders = (preorderOrders||[]).filter(o => String(getVal(o,['item_id','Item ID','itemId'])||'') === id);
-    prHtml += `<div class="card">
-      <div class="row-between" style="margin-bottom:8px">
-        <div style="font-size:16px;font-weight:700">${name}</div>
-        ${statusBadge(status)}
+  // Preorders for owner
+  let prHtml='';
+  (preorderItems||[]).forEach(item=>{
+    const id=gid(item); const nm=gv(item,['name','Name'])||'';
+    const pr=gv(item,['price','Price'])||0; const pt=String(gv(item,['payment_type','Payment Type','paymentType'])||'full');
+    const sl=Number(gv(item,['total_slots','Total Slots','totalSlots'])||0);
+    const fl=Number(gv(item,['filled_slots','Filled Slots','filledSlots'])||0);
+    const eta=gv(item,['eta','ETA'])||'TBC'; const st=String(gv(item,['status','Status'])||'open');
+    const orders=(preorderOrders||[]).filter(o=>String(gv(o,['item_id','Item ID','itemId'])||'')===id);
+    prHtml+=`<div class="card">
+      <div class="rowb" style="margin-bottom:7px"><div style="font-size:15px;font-weight:700">${nm}</div>${badge(st)}</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">GH₵${pr} · ETA: ${eta} · <span class="${pt==='partial'?'pay-partial':'pay-full'}">${pt==='partial'?'Deposit':'Full payment'}</span></div>
+      ${milestoneHtml(fl,sl)}
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">${orders.length} order(s) | ${orders.filter(o=>String(gv(o,['payment_status','Payment Status'])||'').toLowerCase()==='confirmed').length} paid</div>
+      <div class="btn-row" style="margin-top:0">
+        ${st==='open'?`<button class="btn btn-muted btn-sm" onclick="updPreorder('${id}','closed')">Close</button>`:''}
+        ${(st==='closed'||st==='open')?`<button class="btn btn-blue btn-sm" onclick="updPreorder('${id}','arrived')">Mark Arrived</button>`:''}
+        ${st==='arrived'?`<button class="btn btn-green btn-sm" onclick="updPreorder('${id}','ready')">Mark Ready</button>`:''}
+        ${st==='ready'?`<button class="btn btn-green btn-sm" onclick="updPreorder('${id}','delivered')">Mark Delivered</button>`:''}
       </div>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">
-        GH₵${price} · ETA: ${eta} · <span class="${payType==='partial'?'pay-partial':'pay-full'}">${payType} payment</span>
-      </div>
-      ${milestoneHtml(filled, slots, id)}
-      <div style="font-size:13px;color:var(--text2);margin-bottom:12px">${orders.length} order(s)</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${status==='open'?`<button class="btn btn-muted btn-sm" onclick="updatePreorderStatus('${id}','closed')">Close</button>`:''}
-        ${status==='closed'||status==='open'?`<button class="btn btn-info btn-sm" style="background:var(--info-dim);color:var(--info)" onclick="updatePreorderStatus('${id}','arrived')">Mark Arrived</button>`:''}
-        ${status==='arrived'?`<button class="btn btn-success btn-sm" onclick="updatePreorderStatus('${id}','ready')">Mark Ready</button>`:''}
-        ${status==='ready'?`<button class="btn btn-success btn-sm" onclick="updatePreorderStatus('${id}','delivered')">Mark Delivered</button>`:''}
-      </div>
+      <div class="sh" style="margin-top:12px">Orders for this item</div>
+      ${orders.map(o=>{
+        const ost=String(gv(o,['order_status','Order Status'])||''); const pst=String(gv(o,['payment_status','Payment Status'])||'').toLowerCase();
+        const isCancelled=ost.toLowerCase()==='cancelled';
+        return `<div class="card2 rowb" style="margin-bottom:6px;${isCancelled?'opacity:.5':''}">
+          <div><div style="font-size:12px;font-weight:600">${gv(o,['buyer_name','Buyer Name'])||'Buyer'} — ${gv(o,['buyer_phone','Buyer Phone'])||''}</div>
+          <div style="font-size:11px;color:var(--text2)">Qty:${gv(o,['qty','Qty'])||1} · GH₵${gv(o,['total_price','Total Price'])||'?'} · ${gv(o,['payment_proof','Payment Proof'])||'no proof'}</div>
+          <div style="display:flex;gap:5px;margin-top:3px">${badge(ost)} ${badge(pst)}</div>
+          </div>
+          ${!isCancelled&&pst!=='confirmed'?`<button class="btn btn-green btn-xs" onclick="confBuyerPay('${gid(o)}')">Confirm Pay</button>`:''}
+        </div>`;
+      }).join('')}
     </div>`;
   });
-  document.getElementById('ow-preorder-list').innerHTML = prHtml || '<p style="text-align:center;color:var(--text3);padding:32px 0">No preorder items yet. Tap + to add one.</p>';
+  document.getElementById('ow-prl').innerHTML=prHtml||'<p style="text-align:center;color:var(--text3);padding:28px">No preorder items. Tap + to add one.</p>';
 
   // Buyers
-  let bHtml = '';
-  (buyers||[]).forEach(b => {
-    const bid = getId(b);
-    const name = getVal(b,['name','Name'])||'Buyer';
-    const phone = getVal(b,['phone','Phone'])||'';
-    const status = String(getVal(b,['status','Status'])||'active').toLowerCase();
-    const joined = getVal(b,['join_date','Join Date','joinDate'])||'';
-    bHtml += `<div class="list-item">
-      <div class="list-avatar">${name.charAt(0).toUpperCase()}</div>
-      <div class="list-info">
-        <h4>${name}</h4>
-        <p>${phone}${joined ? ' · Joined ' + new Date(joined).toLocaleDateString() : ''}</p>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
-        ${statusBadge(status)}
-        <button class="btn btn-muted btn-sm" onclick="toggleBuyer('${bid}','${status}')">
-          ${status==='active'?'Block':'Unblock'}
-        </button>
+  let bHtml='';
+  (buyers||[]).forEach(b=>{
+    const bid=gid(b); const bn=gv(b,['name','Name'])||'Buyer'; const ph=gv(b,['phone','Phone'])||'';
+    const st=String(gv(b,['status','Status'])||'active').toLowerCase();
+    const jd=gv(b,['join_date','Join Date','joinDate'])||'';
+    bHtml+=`<div class="li">
+      <div class="av">${bn.charAt(0).toUpperCase()}</div>
+      <div class="li-info"><h4>${bn}</h4><p>${ph}${jd?' · '+new Date(jd).toLocaleDateString():''}</p></div>
+      <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+        ${badge(st)}
+        <button class="btn btn-muted btn-xs" onclick="toggleBuyer('${bid}','${st}')">${st==='active'?'Block':'Unblock'}</button>
       </div>
     </div>`;
   });
-  document.getElementById('ow-buyer-list').innerHTML = bHtml || '<p style="text-align:center;color:var(--text3);padding:20px">No buyers yet.</p>';
+  document.getElementById('ow-blist').innerHTML=bHtml||'<p style="text-align:center;color:var(--text3);padding:18px">No buyers yet.</p>';
 
   // Assign dropdowns
-  let selOpts = '<option value="">Select Seller</option>';
-  sellers.forEach(s => { selOpts += `<option value="${getId(s)}">${getVal(s,['market_name','Market Name'])||getVal(s,['name','Name'])}</option>`; });
-  document.getElementById('ow-as-seller').innerHTML = selOpts;
-  let prodOpts = '<option value="">Select Product</option>';
-  products.forEach(p => { prodOpts += `<option value="${getId(p)}">${getVal(p,['name','Name'])}</option>`; });
-  document.getElementById('ow-as-prod').innerHTML = prodOpts;
+  let so='<option value="">Select Seller</option>';
+  sellers.forEach(s=>{ so+=`<option value="${gid(s)}">${gv(s,['market_name','Market Name'])||gv(s,['name','Name'])}</option>`; });
+  document.getElementById('ow-as').innerHTML=so;
+  let po='<option value="">Select Product</option>';
+  products.forEach(p=>{ po+=`<option value="${gid(p)}">${gv(p,['name','Name'])}</option>`; });
+  document.getElementById('ow-ap').innerHTML=po;
 
-  // Stock requests (in assign tab)
-  let reqHtml = '';
-  const pending = (stockRequests||[]).filter(r => String(getVal(r,['status','Status'])||'').toLowerCase() === 'pending');
-  if (pending.length) {
-    pending.forEach(r => {
-      const sid = getSellerId(r); const pid = getProductId(r);
-      const sel = sellers.find(s => getId(s) === sid);
-      const prod = products.find(p => getId(p) === pid);
-      const rid = getId(r); const qty = getVal(r,['qty_requested','Qty Requested'])||'?';
-      reqHtml += `<div class="card-sm row-between" style="margin-bottom:8px">
-        <div>
-          <div style="font-size:14px;font-weight:600">${prod?getVal(prod,['name','Name']):pid} × ${qty}</div>
-          <div style="font-size:12px;color:var(--text2)">${sel?(getVal(sel,['market_name','Market Name'])||getVal(sel,['name','Name'])):sid}</div>
-        </div>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-success btn-sm" onclick="approveRequest('${rid}',${qty})">Assign</button>
-          <button class="btn btn-danger btn-sm" onclick="rejectRequest('${rid}')">Reject</button>
-        </div>
-      </div>`;
-    });
-  } else { reqHtml = '<p style="font-size:13px;color:var(--text3)">No pending stock requests.</p>'; }
-  document.getElementById('ow-req-list').innerHTML = reqHtml;
-}
-
-// Owner actions
-async function addProduct() {
-  const name = document.getElementById('ap-name').value;
-  const price = document.getElementById('ap-price').value;
-  const qty = document.getElementById('ap-qty').value;
-  const file = document.getElementById('ap-img').files[0];
-  if (!name || !price || !qty || !file) return toast('Fill all fields and select image', 'error');
-  setLoading('ap-btn', true);
-  const compressed = await compressImage(file);
-  const imgRes = await apiCall('upload_image', { imageData: compressed, mimeType: 'image/jpeg', fileName: name + '.jpg' });
-  if (!imgRes.success) { setLoading('ap-btn', false); return toast('Image upload failed', 'error'); }
-  const res = await apiCall('add_product', { name, price, totalQty: qty, imageUrl: imgRes.url });
-  setLoading('ap-btn', false);
-  if (res.success) { toast('Product added!', 'success'); closeModal('add-product'); loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
-
-async function addSeller() {
-  const name = document.getElementById('as-name').value;
-  const mname = document.getElementById('as-mname').value;
-  const user = document.getElementById('as-user').value;
-  const pass = document.getElementById('as-pass').value;
-  const phone = document.getElementById('as-phone').value;
-  if (!name || !user || !pass || !phone) return toast('Fill all required fields', 'error');
-  const res = await apiCall('add_seller', { name, market_name: mname, username: user, password: pass, phone });
-  if (res.success) { toast('Seller added!', 'success'); closeModal('add-seller'); loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
-
-function toggleDeposit() {
-  const t = document.getElementById('pr-paytype').value;
-  document.getElementById('pr-deposit-wrap').classList.toggle('hidden', t !== 'partial');
-}
-
-async function addPreorderItem() {
-  const name = document.getElementById('pr-name').value;
-  const desc = document.getElementById('pr-desc').value;
-  const price = document.getElementById('pr-price').value;
-  const payType = document.getElementById('pr-paytype').value;
-  const deposit = document.getElementById('pr-deposit').value;
-  const slots = document.getElementById('pr-slots').value;
-  const eta = document.getElementById('pr-eta').value;
-  const file = document.getElementById('pr-img').files[0];
-  if (!name || !price || !slots || !eta || !file) return toast('Fill all fields', 'error');
-  setLoading('pr-btn', true);
-  const compressed = await compressImage(file);
-  const imgRes = await apiCall('upload_image', { imageData: compressed, mimeType: 'image/jpeg', fileName: name + '.jpg' });
-  if (!imgRes.success) { setLoading('pr-btn', false); return toast('Image upload failed', 'error'); }
-  const res = await apiCall('add_preorder_item', {
-    name, description: desc, price, paymentType: payType,
-    depositAmount: payType === 'partial' ? deposit : price,
-    totalSlots: slots, eta, imageUrl: imgRes.url
+  // Stock requests in assign tab
+  let rHtml='';
+  const pending=(stockRequests||[]).filter(r=>String(gv(r,['status','Status'])||'').toLowerCase()==='pending');
+  if(pending.length) pending.forEach(r=>{
+    const rid=gid(r); const prod=(products||[]).find(p=>gid(p)===gpid(r));
+    const sel=(sellers||[]).find(s=>gid(s)===gsid(r)); const qty=gv(r,['qty_requested','Qty Requested'])||'?';
+    const mn=sel?(gv(sel,['market_name','Market Name'])||gv(sel,['name','Name'])):'Seller';
+    rHtml+=`<div class="card2 rowb" style="margin-bottom:7px">
+      <div><div style="font-size:13px;font-weight:600">${prod?gv(prod,['name','Name']):gpid(r)} × ${qty}</div>
+      <div style="font-size:11px;color:var(--text2)">${mn}</div></div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-green btn-xs" onclick="apprReq('${rid}',${qty})">Assign</button>
+        <button class="btn btn-red btn-xs" onclick="rejReq('${rid}')">Reject</button>
+      </div>
+    </div>`;
   });
-  setLoading('pr-btn', false);
-  if (res.success) { toast('Preorder item created!', 'success'); closeModal('add-preorder'); loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
+  else rHtml='<p style="font-size:12px;color:var(--text3)">No pending stock requests.</p>';
+  document.getElementById('ow-reqlist').innerHTML=rHtml;
 
-async function assignProduct() {
-  const sid = document.getElementById('ow-as-seller').value;
-  const pid = document.getElementById('ow-as-prod').value;
-  const qty = document.getElementById('ow-as-qty').value;
-  if (!sid || sid === 'undefined' || !pid || !qty) return toast('Select seller, product and quantity', 'error');
-  const res = await apiCall('assign_product', { sellerId: sid, productId: pid, qty });
-  if (res.success) { toast('Stock assigned!', 'success'); document.getElementById('ow-as-qty').value = ''; loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
+  // Owner message dropdown
+  let mto='<option value="">To…</option>';
+  sellers.forEach(s=>{ mto+=`<option value="seller:${gid(s)}">${gv(s,['market_name','Market Name'])||gv(s,['name','Name'])}</option>`; });
+  (buyers||[]).forEach(b=>{ mto+=`<option value="buyer:${gid(b)}">${gv(b,['name','Name'])}</option>`; });
+  document.getElementById('ow-msg-to').innerHTML=mto;
 
-function collectPayment(sellerId, amount) {
-  showConfirm('Confirm Payment', `Confirm you received GH₵${amount} from this seller?`, async () => {
-    const res = await apiCall('confirm_payment', { sellerId, amount });
-    if (res.success) { toast('Payment confirmed!', 'success'); loadDashboard(); }
-  });
-}
-
-async function confirmBuyerPayment(orderId) {
-  showConfirm('Confirm Buyer Payment', 'Mark this buyer payment as confirmed?', async () => {
-    const res = await apiCall('confirm_buyer_payment', { orderId });
-    if (res.success) { toast('Payment confirmed!', 'success'); loadDashboard(); }
-  });
-}
-
-async function updatePreorderStatus(itemId, status) {
-  const res = await apiCall('update_preorder_status', { itemId, status });
-  if (res.success) { toast(`Status updated to ${status}`, 'success'); loadDashboard(); }
-  else toast(res.error || 'Failed', 'error');
-}
-
-async function approveListing(listingId) {
-  const res = await apiCall('approve_listing', { listingId });
-  if (res.success) { toast('Listing approved!', 'success'); loadDashboard(); }
-}
-async function rejectListing(listingId) {
-  const res = await apiCall('reject_listing', { listingId });
-  if (res.success) { toast('Listing rejected', 'success'); loadDashboard(); }
-}
-async function approveRequest(requestId, qty) {
-  const res = await apiCall('approve_stock_request', { requestId, qty });
-  if (res.success) { toast('Stock assigned via request!', 'success'); loadDashboard(); }
-}
-async function rejectRequest(requestId) {
-  const res = await apiCall('reject_stock_request', { requestId });
-  if (res.success) { toast('Request rejected', 'success'); loadDashboard(); }
-}
-async function toggleBuyer(buyerId, currentStatus) {
-  const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
-  const res = await apiCall('manage_buyer', { buyerId, status: newStatus });
-  if (res.success) { toast(`Buyer ${newStatus}`, 'success'); loadDashboard(); }
+  // Messages
+  const msgs=(messages||[]).slice().sort((a,b)=>new Date(a.timestamp||0)-new Date(b.timestamp||0));
+  renderMsgs('ow-msgs', msgs, 'admin');
+  const unread=msgs.filter(m=>String(m.to_id||'')==='admin'&&String(m.read||'')!=='true').length;
+  if(unread>0) markRead(msgs.filter(m=>String(m.to_id||'')==='admin'&&String(m.read||'')!=='true').map(m=>gid(m)));
 }
 
 // ============================================================
 //  BUYER RENDER
 // ============================================================
-function buyerTab(tab, el) {
-  document.querySelectorAll('#view-buyer .nav-item').forEach(n => n.classList.remove('active'));
-  if (el) el.classList.add('active');
-  ['browse','orders','wishlist','profile'].forEach(v => {
-    document.getElementById('bv-' + v).classList.toggle('hidden', v !== tab);
+function bvTab(tab, el) {
+  document.querySelectorAll('#v-buyer .ni').forEach(n=>n.classList.remove('act'));
+  if(el) el.classList.add('act');
+  ['browse','orders','wishlist','msgs-view','profile'].forEach(v=>{
+    document.getElementById('bv-'+v).classList.toggle('hidden',v!==tab);
   });
+  document.getElementById('bv-msg-bar').classList.toggle('hidden', tab!=='msgs-view');
+  document.getElementById('bv-ref').parentElement.parentElement.style.paddingBottom = tab==='msgs-view'?'60px':'';
 }
 
-function buyerBrowseTab(tab, el) {
-  currentBuyerBrowseTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if (el) el.classList.add('active');
-  document.getElementById('bv-preorders').classList.toggle('hidden', tab !== 'preorders');
-  document.getElementById('bv-market').classList.toggle('hidden', tab !== 'market');
+function bTab(tab, el) {
+  document.querySelectorAll('#bv-browse .tabbtn').forEach(b=>b.classList.remove('act'));
+  if(el) el.classList.add('act');
+  document.getElementById('bv-preorders').classList.toggle('hidden',tab!=='preorders');
+  document.getElementById('bv-market').classList.toggle('hidden',tab!=='market');
 }
 
 function renderBuyer() {
-  document.getElementById('bv-name').textContent = currentUser.name;
-  const { preorderItems, listings, orders, wishlist } = db;
-  const wishIds = (wishlist || []).map(w => String(getVal(w,['item_id','Item ID','itemId'])||''));
+  const {preorderItems,listings,orders,wishlist,messages} = DB;
+  document.getElementById('bv-name').textContent = U.name;
+  const wishIds=(wishlist||[]).map(w=>String(gv(w,['item_id','Item ID','itemId'])||''));
 
-  // Pending orders badge
-  const pendingCount = (orders||[]).filter(o => String(getVal(o,['order_status','Order Status'])||'').toLowerCase() !== 'delivered' && String(getVal(o,['order_status','Order Status'])||'').toLowerCase() !== 'cancelled').length;
-  const badge = document.getElementById('bv-order-badge');
-  if (pendingCount > 0) { badge.textContent = pendingCount; badge.classList.remove('hidden'); }
-  else { badge.classList.add('hidden'); }
+  // Badges
+  const pendOrders=(orders||[]).filter(o=>{
+    const ost=String(gv(o,['order_status','Order Status'])||'').toLowerCase();
+    return ost!=='delivered'&&ost!=='cancelled';
+  }).length;
+  const ob=document.getElementById('bv-obadge');
+  if(pendOrders>0){ob.textContent=pendOrders;ob.classList.remove('hidden');}else ob.classList.add('hidden');
+  const unreadMsgs=(messages||[]).filter(m=>String(m.to_id||'')===U.id&&String(m.read||'')!=='true').length;
+  const mb=document.getElementById('bv-mbadge');
+  if(unreadMsgs>0){mb.textContent=unreadMsgs;mb.classList.remove('hidden');}else mb.classList.add('hidden');
 
-  // Preorder items
-  let prHtml = '';
-  (preorderItems||[]).forEach(item => {
-    const id = getId(item);
-    const name = getVal(item,['name','Name'])||'';
-    const price = getVal(item,['price','Price'])||0;
-    const desc = getVal(item,['description','Description'])||'';
-    const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
-    const depositAmt = getVal(item,['deposit_amount','Deposit Amount','depositAmount'])||price;
-    const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
-    const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
-    const eta = getVal(item,['eta','ETA'])||'TBC';
-    const status = String(getVal(item,['status','Status'])||'open');
-    const imgUrl = getVal(item,['image_url','Image URL','imageUrl'])||'';
-    const isWished = wishIds.includes(id);
-    const isFull = slots > 0 && filled >= slots;
-
-    prHtml += `<div class="preorder-card">
-      ${imgUrl ? `<img src="${imgUrl}" class="preorder-img" loading="lazy" onerror="this.style.display='none'">` : ''}
-      <div class="preorder-body">
-        <div class="row-between">
-          <div class="preorder-title">${name}</div>
-          <button class="wish-btn ${isWished?'active':''}" onclick="toggleWishlist('${id}',this)" title="${isWished?'Remove from wishlist':'Add to wishlist'}">
-            ${isWished ? '♥' : '♡'}
-          </button>
+  // Preorders (only 'open' status)
+  let prHtml='';
+  (preorderItems||[]).filter(i=>String(gv(i,['status','Status'])||'').toLowerCase()==='open').forEach(item=>{
+    const id=gid(item); const nm=gv(item,['name','Name'])||'';
+    const pr=Number(gv(item,['price','Price'])||0); const desc=gv(item,['description','Description'])||'';
+    const pt=String(gv(item,['payment_type','Payment Type','paymentType'])||'full');
+    const da=Number(gv(item,['deposit_amount','Deposit Amount','depositAmount'])||pr);
+    const sl=Number(gv(item,['total_slots','Total Slots','totalSlots'])||0);
+    const fl=Number(gv(item,['filled_slots','Filled Slots','filledSlots'])||0);
+    const eta=gv(item,['eta','ETA'])||'TBC'; const img=gv(item,['image_url','Image URL','imageUrl'])||'';
+    const isW=wishIds.includes(id); const isFull=sl>0&&fl>=sl;
+    prHtml+=`<div class="prcrd">
+      ${img?`<div class="primg-wrap" onclick="lb('${img}')">
+        <img src="${img}" loading="lazy" onerror="this.style.display='none'">
+        <span class="primg-expand">🔍 Tap to expand</span>
+      </div>`:''}
+      <div class="prbody">
+        <div class="rowb" style="margin-bottom:5px">
+          <div class="prtitle">${nm}</div>
+          <button style="background:none;border:none;cursor:pointer;font-size:22px;color:${isW?'var(--gold)':'var(--text3)'}" onclick="togWish('${id}',this)">${isW?'♥':'♡'}</button>
         </div>
-        <div class="preorder-desc">${desc}</div>
-        <div class="preorder-meta">
-          <span class="preorder-eta">ETA: ${eta}</span>
-          <span class="${payType==='partial'?'pay-partial':'pay-full'} pay-type">${payType === 'partial' ? `Deposit: GH₵${depositAmt}` : 'Full payment'}</span>
-          ${statusBadge(isFull ? 'closed' : status)}
+        ${desc?`<div class="prdesc">${desc}</div>`:''}
+        <div class="prmeta">
+          <span class="eta-pill">ETA: ${eta}</span>
+          <span class="${pt==='partial'?'pay-partial':'pay-full'}">${pt==='partial'?`Deposit: GH₵${da}`:'Full payment'}</span>
+          ${isFull?'<span class="badge bg-red">Fully subscribed</span>':''}
         </div>
-        <div class="preorder-price-row">
-          <span class="preorder-price">GH₵ ${price}</span>
-        </div>
-        ${milestoneHtml(filled, slots, id)}
-        <button class="btn ${isFull ? 'btn-muted' : 'btn-primary'}" ${isFull ? 'disabled' : ''} onclick="openPreorder('${id}')">
-          ${isFull ? 'Fully Subscribed' : 'Preorder Now'}
+        <div style="font-size:22px;font-weight:700;color:var(--gold);margin-bottom:8px">GH₵${pr}</div>
+        ${milestoneHtml(fl,sl)}
+        <button class="btn ${isFull?'btn-muted':'btn-gold'}" ${isFull?'disabled':''} onclick="openOrder('${id}')">
+          ${isFull?'Fully Subscribed':'Preorder Now'}
         </button>
       </div>
     </div>`;
   });
-  document.getElementById('bv-preorders').innerHTML = prHtml || '<p style="text-align:center;color:var(--text3);padding:40px 0">No preorder items available right now.</p>';
+  document.getElementById('bv-preorders').innerHTML=prHtml||'<p style="text-align:center;color:var(--text3);padding:40px 0">No preorder items right now.<br>Check back soon!</p>';
 
   // Marketplace
-  renderMarket(listings || []);
-
-  // Orders
-  let ordHtml = '';
-  if (orders && orders.length) {
-    orders.slice().reverse().forEach(o => {
-      const oid = getId(o);
-      const iid = String(getVal(o,['item_id','Item ID','itemId'])||'');
-      const item = (preorderItems||[]).find(i => getId(i) === iid);
-      const qty = getVal(o,['qty','Qty'])||1;
-      const total = getVal(o,['total_price','Total Price','totalPrice'])||'?';
-      const payStatus = String(getVal(o,['payment_status','Payment Status'])||'pending').toLowerCase();
-      const ordStatus = String(getVal(o,['order_status','Order Status'])||'ordered').toLowerCase();
-      const ts = getVal(o,['timestamp','Timestamp'])||'';
-      const canCancel = payStatus !== 'confirmed' && ordStatus !== 'cancelled' && ordStatus !== 'delivered';
-
-      ordHtml += `<div class="order-card">
-        <div class="order-header">
-          <div>
-            <div class="order-id">#${oid.substring(0,8).toUpperCase()}</div>
-            <div class="order-product">${item ? getVal(item,['name','Name']) : 'Preorder item'} × ${qty}</div>
-            <div class="order-meta">GH₵${total} · ${ts ? new Date(ts).toLocaleDateString() : ''}</div>
-          </div>
-          <div style="text-align:right">
-            <div style="margin-bottom:4px">${statusBadge(ordStatus)}</div>
-            <div>${statusBadge(payStatus)}</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-wa btn-sm" onclick="waOwner('Hi, I am ${currentUser.name}. My order is #${oid.substring(0,8).toUpperCase()} on BLACKMARKET.')">Contact Owner</button>
-          ${canCancel ? `<button class="btn btn-danger btn-sm" onclick="cancelOrder('${oid}')">Cancel Order</button>` : ''}
-        </div>
-      </div>`;
-    });
-  } else { ordHtml = '<p style="text-align:center;color:var(--text3);padding:32px 0">No orders yet.</p>'; }
-  document.getElementById('bv-orders-list').innerHTML = ordHtml;
-
-  // Wishlist view
-  let wHtml = '';
-  const wishItems = (preorderItems||[]).filter(i => wishIds.includes(getId(i)));
-  if (wishItems.length) {
-    wishItems.forEach(item => {
-      const id = getId(item);
-      const slots = Number(getVal(item,['total_slots','Total Slots','totalSlots'])||0);
-      const filled = Number(getVal(item,['filled_slots','Filled Slots','filledSlots'])||0);
-      wHtml += `<div class="card-sm row-between" style="margin-bottom:10px">
-        <div>
-          <div style="font-size:14px;font-weight:600">${getVal(item,['name','Name'])}</div>
-          <div style="font-size:12px;color:var(--text2)">GH₵${getVal(item,['price','Price'])} · ETA: ${getVal(item,['eta','ETA'])}</div>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          ${milestoneHtml(filled, slots, id)}
-          <button class="btn btn-primary btn-sm" onclick="openPreorder('${id}')">Order</button>
-        </div>
-      </div>`;
-    });
-  } else { wHtml = '<p style="text-align:center;color:var(--text3);padding:32px 0">No wishlisted items.</p>'; }
-  document.getElementById('bv-wish-list').innerHTML = wHtml;
-
-  // Profile
-  document.getElementById('bv-profile-info').innerHTML = `
-    <div class="profile-field"><span>Name</span><span>${currentUser.name}</span></div>
-    <div class="profile-field"><span>Phone</span><span>${currentUser.phone}</span></div>
-    <div class="profile-field"><span>Username</span><span>${currentUser.id ? 'Member' : ''}</span></div>
-    <div class="profile-field"><span>Orders</span><span>${(orders||[]).length}</span></div>
-  `;
-}
-
-function renderMarket(listings) {
-  let html = '';
-  listings.forEach(l => {
-    const market = l.market_name || 'Seller';
-    const town = l.town || '';
-    const delivery = l.delivery_method || '';
-    const phone = l.phone || '';
-    const productName = l.product_name || 'Product';
-    const imgUrl = l.image_url || '';
-    const price = l.selling_price || '?';
-
-    html += `<div class="market-card" data-town="${town.toLowerCase()}">
-      ${imgUrl ? `<img src="${imgUrl}" style="width:100%;height:160px;object-fit:cover" loading="lazy">` : ''}
-      <div class="market-card-body">
-        <div class="market-name">${market}</div>
-        ${town ? `<div class="market-town">📍 ${town}</div>` : ''}
-        ${delivery ? `<div class="market-delivery">🚗 ${delivery}</div>` : ''}
-        <div class="market-product">${productName}</div>
-        <div class="market-price">GH₵ ${price}</div>
-        ${phone ? `<div style="margin-top:12px"><button class="btn btn-wa btn-sm" onclick="waSeller('${phone}','${market}','${productName}')">💬 Contact ${market}</button></div>` : ''}
+  let mHtml='';
+  (listings||[]).forEach(l=>{
+    const mn=l.market_name||'Seller'; const tw=l.town||''; const dm=l.delivery_method||'';
+    const ph=l.phone||''; const pn=l.product_name||'Product'; const img=l.image_url||'';
+    const pr=l.selling_price||'?';
+    mHtml+=`<div class="mcrd" data-town="${tw.toLowerCase()}">
+      ${img?`<img src="${img}" class="mcrd-img" loading="lazy" onerror="this.style.display='none'" onclick="lb('${img}')">`:''}
+      <div class="mcrd-body">
+        <div class="mname">${mn}</div>
+        ${tw?`<div class="mtown">📍 ${tw}</div>`:''}
+        ${dm?`<div class="mdel">🚗 ${dm}</div>`:''}
+        <div class="mpname">${pn}</div>
+        <div class="mprice">GH₵${pr}</div>
+        ${ph?`<div style="margin-top:10px"><button class="btn btn-wa btn-sm" onclick="waSeller('${ph}','${mn}','${pn}')">💬 Contact ${mn}</button></div>`:''}
       </div>
     </div>`;
   });
-  document.getElementById('bv-market-list').innerHTML = html || '<p style="text-align:center;color:var(--text3);padding:40px 0">No marketplace listings yet.</p>';
+  document.getElementById('bv-mktlist').innerHTML=mHtml||'<p style="text-align:center;color:var(--text3);padding:40px 0">No marketplace listings yet.</p>';
+
+  // Orders
+  let oHtml='';
+  if(orders&&orders.length) {
+    orders.slice().reverse().forEach(o=>{
+      const oid=gid(o); const iname=gv(o,['item_name','Item Name'])||'Item';
+      const qty=gv(o,['qty','Qty'])||1; const tot=gv(o,['total_price','Total Price'])||'?';
+      const pst=String(gv(o,['payment_status','Payment Status'])||'pending').toLowerCase();
+      const ost=String(gv(o,['order_status','Order Status'])||'ordered').toLowerCase();
+      const ts=gv(o,['timestamp','Timestamp'])||'';
+      const canCancel=pst!=='confirmed'&&ost!=='cancelled'&&ost!=='delivered';
+      oHtml+=`<div class="ocrd">
+        <div class="rowb" style="margin-bottom:6px">
+          <div>
+            <div class="oid">#${oid.substring(0,8).toUpperCase()}</div>
+            <div class="oprod">${iname} × ${qty}</div>
+            <div class="ometa">GH₵${tot}${ts?' · '+fmtTime(ts):''}</div>
+          </div>
+          <div style="text-align:right;display:flex;flex-direction:column;gap:4px">
+            ${badge(ost)}${badge(pst)}
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-wa btn-sm" onclick="waOwner('Hi, I am ${U.name}. My order #${oid.substring(0,8).toUpperCase()} for ${iname}. Please help.')">Contact Owner</button>
+          ${canCancel?`<button class="btn btn-red btn-sm" onclick="cancelOrd('${oid}')">Cancel</button>`:''}
+        </div>
+      </div>`;
+    });
+  } else oHtml='<p style="text-align:center;color:var(--text3);padding:28px 0">No orders yet. Browse preorders to get started!</p>';
+  document.getElementById('bv-olist').innerHTML=oHtml;
+
+  // Wishlist
+  let wHtml='';
+  const wItems=(preorderItems||[]).filter(i=>wishIds.includes(gid(i)));
+  if(wItems.length) wItems.forEach(item=>{
+    const id=gid(item);
+    const sl=Number(gv(item,['total_slots','Total Slots','totalSlots'])||0);
+    const fl=Number(gv(item,['filled_slots','Filled Slots','filledSlots'])||0);
+    const st=String(gv(item,['status','Status'])||'').toLowerCase();
+    wHtml+=`<div class="card2 rowb" style="margin-bottom:9px">
+      <div><div style="font-size:14px;font-weight:600">${gv(item,['name','Name'])}</div>
+      <div style="font-size:11px;color:var(--text2)">GH₵${gv(item,['price','Price'])} · ${gv(item,['eta','ETA'])}</div>
+      ${milestoneHtml(fl,sl)}</div>
+      ${st==='open'?`<button class="btn btn-gold btn-sm" onclick="openOrder('${id}')">Order</button>`:`<span class="badge bg-muted">${st}</span>`}
+    </div>`;
+  });
+  else wHtml='<p style="text-align:center;color:var(--text3);padding:28px 0">No wishlisted items.</p>';
+  document.getElementById('bv-wlist').innerHTML=wHtml;
+
+  // Messages
+  const sortedMsgs=(messages||[]).slice().sort((a,b)=>new Date(a.timestamp||0)-new Date(b.timestamp||0));
+  renderMsgs('bv-msgs', sortedMsgs, U.id);
+  const unread=sortedMsgs.filter(m=>String(m.to_id||'')===U.id&&String(m.read||'')!=='true').length;
+  if(unread>0) markRead(sortedMsgs.filter(m=>String(m.to_id||'')===U.id&&String(m.read||'')!=='true').map(m=>gid(m)));
+
+  // Profile
+  document.getElementById('bv-pinfo').innerHTML=`
+    <div class="pfield"><span>Name</span><span>${U.name}</span></div>
+    <div class="pfield"><span>Phone</span><span>${U.phone||'—'}</span></div>
+    <div class="pfield"><span>Orders</span><span>${(orders||[]).length}</span></div>
+    <div class="pfield"><span>Wishlisted</span><span>${wishIds.length}</span></div>`;
 }
 
-function filterMarket() {
-  const query = document.getElementById('bv-search').value.toLowerCase().trim();
-  document.querySelectorAll('.market-card').forEach(card => {
-    const town = card.dataset.town || '';
-    card.style.display = (!query || town.includes(query)) ? '' : 'none';
+function filterMkt() {
+  const q=document.getElementById('bv-srch').value.toLowerCase().trim();
+  document.querySelectorAll('.mcrd').forEach(c=>{
+    c.style.display=(!q||c.dataset.town.includes(q))?'':'none';
   });
 }
 
-// Buyer actions
-function openPreorder(itemId) {
-  const item = (db.preorderItems || []).find(i => getId(i) === itemId);
-  if (!item) return;
-  currentPreorderItem = item;
-  const name = getVal(item,['name','Name'])||'';
-  const price = Number(getVal(item,['price','Price'])||0);
-  const payType = String(getVal(item,['payment_type','Payment Type','paymentType'])||'full');
-  const depositAmt = Number(getVal(item,['deposit_amount','Deposit Amount','depositAmount'])||price);
-  const eta = getVal(item,['eta','ETA'])||'TBC';
+// ============================================================
+//  MESSAGES
+// ============================================================
+function renderMsgs(containerId, msgs, myId) {
+  const el=document.getElementById(containerId); if(!el) return;
+  if(!msgs||!msgs.length){ el.innerHTML='<p style="text-align:center;color:var(--text3);font-size:12px;padding:16px 0">No messages yet.</p>'; return; }
+  let h='';
+  msgs.forEach(m=>{
+    const isMe = String(m.from_id||'')=== String(myId);
+    const isSys= String(m.from_role||'')==='system';
+    const body = String(m.body||'').replace(/\n/g,'<br>');
+    const t = fmtTime(m.timestamp||'');
+    if(isSys) {
+      h+=`<div class="msg-bubble msg-sys">${body}<div class="msg-time">${t}</div></div>`;
+    } else if(isMe) {
+      h+=`<div class="msg-bubble msg-out">${body}<div class="msg-time" style="text-align:right">${t}</div></div>`;
+    } else {
+      h+=`<div class="msg-bubble msg-in"><div class="msg-name">${m.from_name||m.from_role}</div>${body}<div class="msg-time">${t}</div></div>`;
+    }
+  });
+  el.innerHTML=h;
+  el.scrollTop=el.scrollHeight;
+}
 
-  document.getElementById('po-title').textContent = name;
-  document.getElementById('po-sub').textContent = `ETA: ${eta}`;
-
-  let payInfo = '';
-  if (payType === 'partial') {
-    payInfo = `<strong style="color:var(--primary)">Deposit required: GH₵${depositAmt}</strong><br>
-    Full price: GH₵${price}<br>
-    Pay the deposit now to secure your order. Remainder due on delivery.`;
-    document.getElementById('po-cancel-note').textContent = 'You can cancel before payment is confirmed. Once confirmed, deposit is non-refundable.';
+async function sendMsg(role) {
+  let inp, toRole, toId;
+  if(role==='seller') {
+    inp=document.getElementById('sv-msg-inp'); toRole='owner'; toId='admin';
+  } else if(role==='buyer') {
+    inp=document.getElementById('bv-msg-inp'); toRole='owner'; toId='admin';
   } else {
-    payInfo = `<strong style="color:var(--primary)">Full payment: GH₵${price} per unit</strong><br>
-    Payment must be sent and confirmed before your order is secured.`;
-    document.getElementById('po-cancel-note').textContent = 'You can cancel before your payment is confirmed. Once confirmed, no cancellation.';
+    inp=document.getElementById('ow-msg-inp');
+    const sel=document.getElementById('ow-msg-to').value;
+    if(!sel) return toast('Select recipient','err');
+    [toRole, toId] = sel.split(':');
   }
-  document.getElementById('po-pay-info').innerHTML = payInfo;
+  const body=inp.value.trim(); if(!body) return;
+  const r=await api('send_message',{fromRole:role,fromId:U.id,fromName:U.market_name||U.name,toRole,toId,body,thread:'general'});
+  if(r.success){ inp.value=''; loadDash(true); } else toast('Failed to send','err');
+}
 
-  const qtyInput = document.getElementById('po-qty');
-  qtyInput.value = 1;
-  document.getElementById('po-total').textContent = `GH₵${(payType === 'partial' ? depositAmt : price).toFixed(2)}`;
-  qtyInput.oninput = () => {
-    const q = parseInt(qtyInput.value) || 1;
-    const amt = payType === 'partial' ? depositAmt : price;
-    document.getElementById('po-total').textContent = `GH₵${(amt * q).toFixed(2)}`;
-  };
-  openModal('place-order');
+async function markRead(ids) {
+  if(!ids||!ids.length) return;
+  await api('mark_read',{userId:U.id, messageIds:ids});
+}
+
+// ============================================================
+//  SELLER ACTIONS
+// ============================================================
+function step(id, ch) {
+  const inp=document.getElementById(`qty-${id}`); if(!inp) return;
+  let v=parseInt(inp.value)||0;
+  v=Math.max(0,Math.min(parseInt(inp.max)||999,v+ch));
+  inp.value=v; updateSubBtn();
+}
+
+function updateSubBtn() {
+  const inputs=document.querySelectorAll('[id^="qty-"]');
+  let t=0; inputs.forEach(i=>t+=parseInt(i.value)||0);
+  const b=document.getElementById('sv-sub-btn'); if(b) b.textContent=`Submit Sales (${t} items)`;
+}
+
+async function submitSales() {
+  const inputs=document.querySelectorAll('[id^="qty-"]');
+  const batch=[]; inputs.forEach(i=>{ const q=parseInt(i.value); if(q>0) batch.push({productId:i.id.replace('qty-',''),qty:q}); });
+  if(!batch.length) return toast('Select items to submit','err');
+  confirm$('Submit Sales?',`Log ${batch.reduce((s,i)=>s+i.qty,0)} items sold?`, async()=>{
+    const r=await api('record_sale',{sellerId:U.id,sales:batch});
+    if(r.success){ toast('Sales recorded!','ok'); loadDash(); }
+  });
+}
+
+async function reqStock() {
+  const pid=document.getElementById('sv-rp').value, qty=document.getElementById('sv-rq').value;
+  if(!pid||!qty) return toast('Select product and enter quantity','err');
+  const r=await api('request_stock',{sellerId:U.id,productId:pid,qty});
+  if(r.success){ toast('Request sent!','ok'); document.getElementById('sv-rq').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+function listingTab(type, el) {
+  curListingIsCustom = type==='custom';
+  document.querySelectorAll('#sv-listing-type .tabbtn').forEach(b=>b.classList.remove('act'));
+  if(el) el.classList.add('act');
+  document.getElementById('sv-list-owner').classList.toggle('hidden', type!=='owner');
+  document.getElementById('sv-list-custom').classList.toggle('hidden', type!=='custom');
+}
+
+async function submitListing() {
+  const price=document.getElementById('sv-lprice').value;
+  if(!price) return toast('Enter selling price','err');
+  let productId='', imageUrl='', productName='', payload={};
+  if(curListingIsCustom) {
+    const nm=document.getElementById('sv-lname').value;
+    const file=document.getElementById('sv-limg').files[0];
+    if(!nm) return toast('Enter product name','err');
+    if(!file) return toast('Select product image','err');
+    setBtn('sv-list-btn',true);
+    const compressed=await compressImg(file);
+    const ir=await api('upload_image',{imageData:compressed,mimeType:'image/jpeg',fileName:nm+'.jpg'});
+    if(!ir.success){ setBtn('sv-list-btn',false); return toast('Image upload failed','err'); }
+    imageUrl=ir.url; productName=nm; payload={sellerId:U.id,productId:'',sellingPrice:price,imageUrl,productName,isCustom:true};
+  } else {
+    productId=document.getElementById('sv-lp').value;
+    if(!productId) return toast('Select a product','err');
+    payload={sellerId:U.id,productId,sellingPrice:price,isCustom:false};
+    setBtn('sv-list-btn',true);
+  }
+  const r=await api('submit_listing',payload);
+  setBtn('sv-list-btn',false);
+  if(r.success){ toast('Listing submitted for approval!','ok'); document.getElementById('sv-lprice').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+async function saveProfile() {
+  const payload={sellerId:U.id,market_name:document.getElementById('sp-mn').value,town:document.getElementById('sp-tw').value,phone:document.getElementById('sp-ph').value,delivery_method:document.getElementById('sp-dm').value};
+  const r=await api('update_seller_profile',payload);
+  if(r.success){
+    U.market_name=payload.market_name; U.town=payload.town; U.phone=payload.phone;
+    toast('Profile updated!','ok'); mclose('seller-profile'); loadDash();
+  } else toast(r.error||'Failed to save — check that your Sellers sheet has market_name, town, delivery_method, phone columns','err');
+}
+
+// ============================================================
+//  OWNER ACTIONS
+// ============================================================
+async function addProduct() {
+  const n=document.getElementById('ap-n').value, pr=document.getElementById('ap-pr').value;
+  const q=document.getElementById('ap-q').value, file=document.getElementById('ap-img').files[0];
+  if(!n||!pr||!q||!file) return toast('Fill all fields and select image','err');
+  setBtn('ap-btn',true);
+  const c=await compressImg(file);
+  const ir=await api('upload_image',{imageData:c,mimeType:'image/jpeg',fileName:n+'.jpg'});
+  if(!ir.success){ setBtn('ap-btn',false); return toast('Image upload failed','err'); }
+  const r=await api('add_product',{name:n,price:pr,totalQty:q,imageUrl:ir.url});
+  setBtn('ap-btn',false);
+  if(r.success){ toast('Product added!','ok'); mclose('add-product'); ['ap-n','ap-pr','ap-q'].forEach(i=>document.getElementById(i).value=''); document.getElementById('ap-img').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+async function addSeller() {
+  const n=document.getElementById('as-n').value, mn=document.getElementById('as-mn').value;
+  const u=document.getElementById('as-u').value, pw=document.getElementById('as-pw').value, ph=document.getElementById('as-ph').value;
+  if(!n||!u||!pw||!ph) return toast('Fill all required fields','err');
+  const r=await api('add_seller',{name:n,market_name:mn,username:u,password:pw,phone:ph});
+  if(r.success){ toast('Seller added!','ok'); mclose('add-seller'); ['as-n','as-mn','as-u','as-pw','as-ph'].forEach(i=>document.getElementById(i).value=''); loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+function togDeposit() {
+  document.getElementById('pr-dw').classList.toggle('hidden', document.getElementById('pr-pt').value!=='partial');
+}
+
+async function addPreorder() {
+  const n=document.getElementById('pr-n').value, d=document.getElementById('pr-d').value;
+  const pr=document.getElementById('pr-pr').value, pt=document.getElementById('pr-pt').value;
+  const da=document.getElementById('pr-da').value, sl=document.getElementById('pr-sl').value;
+  const eta=document.getElementById('pr-eta').value, file=document.getElementById('pr-img').files[0];
+  if(!n||!pr||!sl||!eta||!file) return toast('Fill all fields','err');
+  if(pt==='partial'&&!da) return toast('Enter deposit amount','err');
+  setBtn('pr-btn',true);
+  const c=await compressImg(file);
+  const ir=await api('upload_image',{imageData:c,mimeType:'image/jpeg',fileName:n+'.jpg'});
+  if(!ir.success){ setBtn('pr-btn',false); return toast('Image upload failed','err'); }
+  const r=await api('add_preorder_item',{name:n,description:d,price:pr,paymentType:pt,depositAmount:pt==='partial'?da:pr,totalSlots:sl,eta,imageUrl:ir.url});
+  setBtn('pr-btn',false);
+  if(r.success){ toast('Preorder created!','ok'); mclose('add-preorder'); ['pr-n','pr-d','pr-pr','pr-da','pr-sl','pr-eta'].forEach(i=>document.getElementById(i).value=''); document.getElementById('pr-img').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+async function assignProd() {
+  const s=document.getElementById('ow-as').value, p=document.getElementById('ow-ap').value, q=document.getElementById('ow-aq').value;
+  if(!s||s==='undefined'||!p||!q) return toast('Select seller, product and quantity','err');
+  const r=await api('assign_product',{sellerId:s,productId:p,qty:q});
+  if(r.success){ toast('Stock assigned!','ok'); document.getElementById('ow-aq').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+async function collectPay(sid, amount) {
+  confirm$('Confirm Payment',`Confirm you received GH₵${amount.toFixed(0)}?`, async()=>{
+    const r=await api('confirm_payment',{sellerId:sid,amount});
+    if(r.success){ toast('Payment confirmed!','ok'); loadDash(); }
+  });
+}
+
+async function confBuyerPay(oid) {
+  confirm$('Confirm Buyer Payment','Mark this buyer payment as confirmed?', async()=>{
+    const r=await api('confirm_buyer_payment',{orderId:oid});
+    if(r.success){ toast('Confirmed!','ok'); loadDash(); }
+    else toast(r.error||'Failed','err');
+  });
+}
+
+async function updPreorder(id, status) {
+  const r=await api('update_preorder_status',{itemId:id,status});
+  if(r.success){ toast(`Status → ${status}`,'ok'); loadDash(); }
+  else toast(r.error||'Failed','err');
+}
+
+async function apprList(id) { const r=await api('approve_listing',{listingId:id}); if(r.success){toast('Approved!','ok');loadDash();}else toast(r.error||'Failed','err'); }
+async function rejList(id)  { const r=await api('reject_listing',{listingId:id});  if(r.success){toast('Rejected','ok');loadDash();}else toast(r.error||'Failed','err'); }
+async function apprReq(id, qty) { const r=await api('approve_stock_request',{requestId:id,qty}); if(r.success){toast('Assigned!','ok');loadDash();}else toast(r.error,'err'); }
+async function rejReq(id) { const r=await api('reject_stock_request',{requestId:id}); if(r.success){toast('Rejected','ok');loadDash();}else toast(r.error,'err'); }
+async function toggleBuyer(id, st) { const r=await api('manage_buyer',{buyerId:id,status:st==='active'?'blocked':'active'}); if(r.success){toast('Updated','ok');loadDash();} }
+async function toggleOpenSell(sid, enabled) {
+  const r=await api('toggle_open_selling',{sellerId:sid,enabled});
+  if(r.success) toast(enabled?'Open selling enabled':'Open selling disabled','ok');
+  else toast(r.error||'Failed','err');
+  loadDash();
+}
+
+// ============================================================
+//  BUYER ACTIONS
+// ============================================================
+function openOrder(itemId) {
+  const item=(DB.preorderItems||[]).find(i=>gid(i)===itemId); if(!item) return;
+  curPreorderItem=item;
+  const nm=gv(item,['name','Name'])||'';
+  const pr=Number(gv(item,['price','Price'])||0);
+  const pt=String(gv(item,['payment_type','Payment Type','paymentType'])||'full');
+  const da=Number(gv(item,['deposit_amount','Deposit Amount','depositAmount'])||pr);
+  const eta=gv(item,['eta','ETA'])||'TBC';
+  const momo=(U&&U.momo)||'Contact owner for payment details';
+  document.getElementById('po-t').textContent=nm;
+  document.getElementById('po-s').textContent=`ETA: ${eta}`;
+  document.getElementById('po-q').value=1;
+  const payAmt=pt==='partial'?da:pr;
+  document.getElementById('po-tval').textContent=`GH₵${payAmt.toFixed(2)}`;
+  document.getElementById('po-momo').innerHTML=
+    `<b>Payment details:</b><br>${momo}<br><br>`+
+    (pt==='partial'
+      ? `<b>Deposit required: GH₵${da}</b> to secure your slot.<br>Remaining GH₵${(pr-da).toFixed(2)} paid on delivery.`
+      : `<b>Full payment: GH₵${pr} per unit.</b>`)+
+    `<br><br>Send payment first, then enter your transaction ID below.`;
+  document.getElementById('po-cnote').textContent = pt==='partial'
+    ? 'Deposit is non-refundable after payment is confirmed by owner.'
+    : 'No cancellation after payment is confirmed.';
+  mopen('place-order');
+}
+
+function updateOrderTotal() {
+  if(!curPreorderItem) return;
+  const q=parseInt(document.getElementById('po-q').value)||1;
+  const pr=Number(gv(curPreorderItem,['price','Price'])||0);
+  const pt=String(gv(curPreorderItem,['payment_type','Payment Type','paymentType'])||'full');
+  const da=Number(gv(curPreorderItem,['deposit_amount','Deposit Amount','depositAmount'])||pr);
+  const payAmt=(pt==='partial'?da:pr)*q;
+  document.getElementById('po-tval').textContent=`GH₵${payAmt.toFixed(2)}`;
 }
 
 async function placeOrder() {
-  if (!currentPreorderItem) return;
-  const qty = parseInt(document.getElementById('po-qty').value) || 1;
-  const proof = document.getElementById('po-proof').value;
-  const res = await apiCall('place_preorder', {
-    buyerId: currentUser.id,
-    itemId: getId(currentPreorderItem),
-    qty, paymentProof: proof
-  });
-  if (res.success) {
-    toast('Order placed! Awaiting payment confirmation.', 'success');
-    closeModal('place-order');
-    loadDashboard();
-  } else toast(res.error || 'Order failed', 'error');
+  if(!curPreorderItem) return;
+  const qty=parseInt(document.getElementById('po-q').value)||1;
+  const proof=document.getElementById('po-proof').value;
+  const r=await api('place_preorder',{buyerId:U.id,itemId:gid(curPreorderItem),qty,paymentProof:proof});
+  if(r.success){ toast('Preorder placed! Check Messages for payment instructions.','ok'); mclose('place-order'); document.getElementById('po-proof').value=''; loadDash(); }
+  else toast(r.error||'Failed','err');
 }
 
-async function cancelOrder(orderId) {
-  showConfirm('Cancel Order', 'Are you sure? This cannot be undone.', async () => {
-    const res = await apiCall('cancel_preorder', { orderId, buyerId: currentUser.id });
-    if (res.success) { toast('Order cancelled', 'success'); loadDashboard(); }
-    else toast(res.error || 'Cannot cancel', 'error');
+async function cancelOrd(oid) {
+  confirm$('Cancel Order','Cancel this order? This cannot be undone.', async()=>{
+    const r=await api('cancel_preorder',{orderId:oid,buyerId:U.id});
+    if(r.success){ toast('Order cancelled','ok'); loadDash(); }
+    else toast(r.error||'Cannot cancel','err');
   });
 }
 
-async function toggleWishlist(itemId, btn) {
-  const res = await apiCall('toggle_wishlist', { buyerId: currentUser.id, itemId });
-  if (res.success) {
-    if (res.action === 'added') { btn.textContent = '♥'; btn.classList.add('active'); toast('Added to wishlist!'); }
-    else { btn.textContent = '♡'; btn.classList.remove('active'); toast('Removed from wishlist'); }
-    loadDashboard();
+async function togWish(id, btn) {
+  const r=await api('toggle_wishlist',{buyerId:U.id,itemId:id});
+  if(r.success){
+    if(r.action==='added'){btn.textContent='♥';btn.style.color='var(--gold)';toast('Wishlisted!');}
+    else{btn.textContent='♡';btn.style.color='var(--text3)';toast('Removed from wishlist');}
+    loadDash(true);
   }
+}
+
+// ============================================================
+//  PWA INSTALL
+// ============================================================
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault(); deferredPrompt=e;
+  setTimeout(()=>{
+    if(deferredPrompt&&!localStorage.getItem('pwaInstalled')){
+      toast('📱 Tap to install BLACKMARKET as an app','info');
+      const banner=document.createElement('div');
+      banner.style.cssText='position:fixed;bottom:80px;left:14px;right:14px;background:var(--gold);color:#0a0a0a;border-radius:var(--rs);padding:13px 16px;font-size:13px;font-weight:600;display:flex;justify-content:space-between;align-items:center;z-index:9998;box-shadow:0 4px 20px rgba(245,197,24,.4)';
+      banner.innerHTML='<span>📱 Install BLACKMARKET app</span><button onclick="installPWA(this.parentElement)" style="background:#0a0a0a;color:var(--gold);border:none;border-radius:var(--rx);padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer">Install</button>';
+      document.body.appendChild(banner);
+    }
+  }, 3000);
+});
+async function installPWA(banner) {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const {outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted'){ localStorage.setItem('pwaInstalled','1'); toast('BLACKMARKET installed!','ok'); }
+  deferredPrompt=null; if(banner) banner.remove();
+}
+window.addEventListener('appinstalled',()=>{ localStorage.setItem('pwaInstalled','1'); toast('App installed successfully!','ok'); });
+
+// Register Service Worker
+if('serviceWorker' in navigator) {
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').then(()=>{}).catch(()=>{});
+  });
 }
 </script>
 </body>
